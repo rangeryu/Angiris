@@ -1,0 +1,1340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner"
+  dslVersion="1.0.0.0"
+  Id="364f8a47-159d-4d47-a2c8-bc4f795a0d26"
+  name="Angiris.ModelingProject" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <ownedCommentsInternal>
+    <comment
+      Id="51f1651c-c4d7-40b4-b74e-aea9c2e6f427">
+      <body>Robot instances can be horizontally scaled based on the pressure
+Can be customized and extended if new sources are required
+Each robot is a competing consumer for predefined topics
+Execute queued tasks with predefined schema and workflow</body>
+      <annotatedElements>
+        <componentMoniker
+          Id="3d87ca47-ef93-4537-8f61-27259b0332fd"
+          LastKnownName="App Server: Task Consumer Farm"
+          LastKnownLocation="Angiris.ModelingProject.uml" />
+      </annotatedElements>
+    </comment>
+  </ownedCommentsInternal>
+  <appliedStereotypesInternal>
+    <stereotypeInstance
+      Id="23992d18-0226-489b-9836-2dfd4cf5f7fd"
+      name="namespace"
+      profile="CSharpProfile">
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="f6537cbd-3c13-4ba7-baf1-32e04615ad0c">
+          <propertyInstance
+            Id="f42cc445-1e57-40a5-a750-31cfbd6389a2"
+            name="BaseName" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="b77f948f-5aae-440b-8f17-24f488e0db49">
+          <propertyInstance
+            Id="66a7a4e1-d70a-4754-b8b5-db9cdbfbcefa"
+            name="ClrAttributes" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="e1cc09d2-f756-45fb-acf4-99266a222a42">
+          <propertyInstance
+            Id="25762927-ac7a-4d13-a919-aab2dd5de1fc"
+            name="Usings" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+    <stereotypeInstance
+      Id="02f31bac-b40a-4c4b-a847-2f5166d77391"
+      name="TextTemplateBindings"
+      profile="TextTemplateBindings">
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="5cc37015-81f9-4ec4-bf4e-ac4c6f7d0d83">
+          <propertyInstance
+            Id="57b4a915-9e9d-4046-8fee-8c7e84b2e094"
+            name="Alias"
+            value="ClassTemplate|EnumTemplate|InterfaceTemplate|StructTemplate" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="57a6647b-92b8-44fd-b00f-909ee3ecbf6a">
+          <propertyInstance
+            Id="d4b0bcc0-74ce-4806-98e5-90085a765e6d"
+            name="TemplateFilePath"
+            value="ClassTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4|EnumTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\EnumTemplate.t4|InterfaceTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\InterfaceTemplate.t4|StructTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="2be7ccfa-fb0e-440e-9d53-572599896842">
+          <propertyInstance
+            Id="a5af6764-1335-4596-8535-1adf6aa44d59"
+            name="ProjectPath"
+            value="ClassTemplate=..\Angiris.ModelingProjectLib\Angiris.ModelingProjectLib.csproj|EnumTemplate=..\Angiris.ModelingProjectLib\Angiris.ModelingProjectLib.csproj|InterfaceTemplate=..\Angiris.ModelingProjectLib\Angiris.ModelingProjectLib.csproj|StructTemplate=..\Angiris.ModelingProjectLib\Angiris.ModelingProjectLib.csproj" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="20a5789a-c606-4fe2-abf6-82657036084a">
+          <propertyInstance
+            Id="f94ba30f-7cf4-4232-b002-926c2a52321f"
+            name="TargetDirectory"
+            value="ClassTemplate=GeneratedCode\{PackageStructure}|EnumTemplate=GeneratedCode\{PackageStructure}|InterfaceTemplate=GeneratedCode\{PackageStructure}|StructTemplate=GeneratedCode\{PackageStructure}" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="200cbccd-bed8-4bf8-9f6c-1270034a9d3b">
+          <propertyInstance
+            Id="e8936b9e-363f-4cc1-9db4-41a605a06c5a"
+            name="TargetName"
+            value="ClassTemplate={Name}|EnumTemplate={Name}|InterfaceTemplate={Name}|StructTemplate={Name}" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="30a4516f-0e2c-40bd-9cd4-3474fff71656">
+          <propertyInstance
+            Id="7b4f76f7-0748-4984-97b8-54bb4227e2ce"
+            name="Overwrite"
+            value="ClassTemplate=True|EnumTemplate=True|InterfaceTemplate=True|StructTemplate=True" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="b6c524d4-28f1-4783-92a1-1e233bac646b">
+          <propertyInstance
+            Id="d5659ed6-219c-49ad-9191-3257c16489ed"
+            name="Parameters" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+  </appliedStereotypesInternal>
+  <profileInstances>
+    <packageHasProfileInstances
+      Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
+      <profileInstance
+        Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791"
+        name="StandardProfileL2" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="29349502-908c-4fda-9054-c48619c59ed0">
+      <profileInstance
+        Id="532ea607-fb19-44b8-8502-3351b05452be"
+        name="StandardProfileL3" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="67f9dd0a-b5a7-4f16-a69e-3157aeb90304">
+      <profileInstance
+        Id="83a55f8f-2be8-42fe-a382-b80997d050d8"
+        name="CSharpProfile" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="24f22f19-dacc-4493-9cd4-fcef25a486c8">
+      <profileInstance
+        Id="70b709cb-92c0-4302-bb3b-d0345e7ae064"
+        name="TextTemplateBindings" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <packageHasNamedElement>
+      <component
+        Id="b72c5e89-85c5-4c13-8a3b-15798da6dac1"
+        name="Web Server: API Gateway"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <part
+            Id="56448b64-4a98-40dc-8e03-19f338e82acc"
+            name="Authentication"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="24828f27-c8fb-496d-8047-87b9a9a83c41"
+                LastKnownName="BasicAuth"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="76a0d2ae-2650-4259-9424-f5716e0171a3"
+            name="Logging"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="43681e24-440a-436b-80a5-4b2b77e08733"
+                LastKnownName="APIConsumptionLogger"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <providedInterface
+            Id="9943b75d-3b88-4be4-a5c0-eae541d029ec"
+            name="Port1"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false"
+            isService="false"
+            isBehavior="false">
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="8b57ca4d-1237-4b5a-9bb5-833a391095ea"
+                LastKnownName="IQueryAPI"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </providedInterface>
+          <providedInterface
+            Id="fc190192-489d-4371-af62-daffcb055241"
+            name="Port2"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false"
+            isService="false"
+            isBehavior="false">
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="69ef28d8-a7d9-415e-881a-c6e140ba9965"
+                LastKnownName="IOrderAPI"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </providedInterface>
+          <part
+            Id="7dd9708d-b40a-4c37-9f3b-088f12b47213"
+            name="Authorization"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="348c28d1-30a7-4f08-891d-002bba4d4408"
+                LastKnownName="APIMembershipProvider"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="c7561a76-6fc3-45e3-b21f-9672a0230da7"
+            name="API WebServer"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <targetNamedElementsInternal>
+              <connector
+                Id="73db6eda-1f9b-47ad-9b34-15d309f78d14"
+                isLeaf="false"
+                isStatic="false">
+                <requiredInterfaceMoniker
+                  Id="dcee5702-cade-4f6e-af4e-bc2c413cb9fd"
+                  LastKnownName="Port3"
+                  LastKnownLocation="Angiris.ModelingProject.uml" />
+                <relationshipOwnedElementsInternal>
+                  <connectorHasConnectorEnds>
+                    <connectorEnd
+                      Id="9edf618e-3ae7-4c5d-8867-7fa18b580abc">
+                      <portWithPart>
+                        <requiredInterfaceMoniker
+                          Id="7845aae7-0721-4951-ac7c-11b6cd1e679f"
+                          LastKnownName="Port1"
+                          LastKnownLocation="Angiris.ModelingProject.uml" />
+                      </portWithPart>
+                    </connectorEnd>
+                  </connectorHasConnectorEnds>
+                  <connectorHasConnectorEnds>
+                    <connectorEnd
+                      Id="bba2867b-80fe-480b-816f-8978539eaf26" />
+                  </connectorHasConnectorEnds>
+                </relationshipOwnedElementsInternal>
+              </connector>
+            </targetNamedElementsInternal>
+            <type_NamedElement>
+              <componentMoniker
+                Id="efc23d1a-5aca-4e8d-ac91-c5df8d52e973"
+                LastKnownName="WebAPIController"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <requiredInterface
+            Id="dcee5702-cade-4f6e-af4e-bc2c413cb9fd"
+            name="Port3"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false"
+            isService="false"
+            isBehavior="false">
+            <suppliersInternal>
+              <dependency
+                Id="78528991-5b32-4284-83f8-9c08e48d7632">
+                <providedInterfaceMoniker
+                  Id="fd476630-46ae-42af-9dd1-5e10e4cdb00d"
+                  LastKnownName="Port1"
+                  LastKnownLocation="Angiris.ModelingProject.uml" />
+              </dependency>
+            </suppliersInternal>
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="880993bb-6e16-4764-9962-a316a2adb085"
+                LastKnownName="ITicketService"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </requiredInterface>
+        </ownedAttributesInternal>
+      </component>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="4edf9a32-c0c4-4018-ad23-fdb2ac12731c"
+        name="Consumer Client: Query"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="21e9522e-dc64-4579-928d-d10ffe250cd2"
+        name="Consumer Clients"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="6c581575-8771-4491-b8e2-29480da9fee5">
+            <providedInterfaceMoniker
+              Id="9943b75d-3b88-4be4-a5c0-eae541d029ec"
+              LastKnownName="Port1"
+              LastKnownLocation="Angiris.ModelingProject.uml" />
+          </dependency>
+          <dependency
+            Id="946a12f1-5031-4363-a521-733c7be6e85e">
+            <providedInterfaceMoniker
+              Id="fc190192-489d-4371-af62-daffcb055241"
+              LastKnownName="Port2"
+              LastKnownLocation="Angiris.ModelingProject.uml" />
+          </dependency>
+        </suppliersInternal>
+        <ownedAttributesInternal>
+          <part
+            Id="d40cef6b-0a13-47ac-86c5-f7d4691fa732"
+            name="UserRequest"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="2e4626ad-ccdb-4627-b8d8-e9b936a435f5"
+                LastKnownName="Order"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="a7c27542-1b79-438a-b203-137323471a9d"
+            name="UserRequest"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="b3a87ba7-7459-4b86-bcdf-669b5864834a"
+                LastKnownName="Query"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+        </ownedAttributesInternal>
+      </component>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="cecdc63e-f926-425c-9aa7-3e4a9b39682b"
+        name="NoSQL"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="a6585f12-ff4b-4629-bfe6-48df4e7921e1"
+        name="Data Store"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <part
+            Id="1aeb40fa-b13c-405f-b2a3-1fecf2e9f778"
+            name="NoSQL"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="976614ed-a49d-4860-9380-634dbc7baeb3"
+                LastKnownName="StorageTable"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="ab6b39bd-de58-4ff6-a990-a7f0f6acc332"
+            name="RDBMS"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="e4e48491-6d4d-4a06-8dfd-aefdb9f173ac"
+                LastKnownName="SQLDatabase"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="fcd83514-507f-41a8-819d-a73034a546a2"
+            name="Blob"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="dbc97c90-398c-42a1-b733-c1c64e882e4e"
+                LastKnownName="StorageBlob"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="8a5ba77f-2623-40a7-8415-82e3810be5d3"
+            name="Cache Service"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="26e0f020-a1da-4be5-9129-dae1b17e1936"
+                LastKnownName="RedisCache"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+        </ownedAttributesInternal>
+      </component>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="24828f27-c8fb-496d-8047-87b9a9a83c41"
+        name="BasicAuth"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="43681e24-440a-436b-80a5-4b2b77e08733"
+        name="APIConsumptionLogger"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="4a68333f-c56b-43f2-b4f9-41ceda60d31b"
+        name="App Server: API Worker"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="6c38fdba-cac3-428d-a3a1-7a553d52826b">
+            <componentMoniker
+              Id="e3ce2f59-269f-4473-bf1f-9693a5e355c8"
+              LastKnownName="Task Queue"
+              LastKnownLocation="Angiris.ModelingProject.uml" />
+          </dependency>
+          <dependency
+            Id="9d0d3b53-25c0-40bf-8dd0-1e85e719d3ee">
+            <componentMoniker
+              Id="a6585f12-ff4b-4629-bfe6-48df4e7921e1"
+              LastKnownName="Data Store"
+              LastKnownLocation="Angiris.ModelingProject.uml" />
+          </dependency>
+        </suppliersInternal>
+        <ownedAttributesInternal>
+          <part
+            Id="d9e9c015-dfe6-489c-aaf2-32dffbf1220e"
+            name="On-Demond Task Factory"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="79d2cc6f-26dc-450b-aa30-ba426ea0b6b8"
+                LastKnownName="TaskFactory"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="a7ff4d20-fe9d-4bd5-88c8-a28e3c54e572"
+            name="TaskChecker"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="9639eea9-7775-4d0f-8dd4-3616eec42c87"
+                LastKnownName="TaskChecker"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="55807686-1e0f-44ae-ab36-14f65059b42c"
+            name="Data Store Direct Query"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="4ba73c9e-72e1-4361-a02c-0461781127e0"
+                LastKnownName="DBQueryClient"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="1b0074aa-ea19-4a2b-aab1-d80ab422cadc"
+            name="API Service"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <targetNamedElementsInternal>
+              <connector
+                Id="4b576a07-5a58-4a18-ac7a-93b45af16465"
+                isLeaf="false"
+                isStatic="false">
+                <partMoniker
+                  Id="55807686-1e0f-44ae-ab36-14f65059b42c"
+                  LastKnownName="Data Store Direct Query"
+                  LastKnownLocation="Angiris.ModelingProject.uml" />
+                <relationshipOwnedElementsInternal>
+                  <connectorHasConnectorEnds>
+                    <connectorEnd
+                      Id="1ea6fb59-366f-48d7-99e7-9a6103e66a48" />
+                  </connectorHasConnectorEnds>
+                  <connectorHasConnectorEnds>
+                    <connectorEnd
+                      Id="d95b0abc-8c1e-4cf6-88ac-882403015192" />
+                  </connectorHasConnectorEnds>
+                </relationshipOwnedElementsInternal>
+              </connector>
+              <connector
+                Id="4d6c9323-234c-4216-81c5-c406f7bc24af"
+                isLeaf="false"
+                isStatic="false">
+                <partMoniker
+                  Id="a7ff4d20-fe9d-4bd5-88c8-a28e3c54e572"
+                  LastKnownName="TaskChecker"
+                  LastKnownLocation="Angiris.ModelingProject.uml" />
+                <relationshipOwnedElementsInternal>
+                  <connectorHasConnectorEnds>
+                    <connectorEnd
+                      Id="9f186f2d-3a18-4e8e-aa4c-c6c03d26423a" />
+                  </connectorHasConnectorEnds>
+                  <connectorHasConnectorEnds>
+                    <connectorEnd
+                      Id="9cd492e0-19ef-4e3e-8c4e-f55760e8771e" />
+                  </connectorHasConnectorEnds>
+                </relationshipOwnedElementsInternal>
+              </connector>
+              <connector
+                Id="67550502-5f45-4638-8099-723e5e8fff46"
+                isLeaf="false"
+                isStatic="false">
+                <partMoniker
+                  Id="d9e9c015-dfe6-489c-aaf2-32dffbf1220e"
+                  LastKnownName="On-Demond Task Factory"
+                  LastKnownLocation="Angiris.ModelingProject.uml" />
+                <relationshipOwnedElementsInternal>
+                  <connectorHasConnectorEnds>
+                    <connectorEnd
+                      Id="e9ee4346-4b7b-4c10-8712-9db41b91a71e" />
+                  </connectorHasConnectorEnds>
+                  <connectorHasConnectorEnds>
+                    <connectorEnd
+                      Id="f97ffc58-fec2-4864-a23f-6498db204939" />
+                  </connectorHasConnectorEnds>
+                </relationshipOwnedElementsInternal>
+              </connector>
+            </targetNamedElementsInternal>
+            <type_NamedElement>
+              <componentMoniker
+                Id="aa249de6-7f2a-4796-af39-79e6d230c707"
+                LastKnownName="APIService"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <providedInterface
+            Id="fd476630-46ae-42af-9dd1-5e10e4cdb00d"
+            name="Port1"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false"
+            isService="false"
+            isBehavior="false">
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="38ec311b-fce0-4f7d-8356-e04ad69043f5"
+                LastKnownName="ITicketService"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </providedInterface>
+        </ownedAttributesInternal>
+      </component>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="e3ce2f59-269f-4473-bf1f-9693a5e355c8"
+        name="Task Queue"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="1f669386-d639-4fcb-ab05-53f5bd32a1b3">
+            <componentMoniker
+              Id="3d87ca47-ef93-4537-8f61-27259b0332fd"
+              LastKnownName="App Server: Task Consumer Farm"
+              LastKnownLocation="Angiris.ModelingProject.uml" />
+          </dependency>
+        </suppliersInternal>
+        <ownedAttributesInternal>
+          <part
+            Id="3ca19494-8a7f-44b4-b93d-72ee96ea53b9"
+            name="Topic"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="8d43c217-ff6c-45ae-adb2-6a23a83d90fe"
+                LastKnownName="Query_Normal"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="a6503fff-9452-4ef0-9ab6-e58e97849f23"
+            name="Topic"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="e4b12bfc-1aa1-4816-a776-fdf72eac1f6f"
+                LastKnownName="Query_Prioritized"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="d399de6a-0df3-435a-bc01-679c814a3112"
+            name="Topic"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="b6474544-80ec-4e74-8469-b0b7d23a8864"
+                LastKnownName="Order"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="c4bb29ed-a529-45ee-ace8-dfec24e8000d"
+            name="Topic"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="b92d11c3-5b0d-4c9e-be38-34ebbc425d94"
+                LastKnownName="Crawler"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+        </ownedAttributesInternal>
+      </component>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="8d43c217-ff6c-45ae-adb2-6a23a83d90fe"
+        name="Query_Normal"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="3d87ca47-ef93-4537-8f61-27259b0332fd"
+        name="App Server: Task Consumer Farm"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="c55a6d39-4617-4b4e-ae69-cbb08f1e5b95">
+            <componentMoniker
+              Id="a6585f12-ff4b-4629-bfe6-48df4e7921e1"
+              LastKnownName="Data Store"
+              LastKnownLocation="Angiris.ModelingProject.uml" />
+          </dependency>
+        </suppliersInternal>
+        <ownedAttributesInternal>
+          <part
+            Id="b205f19f-cfb1-4027-b800-d81338e1b23a"
+            name="Query Robot Instance"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="dcb77be7-4438-4198-b5f9-61033f2a00b4"
+                LastKnownName="QueryRobot"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="ca22111a-720e-4b88-83b3-2b3783f4d0d5"
+            name="Order Robot Instance"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="a5ea0c29-3ba2-442f-be81-401f2eb193b0"
+                LastKnownName="OrderRobot"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="dc4a3e4c-2489-4173-b256-36004c92f563"
+            name="Crawl Robot Instance"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="e8d001d2-878c-48d2-a00f-704adf9887c0"
+                LastKnownName="CrawlRobot"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+        </ownedAttributesInternal>
+      </component>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="46ebd986-7e44-40bd-9729-a59b940f66b5"
+        name="ScheduledTaskFactory"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="dcb77be7-4438-4198-b5f9-61033f2a00b4"
+        name="QueryRobot"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="a5ea0c29-3ba2-442f-be81-401f2eb193b0"
+        name="OrderRobot"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="683b2f9a-8803-446f-a35c-72ebc2550992"
+        name="Source 2"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="3828d4bb-fdb6-40a8-9569-6c2fdd995f43"
+        name="Source 2"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="e4b12bfc-1aa1-4816-a776-fdf72eac1f6f"
+        name="Query_Prioritized"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="c2f057be-e60a-4ef7-9359-963a49476047"
+        name="Instance 1"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="e8d001d2-878c-48d2-a00f-704adf9887c0"
+        name="CrawlRobot"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="6fbcc84d-ceb6-44ce-b468-1b4594c39d1f"
+        name="Instance 1"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="bd83be08-cc23-489e-ab4f-d76cf1155063"
+        name="Instance 1"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="b6474544-80ec-4e74-8469-b0b7d23a8864"
+        name="Order"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="79d2cc6f-26dc-450b-aa30-ba426ea0b6b8"
+        name="TaskFactory"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <requiredInterface
+            Id="f991c887-b703-4a12-8b9f-1eba3715c096"
+            name="Port1"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false"
+            isService="false"
+            isBehavior="false">
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="40e8d1c9-590f-4556-9baa-4afa8aa07585"
+                LastKnownName="ITaskFactory"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </requiredInterface>
+        </ownedAttributesInternal>
+      </component>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="a5a81044-a16b-41a5-8088-c00b175ca764"
+        name="Central Admin"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="a2e93b3f-bd00-45f4-b9a5-a6867e460ec2">
+            <componentMoniker
+              Id="e3ce2f59-269f-4473-bf1f-9693a5e355c8"
+              LastKnownName="Task Queue"
+              LastKnownLocation="Angiris.ModelingProject.uml" />
+          </dependency>
+          <dependency
+            Id="e1dd3000-1d59-4915-91f8-02dbf85f4a51">
+            <componentMoniker
+              Id="3d87ca47-ef93-4537-8f61-27259b0332fd"
+              LastKnownName="App Server: Task Consumer Farm"
+              LastKnownLocation="Angiris.ModelingProject.uml" />
+          </dependency>
+        </suppliersInternal>
+        <ownedAttributesInternal>
+          <part
+            Id="53da8fcd-1791-4047-ace5-2c8a49125042"
+            name="Scheduled Task Factory"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="46ebd986-7e44-40bd-9729-a59b940f66b5"
+                LastKnownName="ScheduledTaskFactory"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="6c8876c1-fcf7-4209-8f38-5ab59a99e915"
+            name="Telemetry Manager"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="db0bf4a6-9cec-47a8-b64c-e986cfac25e8"
+                LastKnownName="TelemetryMgr"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="5167ebfe-c086-47af-a1dc-8807bf56753b"
+            name="Farm Scalability Manager"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="dee8b1ba-aeef-492a-b6fc-9ccb65cabb84"
+                LastKnownName="FarmMgr"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="801064b9-8bd8-4cfe-a3b1-9564506b251b"
+            name="Log Manager"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="c211354f-10e3-4870-a3bc-c31f1c7a271b"
+                LastKnownName="LogMgr"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+        </ownedAttributesInternal>
+      </component>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="b92d11c3-5b0d-4c9e-be38-34ebbc425d94"
+        name="Crawler"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="db0bf4a6-9cec-47a8-b64c-e986cfac25e8"
+        name="TelemetryMgr"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="dee8b1ba-aeef-492a-b6fc-9ccb65cabb84"
+        name="FarmMgr"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="976614ed-a49d-4860-9380-634dbc7baeb3"
+        name="StorageTable"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="e4e48491-6d4d-4a06-8dfd-aefdb9f173ac"
+        name="SQLDatabase"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="dbc97c90-398c-42a1-b733-c1c64e882e4e"
+        name="StorageBlob"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="9639eea9-7775-4d0f-8dd4-3616eec42c87"
+        name="TaskChecker"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <requiredInterface
+            Id="15d126fc-a22a-4d5d-a843-73f0e572948a"
+            name="Port1"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false"
+            isService="false"
+            isBehavior="false">
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="e9f623fa-db86-4101-b3b8-ffa09b8a39bf"
+                LastKnownName="ITaskChecker"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </requiredInterface>
+        </ownedAttributesInternal>
+      </component>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="26e0f020-a1da-4be5-9129-dae1b17e1936"
+        name="RedisCache"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="4ba73c9e-72e1-4361-a02c-0461781127e0"
+        name="DBQueryClient"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <requiredInterface
+            Id="2b4e8e11-e4cf-4ba3-b0d1-ad9dfe8efecf"
+            name="Port1"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false"
+            isService="false"
+            isBehavior="false">
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="e3a0e6d5-0feb-4e16-aa27-9fff56480fd7"
+                LastKnownName="IDBQueryClient"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </requiredInterface>
+        </ownedAttributesInternal>
+      </component>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="aa249de6-7f2a-4796-af39-79e6d230c707"
+        name="APIService"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="2e4626ad-ccdb-4627-b8d8-e9b936a435f5"
+        name="Order"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="b3a87ba7-7459-4b86-bcdf-669b5864834a"
+        name="Query"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="8b57ca4d-1237-4b5a-9bb5-833a391095ea"
+        name="IQueryAPI"
+        isAbstract="false"
+        isLeaf="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="924050ad-2d74-4566-ae82-689317424992"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="4080931e-0a98-4900-a96a-ce4bdd1d6688">
+                <propertyInstance
+                  Id="24292c52-5852-4874-bd70-7b1b05822e09"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b7c19f53-3566-4533-8c80-8c887ac5a659">
+                <propertyInstance
+                  Id="c928e620-831d-441d-b694-35adf1f1cff4"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="08738098-c9f6-4518-bd0a-030a3499acc6">
+                <propertyInstance
+                  Id="d794b6eb-9030-4fd4-bd17-b04305bc8e96"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="51747a6e-b235-4acb-a3c0-ede72bb494ff">
+                <propertyInstance
+                  Id="25d99c12-1700-499e-b487-588a562e79f5"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="69ef28d8-a7d9-415e-881a-c6e140ba9965"
+        name="IOrderAPI"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="c211354f-10e3-4870-a3bc-c31f1c7a271b"
+        name="LogMgr"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="348c28d1-30a7-4f08-891d-002bba4d4408"
+        name="APIMembershipProvider"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="efc23d1a-5aca-4e8d-ac91-c5df8d52e973"
+        name="WebAPIController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <requiredInterface
+            Id="7845aae7-0721-4951-ac7c-11b6cd1e679f"
+            name="Port1"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false"
+            isService="false"
+            isBehavior="false">
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="274cc963-759b-42a1-b529-12de5e252ee4"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </requiredInterface>
+        </ownedAttributesInternal>
+      </component>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="38ec311b-fce0-4f7d-8356-e04ad69043f5"
+        name="ITicketService"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="880993bb-6e16-4764-9962-a316a2adb085"
+        name="ITicketService"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="274cc963-759b-42a1-b529-12de5e252ee4"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="bb522c96-96ee-44be-b89d-2d12d3cab9c3"
+        name="Interface1"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="666c5426-9a6b-4707-94c7-58a11f7d0c29"
+        name="Interface2"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="40e8d1c9-590f-4556-9baa-4afa8aa07585"
+        name="ITaskFactory"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="e9f623fa-db86-4101-b3b8-ffa09b8a39bf"
+        name="ITaskChecker"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="e3a0e6d5-0feb-4e16-aa27-9fff56480fd7"
+        name="IDBQueryClient"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+  </packagedElements>
+  <primitiveType
+    Id="220a3521-e091-4221-bae9-3ef9018e845c"
+    name="Integer"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+    name="Boolean"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+    name="String"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="3ab42e7d-4969-445a-b209-471f5cb8209c"
+    name="UnlimitedNatural"
+    isAbstract="false"
+    isLeaf="false" />
+</modelStoreModel>
