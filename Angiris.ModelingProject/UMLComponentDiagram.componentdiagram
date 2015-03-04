@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<componentModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" dslVersion="1.0.0.0" Id="05b465e2-fd2a-4491-9b47-37c384ae07cd" name="UMLComponentDiagram" linkedPackageId="76808333-c201-42a2-b6ce-e801170a6a6b" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner">
+<componentModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="05b465e2-fd2a-4491-9b47-37c384ae07cd" name="UMLComponentDiagram" linkedPackageId="76808333-c201-42a2-b6ce-e801170a6a6b" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner">
   <ownedCommentsInternal>
     <comment Id="d17d5ef1-88e6-438d-ad66-07a0f6047bd4">
       <elementDefinition Id="51f1651c-c4d7-40b4-b74e-aea9c2e6f427" />
       <body>Robot instances can be horizontally scaled based on the pressure
 Can be customized and extended if new sources are required
 Each robot is a competing consumer for predefined topics
-Execute queued tasks with predefined schema and workflow</body>
+Execute queued tasks with predefined schema and workflow
+
+Priorization and parallelism should be implemented.</body>
       <annotatedElements>
         <componentMoniker Id="d0590ab2-7d94-4f99-a555-645e8af08d3c" LastKnownName="App Server: Task Consumer Farm" />
       </annotatedElements>
@@ -84,32 +86,6 @@ Execute queued tasks with predefined schema and workflow</body>
       </propertyInstances>
     </stereotypeInstance>
   </appliedStereotypesInternal>
-  <profileInstances>
-    <packageHasProfileInstances Id="4d261cbb-3e0e-444c-a78c-ee35654844e3">
-      <profileInstance Id="00b903c6-5116-42d4-a970-ebd2730bd150" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="a0e68715-c3e5-4f22-92b6-c3551c88bd63">
-      <profileInstance Id="81b9d71d-9d5b-41cf-a814-6ba1cb47659d" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="9878c63f-dcc8-4be1-8520-f487e1cf7aca">
-      <profileInstance Id="a83ccc88-244c-4bd3-879e-31cf964a9ad3" name="CSharpProfile">
-        <elementDefinition Id="83a55f8f-2be8-42fe-a382-b80997d050d8" />
-      </profileInstance>
-      <elementDefinition Id="67f9dd0a-b5a7-4f16-a69e-3157aeb90304" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="b6e65fbc-d154-4d9a-b363-1b450693653e">
-      <profileInstance Id="0bf5df1a-f799-4ae7-8d98-f6ea66fbaf1f" name="TextTemplateBindings">
-        <elementDefinition Id="70b709cb-92c0-4302-bb3b-d0345e7ae064" />
-      </profileInstance>
-      <elementDefinition Id="24f22f19-dacc-4493-9cd4-fcef25a486c8" />
-    </packageHasProfileInstances>
-  </profileInstances>
   <packagedElements>
     <componentModelHasComponents>
       <component Id="1a7309c5-4e45-488d-a1e8-a0d1f0ee23ee" name="Web Server: API Gateway" isAbstract="false" isLeaf="false" isActiveClass="false">
@@ -220,28 +196,40 @@ Execute queued tasks with predefined schema and workflow</body>
       <component Id="71abece1-bb5f-4a23-b8c5-4299b561f053" name="Data Store" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="a6585f12-ff4b-4629-bfe6-48df4e7921e1" />
         <ownedAttributesInternal>
-          <part Id="b6ef1fbf-c05f-4ddd-8dcf-a5814df41a14" name="NoSQL" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="true">
+          <part Id="b6ef1fbf-c05f-4ddd-8dcf-a5814df41a14" name="NoSQL(Redis)" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="true">
             <elementDefinition Id="1aeb40fa-b13c-405f-b2a3-1fecf2e9f778" />
             <type_NamedElement>
-              <componentMoniker Id="c566497a-315a-4539-961a-c771cf4aca7d" LastKnownName="StorageTable" />
+              <componentMoniker Id="c566497a-315a-4539-961a-c771cf4aca7d" LastKnownName="TicketCacheStore" />
             </type_NamedElement>
           </part>
-          <part Id="7981d6eb-abff-4ebc-a70c-9a1187cc3a09" name="RDBMS" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="true">
+          <part Id="7981d6eb-abff-4ebc-a70c-9a1187cc3a09" name="RDBMS(SQLDB)" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="true">
             <elementDefinition Id="ab6b39bd-de58-4ff6-a990-a7f0f6acc332" />
             <type_NamedElement>
-              <componentMoniker Id="dcab35ac-3a98-43b2-bd98-dddf8bf92d89" LastKnownName="SQLDatabase" />
+              <componentMoniker Id="dcab35ac-3a98-43b2-bd98-dddf8bf92d89" LastKnownName="TicketSnapshotDatabase" />
             </type_NamedElement>
           </part>
-          <part Id="79d8116c-4d1c-412c-b31c-03014895487b" name="Blob" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="true">
+          <part Id="79d8116c-4d1c-412c-b31c-03014895487b" name="Blob Storage(Blob)" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="true">
             <elementDefinition Id="fcd83514-507f-41a8-819d-a73034a546a2" />
             <type_NamedElement>
-              <componentMoniker Id="a98aab1b-c28d-48c1-b41c-6aacf9122521" LastKnownName="StorageBlob" />
+              <componentMoniker Id="a98aab1b-c28d-48c1-b41c-6aacf9122521" LastKnownName="BlobStore" />
             </type_NamedElement>
           </part>
-          <part Id="943756a5-a880-4fea-964b-6793d9cb829d" name="Cache Service" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="true">
+          <part Id="943756a5-a880-4fea-964b-6793d9cb829d" name="NoSQL(Table)" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="true">
             <elementDefinition Id="8a5ba77f-2623-40a7-8415-82e3810be5d3" />
             <type_NamedElement>
-              <componentMoniker Id="b5528d0f-cc2f-40eb-9f77-ac43948c1f82" LastKnownName="RedisCache" />
+              <componentMoniker Id="b5528d0f-cc2f-40eb-9f77-ac43948c1f82" LastKnownName="TicketSnapshotDatabase" />
+            </type_NamedElement>
+          </part>
+          <part Id="3ab2e9da-1132-42d9-82db-2fc27fd0f045" name="Cache Service(Redis)" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="true">
+            <elementDefinition Id="60ec7d2e-91f8-47fb-8d5d-6854454861c7" />
+            <type_NamedElement>
+              <componentMoniker Id="bf0f0cc4-0b8b-4ffc-9e29-46483ed3bee9" LastKnownName="TaskResultCache" />
+            </type_NamedElement>
+          </part>
+          <part Id="6b2afc43-b52c-4eb7-8d2d-78a64c9408c7" name="NoSQL(Table)" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="true">
+            <elementDefinition Id="1d44ec6c-91c7-445e-8fcd-5197c3c78b4e" />
+            <type_NamedElement>
+              <componentMoniker Id="7f0c0bb1-2b21-4d4c-a57e-e1fe6fe1f80c" LastKnownName="TaskResultStore" />
             </type_NamedElement>
           </part>
         </ownedAttributesInternal>
@@ -367,7 +355,7 @@ Execute queued tasks with predefined schema and workflow</body>
           <part Id="a2b0f0b2-7ac6-4044-9716-17898c8cfaf9" name="Topic" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="true">
             <elementDefinition Id="3ca19494-8a7f-44b4-b93d-72ee96ea53b9" />
             <type_NamedElement>
-              <componentMoniker Id="b7f3d350-586b-4ca8-ad64-0079ae02a9cf" LastKnownName="Query_Normal" />
+              <componentMoniker Id="b7f3d350-586b-4ca8-ad64-0079ae02a9cf" LastKnownName="Query_Scheduled" />
             </type_NamedElement>
           </part>
           <part Id="067210c9-078d-432e-96e6-8e4ff9d85885" name="Topic" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="true">
@@ -392,7 +380,7 @@ Execute queued tasks with predefined schema and workflow</body>
       </component>
     </componentModelHasComponents>
     <componentModelHasComponents>
-      <component Id="b7f3d350-586b-4ca8-ad64-0079ae02a9cf" name="Query_Normal" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <component Id="b7f3d350-586b-4ca8-ad64-0079ae02a9cf" name="Query_Scheduled" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="8d43c217-ff6c-45ae-adb2-6a23a83d90fe" />
       </component>
     </componentModelHasComponents>
@@ -459,7 +447,7 @@ Execute queued tasks with predefined schema and workflow</body>
           <requiredInterface Id="5659fb83-4b69-4b93-8bac-0be4c46ea04a" name="Port1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
             <elementDefinition Id="f991c887-b703-4a12-8b9f-1eba3715c096" />
             <type_NamedElement>
-              <interfaceMoniker Id="49de2a41-fe9e-4402-bdfc-8fb756a0e33e" LastKnownName="ITaskFactory" />
+              <interfaceMoniker Id="49de2a41-fe9e-4402-bdfc-8fb756a0e33e" LastKnownName="IRobotTaskFactory" />
             </type_NamedElement>
           </requiredInterface>
         </ownedAttributesInternal>
@@ -527,17 +515,33 @@ Execute queued tasks with predefined schema and workflow</body>
       </component>
     </componentModelHasComponents>
     <componentModelHasComponents>
-      <component Id="c566497a-315a-4539-961a-c771cf4aca7d" name="StorageTable" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <component Id="c566497a-315a-4539-961a-c771cf4aca7d" name="TicketCacheStore" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="976614ed-a49d-4860-9380-634dbc7baeb3" />
+        <ownedAttributesInternal>
+          <providedInterface Id="10a06dd7-34e6-431d-b028-0de9088b6b8c" name="Port1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="653154f7-5ad4-4504-9137-91a2dd51e52b" />
+            <type_NamedElement>
+              <interfaceMoniker Id="16d35a72-213f-44f0-8153-25c7d9daea42" LastKnownName="ITicketModel" />
+            </type_NamedElement>
+          </providedInterface>
+        </ownedAttributesInternal>
       </component>
     </componentModelHasComponents>
     <componentModelHasComponents>
-      <component Id="dcab35ac-3a98-43b2-bd98-dddf8bf92d89" name="SQLDatabase" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <component Id="dcab35ac-3a98-43b2-bd98-dddf8bf92d89" name="TicketSnapshotDatabase" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="e4e48491-6d4d-4a06-8dfd-aefdb9f173ac" />
+        <ownedAttributesInternal>
+          <providedInterface Id="9f6f2aa7-150d-4d32-aaa6-c18778bed943" name="Port1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="e0e2f3e5-d8be-4cc9-8ac5-0b8b2ff028d2" />
+            <type_NamedElement>
+              <interfaceMoniker Id="5a3d0195-7d5a-4133-9f0e-ea9ab4d7d05b" LastKnownName="ITicketSnapshot" />
+            </type_NamedElement>
+          </providedInterface>
+        </ownedAttributesInternal>
       </component>
     </componentModelHasComponents>
     <componentModelHasComponents>
-      <component Id="a98aab1b-c28d-48c1-b41c-6aacf9122521" name="StorageBlob" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <component Id="a98aab1b-c28d-48c1-b41c-6aacf9122521" name="BlobStore" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="dbc97c90-398c-42a1-b733-c1c64e882e4e" />
       </component>
     </componentModelHasComponents>
@@ -548,15 +552,23 @@ Execute queued tasks with predefined schema and workflow</body>
           <requiredInterface Id="c32ae5c0-c850-4cea-b807-76565459c664" name="Port1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
             <elementDefinition Id="15d126fc-a22a-4d5d-a843-73f0e572948a" />
             <type_NamedElement>
-              <interfaceMoniker Id="886dcd60-da92-44fa-9557-3f29fe27261d" LastKnownName="ITaskChecker" />
+              <interfaceMoniker Id="886dcd60-da92-44fa-9557-3f29fe27261d" LastKnownName="IRobotTaskChecker" />
             </type_NamedElement>
           </requiredInterface>
         </ownedAttributesInternal>
       </component>
     </componentModelHasComponents>
     <componentModelHasComponents>
-      <component Id="b5528d0f-cc2f-40eb-9f77-ac43948c1f82" name="RedisCache" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <component Id="b5528d0f-cc2f-40eb-9f77-ac43948c1f82" name="TicketSnapshotDatabase" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="26e0f020-a1da-4be5-9129-dae1b17e1936" />
+        <ownedAttributesInternal>
+          <providedInterface Id="433e4b60-8bde-4091-94a4-4ef4cd804152" name="Port1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="f82405c7-06e5-4fb8-9263-ea5993e162f3" />
+            <type_NamedElement>
+              <interfaceMoniker Id="1b5df2eb-87c2-4e1e-a7ba-3d6a9888252c" LastKnownName="IRobotTaskResult" />
+            </type_NamedElement>
+          </providedInterface>
+        </ownedAttributesInternal>
       </component>
     </componentModelHasComponents>
     <componentModelHasComponents>
@@ -667,12 +679,12 @@ Execute queued tasks with predefined schema and workflow</body>
       </Interface>
     </modelContainsNamedElements>
     <modelContainsNamedElements>
-      <Interface Id="49de2a41-fe9e-4402-bdfc-8fb756a0e33e" name="ITaskFactory" isAbstract="false" isLeaf="false">
+      <Interface Id="49de2a41-fe9e-4402-bdfc-8fb756a0e33e" name="IRobotTaskFactory" isAbstract="false" isLeaf="false">
         <elementDefinition Id="40e8d1c9-590f-4556-9baa-4afa8aa07585" />
       </Interface>
     </modelContainsNamedElements>
     <modelContainsNamedElements>
-      <Interface Id="886dcd60-da92-44fa-9557-3f29fe27261d" name="ITaskChecker" isAbstract="false" isLeaf="false">
+      <Interface Id="886dcd60-da92-44fa-9557-3f29fe27261d" name="IRobotTaskChecker" isAbstract="false" isLeaf="false">
         <elementDefinition Id="e9f623fa-db86-4101-b3b8-ffa09b8a39bf" />
       </Interface>
     </modelContainsNamedElements>
@@ -681,8 +693,85 @@ Execute queued tasks with predefined schema and workflow</body>
         <elementDefinition Id="e3a0e6d5-0feb-4e16-aa27-9fff56480fd7" />
       </Interface>
     </modelContainsNamedElements>
+    <componentModelHasComponents>
+      <component Id="bf0f0cc4-0b8b-4ffc-9e29-46483ed3bee9" name="TaskResultCache" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="5383fa7c-c630-4826-a3bb-6ad93ebc1b73" />
+        <ownedAttributesInternal>
+          <providedInterface Id="c03a8025-4228-4e27-b9dd-062b3f577945" name="Port1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="e73ae739-e521-48d3-810f-f24d101c6d39" />
+            <type_NamedElement>
+              <interfaceMoniker Id="fe4f4813-3407-4e59-aafd-e96ab0ee7f3d" LastKnownName="IRobotTaskResult" />
+            </type_NamedElement>
+          </providedInterface>
+        </ownedAttributesInternal>
+      </component>
+    </componentModelHasComponents>
+    <modelContainsNamedElements>
+      <Interface Id="16d35a72-213f-44f0-8153-25c7d9daea42" name="ITicketModel" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="6a9ade24-0bbc-4a34-943e-b5b714e8d4ac" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="5a3d0195-7d5a-4133-9f0e-ea9ab4d7d05b" name="ITicketSnapshot" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="61939657-41f6-4290-a7fb-c7c4ca9302b1" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="1b5df2eb-87c2-4e1e-a7ba-3d6a9888252c" name="IRobotTaskResult" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="7d093f9c-93c0-47a0-a56f-ee01a2d08135" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="fe4f4813-3407-4e59-aafd-e96ab0ee7f3d" name="IRobotTaskResult" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="a9251634-bbdb-461e-a55c-5db23843ef45" />
+      </Interface>
+    </modelContainsNamedElements>
+    <componentModelHasComponents>
+      <component Id="7f0c0bb1-2b21-4d4c-a57e-e1fe6fe1f80c" name="TaskResultStore" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="398664d2-9c49-4a48-a701-0bafd852608f" />
+        <ownedAttributesInternal>
+          <providedInterface Id="94fac958-087b-4c7c-9274-bf8bcc9d4dcc" name="Port1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="ea629145-381a-4d5f-b430-8ea2d1dfdf2e" />
+            <type_NamedElement>
+              <interfaceMoniker Id="bbbe220f-c540-4758-8319-e124197ffc59" LastKnownName="IRobotTaskResult" />
+            </type_NamedElement>
+          </providedInterface>
+        </ownedAttributesInternal>
+      </component>
+    </componentModelHasComponents>
+    <modelContainsNamedElements>
+      <Interface Id="bbbe220f-c540-4758-8319-e124197ffc59" name="IRobotTaskResult" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="7d093f9c-93c0-47a0-a56f-ee01a2d08135" />
+      </Interface>
+    </modelContainsNamedElements>
   </packagedElements>
   <package Id="76808333-c201-42a2-b6ce-e801170a6a6b" name="Angiris.ModelingProject">
     <elementDefinition Id="364f8a47-159d-4d47-a2c8-bc4f795a0d26" />
+    <profileInstances>
+      <packageHasProfileInstances Id="4d261cbb-3e0e-444c-a78c-ee35654844e3">
+        <profileInstance Id="00b903c6-5116-42d4-a970-ebd2730bd150" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="a0e68715-c3e5-4f22-92b6-c3551c88bd63">
+        <profileInstance Id="81b9d71d-9d5b-41cf-a814-6ba1cb47659d" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="9878c63f-dcc8-4be1-8520-f487e1cf7aca">
+        <profileInstance Id="a83ccc88-244c-4bd3-879e-31cf964a9ad3" name="CSharpProfile">
+          <elementDefinition Id="83a55f8f-2be8-42fe-a382-b80997d050d8" />
+        </profileInstance>
+        <elementDefinition Id="67f9dd0a-b5a7-4f16-a69e-3157aeb90304" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="b6e65fbc-d154-4d9a-b363-1b450693653e">
+        <profileInstance Id="0bf5df1a-f799-4ae7-8d98-f6ea66fbaf1f" name="TextTemplateBindings">
+          <elementDefinition Id="70b709cb-92c0-4302-bb3b-d0345e7ae064" />
+        </profileInstance>
+        <elementDefinition Id="24f22f19-dacc-4493-9cd4-fcef25a486c8" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </componentModel>

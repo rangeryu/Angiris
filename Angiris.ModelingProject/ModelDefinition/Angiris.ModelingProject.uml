@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner"
   dslVersion="1.0.0.0"
   Id="364f8a47-159d-4d47-a2c8-bc4f795a0d26"
   name="Angiris.ModelingProject" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
@@ -9,7 +9,9 @@
       <body>Robot instances can be horizontally scaled based on the pressure
 Can be customized and extended if new sources are required
 Each robot is a competing consumer for predefined topics
-Execute queued tasks with predefined schema and workflow</body>
+Execute queued tasks with predefined schema and workflow
+
+Priorization and parallelism should be implemented.</body>
       <annotatedElements>
         <componentMoniker
           Id="3d87ca47-ef93-4537-8f61-27259b0332fd"
@@ -387,7 +389,7 @@ Execute queued tasks with predefined schema and workflow</body>
         <ownedAttributesInternal>
           <part
             Id="1aeb40fa-b13c-405f-b2a3-1fecf2e9f778"
-            name="NoSQL"
+            name="NoSQL(Redis)"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -398,13 +400,13 @@ Execute queued tasks with predefined schema and workflow</body>
             <type_NamedElement>
               <componentMoniker
                 Id="976614ed-a49d-4860-9380-634dbc7baeb3"
-                LastKnownName="StorageTable"
+                LastKnownName="TicketCacheStore"
                 LastKnownLocation="Angiris.ModelingProject.uml" />
             </type_NamedElement>
           </part>
           <part
             Id="ab6b39bd-de58-4ff6-a990-a7f0f6acc332"
-            name="RDBMS"
+            name="RDBMS(SQLDB)"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -415,13 +417,13 @@ Execute queued tasks with predefined schema and workflow</body>
             <type_NamedElement>
               <componentMoniker
                 Id="e4e48491-6d4d-4a06-8dfd-aefdb9f173ac"
-                LastKnownName="SQLDatabase"
+                LastKnownName="TicketSnapshotDatabase"
                 LastKnownLocation="Angiris.ModelingProject.uml" />
             </type_NamedElement>
           </part>
           <part
             Id="fcd83514-507f-41a8-819d-a73034a546a2"
-            name="Blob"
+            name="Blob Storage(Blob)"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -432,13 +434,13 @@ Execute queued tasks with predefined schema and workflow</body>
             <type_NamedElement>
               <componentMoniker
                 Id="dbc97c90-398c-42a1-b733-c1c64e882e4e"
-                LastKnownName="StorageBlob"
+                LastKnownName="BlobStore"
                 LastKnownLocation="Angiris.ModelingProject.uml" />
             </type_NamedElement>
           </part>
           <part
             Id="8a5ba77f-2623-40a7-8415-82e3810be5d3"
-            name="Cache Service"
+            name="NoSQL(Table)"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -449,7 +451,41 @@ Execute queued tasks with predefined schema and workflow</body>
             <type_NamedElement>
               <componentMoniker
                 Id="26e0f020-a1da-4be5-9129-dae1b17e1936"
-                LastKnownName="RedisCache"
+                LastKnownName="TicketSnapshotDatabase"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="60ec7d2e-91f8-47fb-8d5d-6854454861c7"
+            name="Cache Service(Redis)"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="5383fa7c-c630-4826-a3bb-6ad93ebc1b73"
+                LastKnownName="TaskResultCache"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </part>
+          <part
+            Id="1d44ec6c-91c7-445e-8fcd-5197c3c78b4e"
+            name="NoSQL(Table)"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="398664d2-9c49-4a48-a701-0bafd852608f"
+                LastKnownName="TaskResultStore"
                 LastKnownLocation="Angiris.ModelingProject.uml" />
             </type_NamedElement>
           </part>
@@ -675,7 +711,7 @@ Execute queued tasks with predefined schema and workflow</body>
             <type_NamedElement>
               <componentMoniker
                 Id="8d43c217-ff6c-45ae-adb2-6a23a83d90fe"
-                LastKnownName="Query_Normal"
+                LastKnownName="Query_Scheduled"
                 LastKnownLocation="Angiris.ModelingProject.uml" />
             </type_NamedElement>
           </part>
@@ -736,7 +772,7 @@ Execute queued tasks with predefined schema and workflow</body>
     <packageHasNamedElement>
       <component
         Id="8d43c217-ff6c-45ae-adb2-6a23a83d90fe"
-        name="Query_Normal"
+        name="Query_Scheduled"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false" />
@@ -923,7 +959,7 @@ Execute queued tasks with predefined schema and workflow</body>
             <type_NamedElement>
               <interfaceMoniker
                 Id="40e8d1c9-590f-4556-9baa-4afa8aa07585"
-                LastKnownName="ITaskFactory"
+                LastKnownName="IRobotTaskFactory"
                 LastKnownLocation="Angiris.ModelingProject.uml" />
             </type_NamedElement>
           </requiredInterface>
@@ -1052,23 +1088,67 @@ Execute queued tasks with predefined schema and workflow</body>
     <packageHasNamedElement>
       <component
         Id="976614ed-a49d-4860-9380-634dbc7baeb3"
-        name="StorageTable"
+        name="TicketCacheStore"
         isAbstract="false"
         isLeaf="false"
-        isActiveClass="false" />
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <providedInterface
+            Id="653154f7-5ad4-4504-9137-91a2dd51e52b"
+            name="Port1"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false"
+            isService="false"
+            isBehavior="false">
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="6a9ade24-0bbc-4a34-943e-b5b714e8d4ac"
+                LastKnownName="ITicketModel"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </providedInterface>
+        </ownedAttributesInternal>
+      </component>
     </packageHasNamedElement>
     <packageHasNamedElement>
       <component
         Id="e4e48491-6d4d-4a06-8dfd-aefdb9f173ac"
-        name="SQLDatabase"
+        name="TicketSnapshotDatabase"
         isAbstract="false"
         isLeaf="false"
-        isActiveClass="false" />
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <providedInterface
+            Id="e0e2f3e5-d8be-4cc9-8ac5-0b8b2ff028d2"
+            name="Port1"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false"
+            isService="false"
+            isBehavior="false">
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="61939657-41f6-4290-a7fb-c7c4ca9302b1"
+                LastKnownName="ITicketSnapshot"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </providedInterface>
+        </ownedAttributesInternal>
+      </component>
     </packageHasNamedElement>
     <packageHasNamedElement>
       <component
         Id="dbc97c90-398c-42a1-b733-c1c64e882e4e"
-        name="StorageBlob"
+        name="BlobStore"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false" />
@@ -1096,7 +1176,7 @@ Execute queued tasks with predefined schema and workflow</body>
             <type_NamedElement>
               <interfaceMoniker
                 Id="e9f623fa-db86-4101-b3b8-ffa09b8a39bf"
-                LastKnownName="ITaskChecker"
+                LastKnownName="IRobotTaskChecker"
                 LastKnownLocation="Angiris.ModelingProject.uml" />
             </type_NamedElement>
           </requiredInterface>
@@ -1106,10 +1186,32 @@ Execute queued tasks with predefined schema and workflow</body>
     <packageHasNamedElement>
       <component
         Id="26e0f020-a1da-4be5-9129-dae1b17e1936"
-        name="RedisCache"
+        name="TicketSnapshotDatabase"
         isAbstract="false"
         isLeaf="false"
-        isActiveClass="false" />
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <providedInterface
+            Id="f82405c7-06e5-4fb8-9263-ea5993e162f3"
+            name="Port1"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false"
+            isService="false"
+            isBehavior="false">
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="7d093f9c-93c0-47a0-a56f-ee01a2d08135"
+                LastKnownName="IRobotTaskResult"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </providedInterface>
+        </ownedAttributesInternal>
+      </component>
     </packageHasNamedElement>
     <packageHasNamedElement>
       <component
@@ -1298,14 +1400,14 @@ Execute queued tasks with predefined schema and workflow</body>
     <packageHasNamedElement>
       <Interface
         Id="40e8d1c9-590f-4556-9baa-4afa8aa07585"
-        name="ITaskFactory"
+        name="IRobotTaskFactory"
         isAbstract="false"
         isLeaf="false" />
     </packageHasNamedElement>
     <packageHasNamedElement>
       <Interface
         Id="e9f623fa-db86-4101-b3b8-ffa09b8a39bf"
-        name="ITaskChecker"
+        name="IRobotTaskChecker"
         isAbstract="false"
         isLeaf="false" />
     </packageHasNamedElement>
@@ -1315,6 +1417,94 @@ Execute queued tasks with predefined schema and workflow</body>
         name="IDBQueryClient"
         isAbstract="false"
         isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="5383fa7c-c630-4826-a3bb-6ad93ebc1b73"
+        name="TaskResultCache"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <providedInterface
+            Id="e73ae739-e521-48d3-810f-f24d101c6d39"
+            name="Port1"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false"
+            isService="false"
+            isBehavior="false">
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="a9251634-bbdb-461e-a55c-5db23843ef45"
+                LastKnownName="IRobotTaskResult"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </providedInterface>
+        </ownedAttributesInternal>
+      </component>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="6a9ade24-0bbc-4a34-943e-b5b714e8d4ac"
+        name="ITicketModel"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="61939657-41f6-4290-a7fb-c7c4ca9302b1"
+        name="ITicketSnapshot"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="7d093f9c-93c0-47a0-a56f-ee01a2d08135"
+        name="IRobotTaskResult"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="a9251634-bbdb-461e-a55c-5db23843ef45"
+        name="IRobotTaskResult"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="398664d2-9c49-4a48-a701-0bafd852608f"
+        name="TaskResultStore"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <providedInterface
+            Id="ea629145-381a-4d5f-b430-8ea2d1dfdf2e"
+            name="Port1"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false"
+            isService="false"
+            isBehavior="false">
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="7d093f9c-93c0-47a0-a56f-ee01a2d08135"
+                LastKnownName="IRobotTaskResult"
+                LastKnownLocation="Angiris.ModelingProject.uml" />
+            </type_NamedElement>
+          </providedInterface>
+        </ownedAttributesInternal>
+      </component>
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType
