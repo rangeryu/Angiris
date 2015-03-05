@@ -6,16 +6,39 @@
   <MessageClass Name="Error" Label="Error" Option="Show errors" />
   <MessageClass Name="Property" Label="Property" Option="Show metadata" />
   <MessageClass Name="Diagnostic" Label="Message" Option="Show diagnostic messages" />
-  <Message Timestamp="2015-03-03T14:57:24" Importance="High" Text="Code generation or text transformation started." />
-  <Message Timestamp="2015-03-03T14:57:24" Importance="Diagnostic" Text="Name = InterfaceTemplate" />
-  <Message Timestamp="2015-03-03T14:57:24" Importance="Diagnostic" Text="Overwrite = True" />
-  <Message Timestamp="2015-03-03T14:57:24" Importance="Diagnostic" Text="ProjectPath = ..\Angiris.ModelingProjectLib\Angiris.ModelingProjectLib.csproj" />
-  <Message Timestamp="2015-03-03T14:57:24" Importance="Diagnostic" Text="TargetDirectory = GeneratedCode\{PackageStructure}" />
-  <Message Timestamp="2015-03-03T14:57:24" Importance="Diagnostic" Text="TargetName = {Name}" />
-  <Message Timestamp="2015-03-03T14:57:24" Importance="Diagnostic" Text="TemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\InterfaceTemplate.t4" />
-  <Message Timestamp="2015-03-03T14:57:24" Importance="Diagnostic" Text="ResolvedTemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\InterfaceTemplate.t4" />
-  <Message Timestamp="2015-03-03T14:57:24" Importance="Medium" Text="Angiris.ModelingProject's Text Template Binding: 'InterfaceTemplate' will apply InterfaceTemplate.t4 to: 'Angiris.ModelingProject::IQueryAPI' -  (Interface) " />
-  <Message Timestamp="2015-03-03T14:57:33" Importance="Medium" Text="Project Added: D:\DevDevDev\RangerYuGitRepo\Angiris\Angiris.ModelingProjectLib\Angiris.ModelingProjectLib.csproj" />
-  <Message Timestamp="2015-03-03T14:57:33" Importance="Medium" Text="'Angiris.ModelingProject::IQueryAPI' -  (Interface) : success (file created) - D:\DevDevDev\RangerYuGitRepo\Angiris\Angiris.ModelingProjectLib\GeneratedCode\IQueryAPI.cs" />
-  <Message Timestamp="2015-03-03T14:57:33" Importance="High" Text="Code generation complete. Errors: 0. Warnings: 0." />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="High" Text="Code generation or text transformation started." />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Diagnostic" Text="Name = ClassTemplate" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Diagnostic" Text="Overwrite = True" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Diagnostic" Text="ProjectPath = ..\Angiris.ModelingProjectLib\Angiris.ModelingProjectLib.csproj" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Diagnostic" Text="TargetDirectory = GeneratedCode\{PackageStructure}" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Diagnostic" Text="TargetName = {Name}" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Diagnostic" Text="TemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Diagnostic" Text="ResolvedTemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Medium" Text="Angiris.ModelingProject's Text Template Binding: 'ClassTemplate' will apply ClassTemplate.t4 to: 'Angiris.ModelingProject::EntitySnapshot' -  (Class) " />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Medium" Text="'Angiris.ModelingProject::EntitySnapshot' -  (Class) : success (file replaced) - D:\DevDevDev\RangerYuGitRepo\Angiris\Angiris.ModelingProjectLib\GeneratedCode\EntitySnapshot.cs" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Diagnostic" Text="Name = InterfaceTemplate" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Diagnostic" Text="Overwrite = True" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Diagnostic" Text="ProjectPath = ..\Angiris.ModelingProjectLib\Angiris.ModelingProjectLib.csproj" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Diagnostic" Text="TargetDirectory = GeneratedCode\{PackageStructure}" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Diagnostic" Text="TargetName = {Name}" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Diagnostic" Text="TemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\InterfaceTemplate.t4" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Diagnostic" Text="ResolvedTemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\InterfaceTemplate.t4" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Medium" Text="Angiris.ModelingProject's Text Template Binding: 'InterfaceTemplate' will apply InterfaceTemplate.t4 to: 'Angiris.ModelingProject::IEntitySnapshot' -  (Interface), 'Angiris.ModelingProject::IEntityQuery' -  (Interface), 'Angiris.ModelingProject::IEntityTaskResult' -  (Interface), 'Angiris.ModelingProject::IBackendAPIService' -  (Interface), 'Angiris.ModelingProject::IQueryWorker' -  (Interface) " />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Medium" Text="'Angiris.ModelingProject::IEntitySnapshot' -  (Interface) : success (file replaced) - D:\DevDevDev\RangerYuGitRepo\Angiris\Angiris.ModelingProjectLib\GeneratedCode\IEntitySnapshot.cs" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Medium" Text="'Angiris.ModelingProject::IEntityQuery' -  (Interface) : success (file replaced) - D:\DevDevDev\RangerYuGitRepo\Angiris\Angiris.ModelingProjectLib\GeneratedCode\IEntityQuery.cs" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Medium" Text="'Angiris.ModelingProject::IEntityTaskResult' -  (Interface) : success (file created) - D:\DevDevDev\RangerYuGitRepo\Angiris\Angiris.ModelingProjectLib\GeneratedCode\IEntityTaskResult.cs" />
+  <Message Timestamp="2015-03-05T17:55:27" Importance="Medium" Text="'Angiris.ModelingProject::IBackendAPIService' -  (Interface) : success (file replaced) - D:\DevDevDev\RangerYuGitRepo\Angiris\Angiris.ModelingProjectLib\GeneratedCode\IBackendAPIService.cs" />
+  <Message Timestamp="2015-03-05T17:55:28" Importance="Medium" Text="'Angiris.ModelingProject::IQueryWorker' -  (Interface) : success (file created) - D:\DevDevDev\RangerYuGitRepo\Angiris\Angiris.ModelingProjectLib\GeneratedCode\IQueryWorker.cs" />
+  <Message Timestamp="2015-03-05T17:55:28" Importance="Diagnostic" Text="Name = StructTemplate" />
+  <Message Timestamp="2015-03-05T17:55:28" Importance="Diagnostic" Text="Overwrite = True" />
+  <Message Timestamp="2015-03-05T17:55:28" Importance="Diagnostic" Text="ProjectPath = ..\Angiris.ModelingProjectLib\Angiris.ModelingProjectLib.csproj" />
+  <Message Timestamp="2015-03-05T17:55:28" Importance="Diagnostic" Text="TargetDirectory = GeneratedCode\{PackageStructure}" />
+  <Message Timestamp="2015-03-05T17:55:28" Importance="Diagnostic" Text="TargetName = {Name}" />
+  <Message Timestamp="2015-03-05T17:55:28" Importance="Diagnostic" Text="TemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4" />
+  <Message Timestamp="2015-03-05T17:55:28" Importance="Diagnostic" Text="ResolvedTemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4" />
+  <Message Timestamp="2015-03-05T17:55:28" Importance="Medium" Text="Angiris.ModelingProject's Text Template Binding: 'StructTemplate' will apply StructTemplate.t4 to: 'Angiris.ModelingProject::EntitySnapshot' -  (Class) " />
+  <Message Timestamp="2015-03-05T17:55:28" Importance="Diagnostic" Text="'Angiris.ModelingProject::EntitySnapshot' -  (Class): no file generated because the 'AppliesToElement' method of the template 'StructTemplate.t4' evaluated to false." />
+  <Message Timestamp="2015-03-05T17:55:28" Importance="Diagnostic" Text="The selection included 1 elements which were not bound to a template." />
+  <Message Timestamp="2015-03-05T17:55:28" Importance="Diagnostic" Text="'Angiris.ModelingProject::' -  (InterfaceRealization): no bound template." />
+  <Message Timestamp="2015-03-05T17:55:28" Importance="High" Text="Code generation complete. Errors: 0. Warnings: 0." />
 </Log>

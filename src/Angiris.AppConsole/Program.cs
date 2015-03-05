@@ -10,6 +10,7 @@ namespace Angiris.AppConsole
     {
         static void Main(string[] args)
         {
+            
         }
     }
 }
