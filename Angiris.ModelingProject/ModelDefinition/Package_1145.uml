@@ -15,8 +15,8 @@
     <packageHasNamedElement>
       <class
         Id="d41ddd88-fa1f-4aa2-afdb-04f14189a8d2"
-        name="QueueManager"
-        isAbstract="false"
+        name="QueueTopicManager"
+        isAbstract="true"
         isLeaf="false"
         isActiveClass="false">
         <ownedAttributesInternal>
@@ -31,17 +31,90 @@
             isDerivedUnion="false"
             aggregation="None"
             isComposite="false" />
+          <property
+            Id="f1c07ab5-1dc9-4754-9c6a-452de365bd8f"
+            name="ConnectionString"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
             Id="2fd968b2-f508-459b-b772-a07cfb739e77"
-            name="Operation1"
+            name="SendMessages"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="398dfc2c-b4ec-4614-9c98-48d701fd4132"
+            name="Initialize"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="2065a3e9-dd71-42ba-b084-a3f06bee6955"
+            name="StartReceiveMessages"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="47b3de14-0852-4a14-937e-b8b996aa561b"
+            name="Stop"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
             concurrency="Sequential"
             isQuery="false" />
         </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="e7a5795b-3c7e-431c-83a6-379e631fd478"
+        name="ServiceBusTopicManager"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="2fbbd455-27ea-4cf6-983a-c7d16f784774"
+            isSubstitutable="false">
+            <classMoniker
+              Id="d41ddd88-fa1f-4aa2-afdb-04f14189a8d2"
+              LastKnownName="QueueTopicManager"
+              LastKnownLocation="Package_1145.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="1fbea0db-4914-4280-9f80-8561ddbf4220"
+        name="KafkaTopicManager"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="7b37283c-f982-4571-ba6d-22f2b24c3e8a"
+            isSubstitutable="false">
+            <classMoniker
+              Id="d41ddd88-fa1f-4aa2-afdb-04f14189a8d2"
+              LastKnownName="QueueTopicManager"
+              LastKnownLocation="Package_1145.uml" />
+          </generalization>
+        </generalsInternal>
       </class>
     </packageHasNamedElement>
   </packagedElements>

@@ -1466,18 +1466,52 @@
             </class>
           </packageHasNamedElement>
           <packageHasNamedElement>
-            <class Id="6d6d6c4e-3945-4764-987a-32d9d621e6e1" name="QueueManager" isAbstract="false" isLeaf="false" isActiveClass="false">
+            <class Id="6d6d6c4e-3945-4764-987a-32d9d621e6e1" name="QueueTopicManager" isAbstract="true" isLeaf="false" isActiveClass="false">
               <elementDefinition Id="d41ddd88-fa1f-4aa2-afdb-04f14189a8d2" />
               <ownedAttributesInternal>
                 <property Id="1f85a170-83a9-4987-bd67-e0d23ea0a686" name="TopicName" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
                   <elementDefinition Id="ab17f9df-0158-482a-b3fb-f7ad54466005" />
                 </property>
+                <property Id="83e4ae27-9948-470f-89f6-a3de80db84e9" name="ConnectionString" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="f1c07ab5-1dc9-4754-9c6a-452de365bd8f" />
+                </property>
               </ownedAttributesInternal>
               <ownedOperationsInternal>
-                <operation Id="4e38dd02-b199-415a-b75a-bc54ad1663ec" name="Operation1" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                <operation Id="4e38dd02-b199-415a-b75a-bc54ad1663ec" name="SendMessages" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="2fd968b2-f508-459b-b772-a07cfb739e77" />
                 </operation>
+                <operation Id="74e05aed-9c70-47cc-97d5-95c7e5a35c47" name="Initialize" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="398dfc2c-b4ec-4614-9c98-48d701fd4132" />
+                </operation>
+                <operation Id="af9e2a46-2537-4f6f-8ed7-a8155ddd067f" name="StartReceiveMessages" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="2065a3e9-dd71-42ba-b084-a3f06bee6955" />
+                </operation>
+                <operation Id="ecaa484a-1c35-4e87-8123-8c81168cdc8e" name="Stop" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="47b3de14-0852-4a14-937e-b8b996aa561b" />
+                </operation>
               </ownedOperationsInternal>
+            </class>
+          </packageHasNamedElement>
+          <packageHasNamedElement>
+            <class Id="6cdf5fa6-a08c-4df3-9aaf-9587f11b8eab" name="ServiceBusTopicManager" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="e7a5795b-3c7e-431c-83a6-379e631fd478" />
+              <generalsInternal>
+                <generalization Id="8f7de402-bfe7-430e-ada8-0157008576f4" isSubstitutable="false">
+                  <classMoniker Id="6d6d6c4e-3945-4764-987a-32d9d621e6e1" LastKnownName="QueueTopicManager" />
+                  <elementDefinition Id="2fbbd455-27ea-4cf6-983a-c7d16f784774" />
+                </generalization>
+              </generalsInternal>
+            </class>
+          </packageHasNamedElement>
+          <packageHasNamedElement>
+            <class Id="d28cd416-cbda-4cad-b832-8065b3686429" name="KafkaTopicManager" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="1fbea0db-4914-4280-9f80-8561ddbf4220" />
+              <generalsInternal>
+                <generalization Id="dccfd775-7b0d-49a7-9617-4fe92953569d" isSubstitutable="false">
+                  <classMoniker Id="6d6d6c4e-3945-4764-987a-32d9d621e6e1" LastKnownName="QueueTopicManager" />
+                  <elementDefinition Id="7b37283c-f982-4571-ba6d-22f2b24c3e8a" />
+                </generalization>
+              </generalsInternal>
             </class>
           </packageHasNamedElement>
         </packagedElements>
