@@ -1532,6 +1532,12 @@ Priorization and parallelism should be implemented.</body>
         isLeaf="false"
         isActiveClass="false" />
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="ecb4d615-e362-4c38-b839-3bd71bb246cc"
+        LastKnownName="QueueManager"
+        LastKnownLocation="Package_1145.uml" />
+    </packageHasNamedElement>
   </packagedElements>
   <primitiveType
     Id="220a3521-e091-4221-bae9-3ef9018e845c"

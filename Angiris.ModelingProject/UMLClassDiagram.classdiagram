@@ -1456,6 +1456,33 @@
         </packagedElements>
       </package>
     </logicalClassDesignerModelHasPackages>
+    <logicalClassDesignerModelHasPackages>
+      <package Id="d27f8357-3b52-4096-b0af-bf1e0a77612f" name="QueueManager">
+        <elementDefinition Id="ecb4d615-e362-4c38-b839-3bd71bb246cc" />
+        <packagedElements>
+          <packageHasNamedElement>
+            <class Id="c3dfc777-421c-4cc3-84b5-13a9e21e76e6" name="QueueManagerFactory" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="06c1d2d8-635b-4fd7-9ccb-a0ccf5891a29" />
+            </class>
+          </packageHasNamedElement>
+          <packageHasNamedElement>
+            <class Id="6d6d6c4e-3945-4764-987a-32d9d621e6e1" name="QueueManager" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="d41ddd88-fa1f-4aa2-afdb-04f14189a8d2" />
+              <ownedAttributesInternal>
+                <property Id="1f85a170-83a9-4987-bd67-e0d23ea0a686" name="TopicName" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="ab17f9df-0158-482a-b3fb-f7ad54466005" />
+                </property>
+              </ownedAttributesInternal>
+              <ownedOperationsInternal>
+                <operation Id="4e38dd02-b199-415a-b75a-bc54ad1663ec" name="Operation1" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="2fd968b2-f508-459b-b772-a07cfb739e77" />
+                </operation>
+              </ownedOperationsInternal>
+            </class>
+          </packageHasNamedElement>
+        </packagedElements>
+      </package>
+    </logicalClassDesignerModelHasPackages>
   </packagedElements>
   <package Id="aff5b881-a4b1-495c-8664-5e1a128cf917" name="Angiris.ModelingProject">
     <elementDefinition Id="364f8a47-159d-4d47-a2c8-bc4f795a0d26" />
