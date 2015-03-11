@@ -54,6 +54,47 @@
             </propertyInstances>
           </stereotypeInstance>
         </appliedStereotypesInternal>
+        <targetEnds>
+          <association
+            Id="ea88591a-3604-49f3-8fb9-659cdce3c833"
+            isDerived="false"
+            sourceEndRoleName="RobotDaemon"
+            targetEndRoleName="TaskRobot"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="cdce2b67-8199-4cbd-adf4-a0dc2f11c0d4"
+              LastKnownName="TaskRobot"
+              LastKnownLocation="Package_1715.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="5a347177-537f-42aa-91ed-696b26f4cdc2"
+                  name="RobotDaemon"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Shared"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="b9f07e62-3f3b-4689-a9ca-b0525b5b199d"
+                  name="TaskRobot"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
         <ownedAttributesInternal>
           <property
             Id="7dfdf32f-fe3f-46b6-8f53-303da64a9000"

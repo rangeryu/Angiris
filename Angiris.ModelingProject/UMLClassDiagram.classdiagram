@@ -4117,6 +4117,24 @@
                 </stereotypeInstance>
               </appliedStereotypesInternal>
               <elementDefinition Id="726a43c4-01f3-4878-9f73-503ce5767a40" />
+              <targetEnds>
+                <association Id="92d983b3-8761-4174-9dbd-7df23ac886aa" isDerived="false" sourceEndRoleName="RobotDaemon" targetEndRoleName="TaskRobot" isLeaf="false" isAbstract="false">
+                  <classMoniker Id="690e98e7-d419-439f-b7b3-18ce73dd6664" LastKnownName="TaskRobot" />
+                  <relationshipOwnedElementsInternal>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="a27dec87-2d72-40c8-8ba0-5ae53c911481" name="RobotDaemon" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
+                        <elementDefinition Id="5a347177-537f-42aa-91ed-696b26f4cdc2" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="aa674b95-c884-4b40-8dca-6212a43b4efc" name="TaskRobot" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                        <elementDefinition Id="b9f07e62-3f3b-4689-a9ca-b0525b5b199d" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                  </relationshipOwnedElementsInternal>
+                  <elementDefinition Id="ea88591a-3604-49f3-8fb9-659cdce3c833" />
+                </association>
+              </targetEnds>
               <ownedAttributesInternal>
                 <property Id="cad36803-7089-4031-b26c-4c8389ed9d8a" name="TaskRobotList" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
                   <appliedStereotypesInternal>
