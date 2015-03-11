@@ -39,6 +39,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GeneratedCode\APIWorker\IBackendAPIService.cs" />
+    <Compile Include="GeneratedCode\APIWorker\IQueryWorker.cs" />
+    <Compile Include="GeneratedCode\DataStore\DataProviderFactory.cs" />
+    <Compile Include="GeneratedCode\DataStore\DocDBEntitySnapshotStoreProvider.cs" />
+    <Compile Include="GeneratedCode\DataStore\DocDBEntityTaskResultStoreProvider.cs" />
+    <Compile Include="GeneratedCode\DataStore\EntityCacheStoreProvider.cs" />
+    <Compile Include="GeneratedCode\DataStore\EntitySnapshot.cs" />
+    <Compile Include="GeneratedCode\DataStore\EntitySnapshotStoreProvider.cs" />
+    <Compile Include="GeneratedCode\DataStore\EntityTaskResultStoreProvider.cs" />
+    <Compile Include="GeneratedCode\DataStore\IEntityQuery.cs" />
+    <Compile Include="GeneratedCode\DataStore\IEntitySnapshot.cs" />
+    <Compile Include="GeneratedCode\DataStore\IEntityTaskResult.cs" />
+    <Compile Include="GeneratedCode\DataStore\INoSQLDataProvider.cs" />
+    <Compile Include="GeneratedCode\DataStore\MongoDBEntitySnapshotStoreProvider.cs" />
+    <Compile Include="GeneratedCode\DataStore\RedisEntityCacheStoreProvider.cs" />
+    <Compile Include="GeneratedCode\DataStore\RedisEntityTaskResultStoreProvider.cs" />
     <Compile Include="GeneratedCode\EntitySnapshot.cs">
       <SourceModelReference>modelbus://ModelStoreAdapter.1.0/Angiris.ModelingProject/EntitySnapshot/D:\DevDevDev\RangerYuGitRepo\Angiris\Angiris.ModelingProject\Angiris.ModelingProject.modelproj%252fe0780b8f-704e-4cd9-8483-2b4418fc04f6</SourceModelReference>
     </Compile>
@@ -58,6 +74,14 @@
     <Compile Include="GeneratedCode\IQueryWorker.cs">
       <SourceModelReference>modelbus://ModelStoreAdapter.1.0/Angiris.ModelingProject/IQueryWorker/D:\DevDevDev\RangerYuGitRepo\Angiris\Angiris.ModelingProject\Angiris.ModelingProject.modelproj%252fab1b29f1-cd20-4267-ba81-fd989d09018f</SourceModelReference>
     </Compile>
+    <Compile Include="GeneratedCode\QueueManager\KafkaTopicManager.cs" />
+    <Compile Include="GeneratedCode\QueueManager\QueueManagerFactory.cs" />
+    <Compile Include="GeneratedCode\QueueManager\QueueTopicManager.cs" />
+    <Compile Include="GeneratedCode\QueueManager\ServiceBusTopicManager.cs" />
+    <Compile Include="GeneratedCode\TaskConsumerFarm\CrawlRobot.cs" />
+    <Compile Include="GeneratedCode\TaskConsumerFarm\QueryRobot.cs" />
+    <Compile Include="GeneratedCode\TaskConsumerFarm\RobotDaemon.cs" />
+    <Compile Include="GeneratedCode\TaskConsumerFarm\TaskRobot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
