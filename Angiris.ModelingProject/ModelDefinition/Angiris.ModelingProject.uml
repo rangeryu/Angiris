@@ -1538,6 +1538,12 @@ Priorization and parallelism should be implemented.</body>
         LastKnownName="QueueManager"
         LastKnownLocation="Package_1145.uml" />
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="98fa1283-029c-46d4-a81b-bb44130f4259"
+        LastKnownName="TaskConsumerFarm"
+        LastKnownLocation="Package_1715.uml" />
+    </packageHasNamedElement>
   </packagedElements>
   <primitiveType
     Id="220a3521-e091-4221-bae9-3ef9018e845c"
