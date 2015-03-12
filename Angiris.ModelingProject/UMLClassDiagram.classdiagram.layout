@@ -21,7 +21,7 @@
         </interfaceShape>
       </nestedChildShapes>
     </packageShape>
-    <packageShape Id="53d79eb2-19fd-42d3-a6ac-b2749fcd8709" absoluteBounds="0.875, 0.5, 10.875, 12" customColor="255, 249, 230" hideQualifiedName="false">
+    <packageShape Id="53d79eb2-19fd-42d3-a6ac-b2749fcd8709" absoluteBounds="0.875, 0.5, 11.25, 12" customColor="255, 249, 230" hideQualifiedName="false">
       <packageMoniker Id="8862dc8f-c4f5-4371-926a-052daa254ef2" LastKnownName="DataStore" />
       <nestedChildShapes>
         <interfaceShape Id="22df3b06-b475-4f8b-a74b-9e53dc18f9b1" absoluteBounds="1, 1.125, 2.25, 1.4106596841414771" hideQualifiedName="false" increaseHeight="0.18800345897674564" customColor="207, 223, 191">
@@ -229,7 +229,7 @@
         </classShape>
       </nestedChildShapes>
     </packageShape>
-    <generalizationConnector edgePoints="[(18 : 3.26383968720833); (17.625 : 3.26383968720833)]" fixedFrom="Algorithm" fixedTo="Algorithm" customColor="113, 111, 110">
+    <generalizationConnector edgePoints="[(18 : 3.26383968720833); (17.625 : 3.26383968720833)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110">
       <generalizationMoniker Id="8f7de402-bfe7-430e-ada8-0157008576f4" />
       <relativeChildShapes />
       <nodes>
@@ -237,7 +237,7 @@
         <classShapeMoniker Id="283a3666-c5da-41b6-b1c1-a4a1be347c3a" />
       </nodes>
     </generalizationConnector>
-    <generalizationConnector edgePoints="[(18 : 4.36930842230717); (17.625 : 4.36930842230717)]" fixedFrom="Algorithm" fixedTo="Algorithm" customColor="113, 111, 110">
+    <generalizationConnector edgePoints="[(18 : 4.36930842230717); (17.625 : 4.36930842230717)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110">
       <generalizationMoniker Id="dccfd775-7b0d-49a7-9617-4fe92953569d" />
       <relativeChildShapes />
       <nodes>
@@ -294,7 +294,7 @@
         <classShapeMoniker Id="5ae0c384-04b0-499c-b363-f2387c01ba8a" />
       </nodes>
     </generalizationConnector>
-    <associationConnector edgePoints="[(17 : 7.11930842230717); (18.5 : 7.11930842230717)]" fixedFrom="Algorithm" fixedTo="Algorithm" customColor="113, 111, 110" sourceMultiplicity="1" targetMultiplicity="1">
+    <associationConnector edgePoints="[(17 : 7.11930842230717); (18.5 : 7.11930842230717)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110" sourceMultiplicity="1" targetMultiplicity="1">
       <associationMoniker Id="92d983b3-8761-4174-9dbd-7df23ac886aa" />
       <relativeChildShapes />
       <nodes>

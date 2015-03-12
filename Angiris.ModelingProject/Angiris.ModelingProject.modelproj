@@ -58,10 +58,6 @@
       <Name>Angiris.ModelingProjectLib</Name>
       <Project>{cb2bdcc9-eeab-4f0b-97dc-6b0c86d26b6c}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\src\Angiris.Core\Angiris.Core.csproj">
-      <Name>Angiris.Core</Name>
-      <Project>{db3809b6-eba9-422b-885f-7efd7732be5e}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Validate Include="LayerDiagram.layerdiagram">

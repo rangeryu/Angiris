@@ -247,7 +247,7 @@
         </componentUseShape>
       </nestedChildShapes>
     </componentShape>
-    <dependencyConnector edgePoints="[(8.01656242417172 : 12.3147838282283); (8.39156242417172 : 12.3147838282283); (8.39156242417172 : 14.5647838282283); (9.375 : 14.5647838282283)]" fixedFrom="Caller" fixedTo="Caller" customColor="Black">
+    <dependencyConnector edgePoints="[(8.01656242417172 : 12.3147838282283); (8.59989575750505 : 12.3147838282283); (8.59989575750505 : 14.5647838282283); (9.375 : 14.5647838282283)]" manuallyRouted="true" fixedFrom="Caller" fixedTo="Caller" customColor="Black">
       <dependencyMoniker Id="8d92f9c5-a01a-4adf-ab9c-6ca31b779880" />
       <relativeChildShapes />
       <nodes>
