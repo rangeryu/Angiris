@@ -39,8 +39,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="FakeDataRepo.cs" />
+    <Compile Include="ScheduledTaskFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Angiris.Core.DataStore\Angiris.Core.DataStore.csproj">
+      <Project>{3fa45c27-bbc9-461c-86e6-9200e336c69e}</Project>
+      <Name>Angiris.Core.DataStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Angiris.Core.Messaging\Angiris.Core.Messaging.csproj">
+      <Project>{dad80344-0c66-4509-a547-316b4e466553}</Project>
+      <Name>Angiris.Core.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Angiris.Core.Models\Angiris.Core.Models.csproj">
+      <Project>{6ad8ba4c-fed9-47c5-a08a-1acfabb58e38}</Project>
+      <Name>Angiris.Core.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Angiris.Core.Utility\Angiris.Core.Utility.csproj">
+      <Project>{5f7edd79-050e-4025-acbe-c8407a5cb3bf}</Project>
+      <Name>Angiris.Core.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,12 +1,13 @@
 ﻿namespace Angiris.Core.Messaging
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
+    using Angiris.Core.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
     using System.Threading.Tasks;
 
-	public interface IQueueTopicManager
+	public interface IQueueTopicManager<TMsgBody> where TMsgBody: IQueuedTask
 	{
 		string TopicName
 		{
@@ -20,13 +21,13 @@
 			set;
 		}
 
-        async Task SendMessages();
+        async Task<bool> SendMessages(IEnumerable<TMsgBody> messages);
 
         void Initialize();
 
-        async Task StartReceiveMessages(Action onMsg);
+        void StartReceiveMessages(Func<TMsgBody, Task> processMessageTask);
 
-        public virtual void Stop();
+        async Task Stop();
 
 	}
 }
