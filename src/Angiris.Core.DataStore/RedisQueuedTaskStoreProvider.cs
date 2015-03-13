@@ -51,24 +51,30 @@
             throw new NotImplementedException();
         }
 
-        public RedisQueuedTaskStoreProvider(string sslHost, string password, TimeSpan expiry)
+        public RedisQueuedTaskStoreProvider(string connString, TimeSpan expiry)
         {
-            this.HostName = sslHost;
-            this.AuthKey = password;
+            this.ConfigOption = ConfigurationOptions.Parse(connString);
+            this.ConfigOption.ConnectRetry = 5;
+            this.ConfigOption.SyncTimeout = 10000;
+            this.ConfigOption.ConnectTimeout = 10000;
+ 
             this.Expiry = expiry;
         }
 
         public void Initialize()
         {
-            ConfigurationOptions config = new ConfigurationOptions();
-            config.SslHost = this.HostName;
-            config.Password = this.AuthKey;
 
-            Connection = ConnectionMultiplexer.Connect(config);
+            Connection = ConnectionMultiplexer.Connect(this.ConfigOption);
+            
 
             database = Connection.GetDatabase();
         }
 
+        public ConfigurationOptions ConfigOption
+        {
+            get;
+            private set;
+        }
         public ConnectionMultiplexer Connection
         {
             get;
@@ -77,17 +83,7 @@
 
         private IDatabase database;
 
-        public string HostName
-        {
-            get;
-            private set;
-        }
-
-        public string AuthKey
-        {
-            get;
-            private set;
-        }
+ 
 
         public TimeSpan Expiry
         {

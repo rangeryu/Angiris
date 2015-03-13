@@ -18,13 +18,9 @@ namespace Angiris.CentralAdmin.Core
             for (int i = 0; i < count; i++)
             {
                 var crawlRequest = new FlightCrawlEntity()
-                {
-                    CreateTime = DateTime.UtcNow,
-                    Status = Angiris.Core.Models.TaskStatus.New,
-                    RequestData = GenerateRandomFlightRequest(),
-                    TaskID = Guid.NewGuid()
-                };
-                crawlRequest.LastModifiedTime = crawlRequest.CreateTime;
+                {                   
+                    RequestData = GenerateRandomFlightRequest()
+                };                
 
                 output.Add(crawlRequest);
             }

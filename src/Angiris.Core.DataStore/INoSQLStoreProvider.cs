@@ -9,18 +9,16 @@
 	public interface INoSQLStoreProvider<T> : IDisposable
 	{
         void Initialize();
-		async Task<T> CreateEntity(T entity);
+		Task<T> CreateEntity(T entity);
 
-        async Task<T> ReadEntity(string id);
+        Task<T> ReadEntity(string id);
 
-        async Task<T> UpdateEntity(string id, T entity);
+        Task<T> UpdateEntity(string id, T entity);
 
-        async Task DeleteEntity(string id);
+        Task DeleteEntity(string id);
 
-		async Task<IEnumerable<T>> QueryEntities();
-
-        string HostName { get; }
-        string AuthKey { get; }
+		Task<IEnumerable<T>> QueryEntities();
+ 
 
 	}
 }

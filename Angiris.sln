@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Angiris.Backend.Crawlers", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Angiris.Core.Utility", "src\Angiris.Core.Utility\Angiris.Core.Utility.csproj", "{5F7EDD79-050E-4025-ACBE-C8407A5CB3BF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Angiris.CentralAdmin.TestConsole", "Angiris.CentralAdmin.TestConsole\Angiris.CentralAdmin.TestConsole.csproj", "{69376E2B-D3FC-4B42-B4B8-35BFBB4DA4E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,10 @@ Global
 		{5F7EDD79-050E-4025-ACBE-C8407A5CB3BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F7EDD79-050E-4025-ACBE-C8407A5CB3BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F7EDD79-050E-4025-ACBE-C8407A5CB3BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69376E2B-D3FC-4B42-B4B8-35BFBB4DA4E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69376E2B-D3FC-4B42-B4B8-35BFBB4DA4E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69376E2B-D3FC-4B42-B4B8-35BFBB4DA4E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69376E2B-D3FC-4B42-B4B8-35BFBB4DA4E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,5 +123,6 @@ Global
 		{3722BE64-9E61-4E2E-B4CD-C778FE53BC43} = {A6D94FAC-5AFB-4503-9EA7-F71EF5AA20D3}
 		{D16F4580-577C-4BA9-AB41-E228B3CA3D4A} = {EE4352B5-1FF1-4360-9208-FF5F6C37989B}
 		{5F7EDD79-050E-4025-ACBE-C8407A5CB3BF} = {4D76643A-C8EA-4660-935B-CB2ECD68B23F}
+		{69376E2B-D3FC-4B42-B4B8-35BFBB4DA4E8} = {A6D94FAC-5AFB-4503-9EA7-F71EF5AA20D3}
 	EndGlobalSection
 EndGlobal

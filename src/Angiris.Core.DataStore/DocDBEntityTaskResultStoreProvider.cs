@@ -42,7 +42,7 @@
 
         public async Task<T> ReadEntity(string id)
         {
-            dynamic doc = client.CreateDocumentQuery(collection.SelfLink).Where(d => d.Id == id).FirstOrDefault();
+            dynamic doc = client.CreateDocumentQuery(collection.SelfLink).Where(d => d.Id == id).AsEnumerable().FirstOrDefault();
 
             if (doc != null && doc.Data != null)
             {
@@ -52,17 +52,29 @@
             else
                 return default(T);
 
-            
         }
 
         public async Task<T> UpdateEntity(string id, T entity)
         {
-            throw new NotImplementedException();
+            if (entity.TaskID.ToString() == id)
+            {
+                dynamic docEntity = new { id = entity.TaskID, Data = entity };
+                Document doc = client.CreateDocumentQuery(collection.SelfLink).Where(d => d.Id == id).AsEnumerable().FirstOrDefault();
+                if (doc != null)
+                {
+                    Document updated = await client.ReplaceDocumentAsync(doc.SelfLink, docEntity);
+                    if (updated != null)
+                        return entity;
+                }
+            }
+            return default(T);            
         }
 
         public async Task DeleteEntity(string id)
         {
-            throw new NotImplementedException();
+            Document doc = client.CreateDocumentQuery(collection.SelfLink).Where(d => d.Id == id).AsEnumerable().FirstOrDefault();
+            if (doc != null)
+                await client.DeleteDocumentAsync(doc.SelfLink);
         }
 
         public async Task<IEnumerable<T>> QueryEntities()

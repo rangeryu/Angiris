@@ -12,24 +12,22 @@
 		string TopicName
 		{
 			get;
-			set;
 		}
 
         string ConnectionString
 		{
 			get;
-			set;
 		}
 
-        async Task<bool> SendMessage(TMsgBody messages);
+        Task<bool> SendMessage(TMsgBody messages);
 
-        async Task<bool> SendMessages(IEnumerable<TMsgBody> messages);
+        Task<bool> SendMessages(IEnumerable<TMsgBody> messages);
 
         void Initialize();
 
         void StartReceiveMessages(Func<TMsgBody, Task> processMessageTask);
 
-        async Task Stop();
+        Task Stop();
 
 	}
 }

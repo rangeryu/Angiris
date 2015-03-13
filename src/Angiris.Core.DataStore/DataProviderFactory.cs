@@ -8,18 +8,18 @@ using System.Text;
 
 	public class DataProviderFactory
 	{
-        public INoSQLStoreProvider<T> GetRedisQueuedTaskStore<T>() where T : IQueuedTask
+        public static RedisQueuedTaskStoreProvider<T> GetRedisQueuedTaskStore<T>() where T : IQueuedTask
 		{
             string host = "Angiris-Demo-Cache.redis.cache.windows.net";
             string key = "kYi4cUJPM4o/jDEfWiXR89994u0xG9AMHbL/AyVMczw=";
             TimeSpan expiry = TimeSpan.FromMinutes(5);
-
-            RedisQueuedTaskStoreProvider<T> provider = new RedisQueuedTaskStoreProvider<T>(host, key, expiry);
+            string connString = string.Format("{0},ssl=true,password={1}", host, key);
+            RedisQueuedTaskStoreProvider<T> provider = new RedisQueuedTaskStoreProvider<T>(connString, expiry);
             return provider;
 
 		}
 
-        public INoSQLStoreProvider<T> GetDocDBQueuedTaskStore<T>() where T : IQueuedTask
+        public static DocDBQueuedTaskStoreProvider<T> GetDocDBQueuedTaskStore<T>() where T : IQueuedTask
         {
             string host = "	https://angiris-demo.documents.azure.com:443";
             string key = "dCvlAX1QGxPnjSqpcDsH0DdKu7zuOxvwAv9q1Zb9bQOnGcqyBQJheNAoQTz8YarSG+/Y0I6iCCVSdjz6IVV6Mw==";
