@@ -96,13 +96,31 @@ using System.Threading.Tasks;
 
             }
             
- 
-
+  
             // Create the queue client. By default, the PeekLock method is used.
             this.client = QueueClient.CreateFromConnectionString(this.ConnectionString, this.queueName);
 
         }
-        
+
+        public async Task<bool> SendMessage(TMsgBody msg)
+        {
+            var brokeredMsg = new BrokeredMessage(msg);
+            brokeredMsg.MessageId = msg.TaskID.ToString();
+
+            try
+            {
+                await this.client.SendAsync(brokeredMsg);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError("Exception in QueueClient.SendAsync: {0}", ex.Message);
+
+                return false;
+            }
+
+        }
+
         public async Task<bool> SendMessages(IEnumerable<TMsgBody> messages)
         {
             var sbMsgList = new List<BrokeredMessage>();
@@ -151,7 +169,6 @@ using System.Threading.Tasks;
 
                     try
                     {
-
 
                         var msgBody = msg.GetBody<TMsgBody>();
                         // Execute processing task here

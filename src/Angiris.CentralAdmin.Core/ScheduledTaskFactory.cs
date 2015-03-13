@@ -4,37 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Angiris.Core.Models;
+using Angiris.Core.Messaging;
 
 namespace Angiris.CentralAdmin.Core
 {
     public class ScheduledFlightCrawlRequestFactory
     {
-        public async Task StartPushJob()
+        IQueueTopicManager<FlightCrawlEntity> queueManager;
+ 
+        public async Task StartPushTaskMessages()
         {
-            var crawlRequests = FakeDataRepo.GenerateRandomFlightCrawlRequests(1000);
+            queueManager = QueueManagerFactory.CreateFlightCrawlEntityQueueMgr();
+            queueManager.Initialize();
 
-            crawlRequests.ForEach(r =>  {
 
-                SaveToTaskResultStore(r).Wait();
+            var crawlRequests = FakeDataRepo.GenerateRandomFlightCrawlRequests(100);
 
+            crawlRequests.ForEach(async(r) =>  {
+
+                await SaveToTaskResultStore(r);
+                var sendResult = await queueManager.SendMessage(r);
+                if(!sendResult)
+                {
+                    //
+                }
             
             });
 
         }
+ 
 
-        private async Task PushToMessageQueue(FlightEntityCrawlRequest crawlTask)
-        {
-            var msgBody = crawlTask.RequestData;
-            
-
-
-            //why not bulk push...
-            //send to q
-            //TODO: retry, error handling
-            return;
-        }
-
-        private async Task SaveToTaskResultStore(FlightEntityCrawlRequest crawlTask)
+        private async Task SaveToTaskResultStore(FlightCrawlEntity crawlTask)
         {
             //async save to redis - EntityTaskResultStore
             //async save to docdb - EntityTaskResultStore

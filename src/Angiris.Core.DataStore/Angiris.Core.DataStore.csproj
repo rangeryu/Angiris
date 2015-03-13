@@ -56,17 +56,23 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="DataProviderFactory.cs" />
-    <Compile Include="DocDBEntitySnapshotStoreProvider.cs" />
     <Compile Include="DocDBEntityTaskResultStoreProvider.cs" />
-    <Compile Include="EntityCacheStoreProvider.cs" />
-    <Compile Include="EntitySnapshotStoreProvider.cs" />
-    <Compile Include="EntityTaskResultStoreProvider.cs" />
+    <Compile Include="INoSQLStoreProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RedisEntityCacheStoreProvider.cs" />
-    <Compile Include="RedisEntityTaskResultStoreProvider.cs" />
+    <Compile Include="RedisQueuedTaskStoreProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Angiris.Core.Models\Angiris.Core.Models.csproj">
+      <Project>{6ad8ba4c-fed9-47c5-a08a-1acfabb58e38}</Project>
+      <Name>Angiris.Core.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Angiris.Core.Utility\Angiris.Core.Utility.csproj">
+      <Project>{5f7edd79-050e-4025-acbe-c8407a5cb3bf}</Project>
+      <Name>Angiris.Core.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

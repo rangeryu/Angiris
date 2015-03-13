@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FlightEntityCrawlRequest.cs" />
+    <Compile Include="FlightCrawlEntity.cs" />
     <Compile Include="EntitySnapshot.cs" />
     <Compile Include="FlightEntities.cs" />
     <Compile Include="IEntityCrawlRequest.cs" />

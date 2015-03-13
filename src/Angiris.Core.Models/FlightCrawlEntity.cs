@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Angiris.Core.Models
 {
-    public class FlightEntityCrawlRequest : IEntityCrawlRequest<FlightRequest,FlightResponse>, IQueuedTask
+    public class FlightCrawlEntity : IEntityCrawlRequest<FlightRequest,FlightResponse>, IQueuedTask
     {
         public FlightRequest RequestData
         {

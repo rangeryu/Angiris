@@ -21,6 +21,8 @@
 			set;
 		}
 
+        async Task<bool> SendMessage(TMsgBody messages);
+
         async Task<bool> SendMessages(IEnumerable<TMsgBody> messages);
 
         void Initialize();

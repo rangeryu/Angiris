@@ -9,15 +9,15 @@ namespace Angiris.CentralAdmin.Core
 {
     public class FakeDataRepo
     {
-        public static List<FlightEntityCrawlRequest> GenerateRandomFlightCrawlRequests(int count)
+        public static List<FlightCrawlEntity> GenerateRandomFlightCrawlRequests(int count)
         {
             //fake data
 
-            List<FlightEntityCrawlRequest> output = new List<FlightEntityCrawlRequest>();
+            List<FlightCrawlEntity> output = new List<FlightCrawlEntity>();
 
             for (int i = 0; i < count; i++)
             {
-                var crawlRequest = new FlightEntityCrawlRequest()
+                var crawlRequest = new FlightCrawlEntity()
                 {
                     CreateTime = DateTime.UtcNow,
                     Status = Angiris.Core.Models.TaskStatus.New,
