@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Angiris.CentralAdmin.Core
+namespace Angiris.Core.Utility
 {
     public class Class1
     {
