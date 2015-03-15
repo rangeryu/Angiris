@@ -47,6 +47,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Angiris.Backend.Core\Angiris.Backend.Core.csproj">
+      <Project>{52ddd171-aafc-4e11-a121-439b0255b492}</Project>
+      <Name>Angiris.Backend.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Angiris.Backend.Crawlers\Angiris.Backend.Crawlers.csproj">
+      <Project>{d16f4580-577c-4ba9-ab41-e228b3ca3d4a}</Project>
+      <Name>Angiris.Backend.Crawlers</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

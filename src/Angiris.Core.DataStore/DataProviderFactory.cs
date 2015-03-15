@@ -16,8 +16,17 @@ using System.Text;
             string connString = string.Format("{0},ssl=true,password={1}", host, key);
             RedisQueuedTaskStoreProvider<T> provider = new RedisQueuedTaskStoreProvider<T>(connString, expiry);
             return provider;
-
 		}
+
+        public static RedisDaemonStatusProvider GetRedisDaemonStatusProvider()
+        {
+            string host = "Angiris-Demo-Cache.redis.cache.windows.net";
+            string key = "kYi4cUJPM4o/jDEfWiXR89994u0xG9AMHbL/AyVMczw=";
+            string connString = string.Format("{0},ssl=true,password={1}", host, key);
+            string keyname = "Telemetry-DaemonStatus";
+            RedisDaemonStatusProvider provider = new RedisDaemonStatusProvider(connString, keyname);
+            return provider;
+        }
 
         public static DocDBQueuedTaskStoreProvider<T> GetDocDBQueuedTaskStore<T>() where T : IQueuedTask
         {

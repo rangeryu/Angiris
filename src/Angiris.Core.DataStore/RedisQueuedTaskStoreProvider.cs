@@ -16,7 +16,7 @@
         {
             var value = JsonConvert.SerializeObject(entity);
 
-            if (database.StringSet(entity.TaskID.ToString(), value, expiry: this.Expiry))
+            if (await database.StringSetAsync(entity.TaskID.ToString(), value, expiry: this.Expiry))
                 return entity;
             else
                 return default(T);
@@ -24,7 +24,7 @@
 
         public async Task<T> ReadEntity(string id)
         {
-            var value = database.StringGet(id);
+            var value = await database.StringGetAsync(id);
 
             var obj = JsonConvert.DeserializeObject<T>(value);
             return obj;
@@ -35,7 +35,7 @@
         {
             var value = JsonConvert.SerializeObject(entity);
 
-            if (database.StringSet(id, value, expiry: this.Expiry))
+            if (await database.StringSetAsync(id, value, expiry: this.Expiry))
                 return entity;
             else
                 return default(T);
@@ -43,7 +43,7 @@
 
         public async Task DeleteEntity(string id)
         {
-            database.KeyDelete(id);
+           await database.KeyDeleteAsync(id);
         }
 
         public async Task<IEnumerable<T>> QueryEntities()
