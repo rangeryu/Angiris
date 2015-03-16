@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +9,15 @@ namespace Angiris.Core.Models
 {
     public interface IQueuedTask
     {
+        [JsonProperty(PropertyName = "id")]
         Guid TaskID { get; set; }
         string LogData { get; set; }
 
-        DateTime CreateTime { get; set; }
+        DateEpoch CreateTime { get; set; }
 
-        DateTime FinishTime { get; set; }
+        DateEpoch FinishTime { get; set; }
 
-        DateTime LastModifiedTime { get; set; }
+        DateEpoch LastModifiedTime { get; set; }
 
         TaskStatus Status { get; set; }
     }

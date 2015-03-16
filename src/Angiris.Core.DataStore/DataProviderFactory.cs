@@ -30,7 +30,7 @@ using System.Text;
 
         public static DocDBQueuedTaskStoreProvider<T> GetDocDBQueuedTaskStore<T>() where T : IQueuedTask
         {
-            string host = "	https://angiris-demo.documents.azure.com:443";
+            string host = "https://angiris-demo.documents.azure.com:443";
             string key = "dCvlAX1QGxPnjSqpcDsH0DdKu7zuOxvwAv9q1Zb9bQOnGcqyBQJheNAoQTz8YarSG+/Y0I6iCCVSdjz6IVV6Mw==";
             string databaseId = "EntityTaskResults";
             string collectionId = "QueuedTask";

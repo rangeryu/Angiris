@@ -66,7 +66,7 @@
 
             Connection = ConnectionMultiplexer.Connect(this.ConfigOption);
             
-
+            
             database = Connection.GetDatabase();
         }
 

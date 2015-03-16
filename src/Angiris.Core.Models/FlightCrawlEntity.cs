@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Angiris.Core.Utility;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +21,7 @@ namespace Angiris.Core.Models
         {
             get
             {
-                return responseData;
+                return responseData; 
             }
             set
             {
@@ -34,6 +36,7 @@ namespace Angiris.Core.Models
             set;
         }
 
+        [JsonProperty(PropertyName = "id", ItemConverterType = typeof(GuidConverter))]
         public Guid TaskID
         {
             get;
@@ -46,19 +49,19 @@ namespace Angiris.Core.Models
             set;
         }
 
-        public DateTime CreateTime
+        public DateEpoch CreateTime
         {
             get;
             set;
         }
 
-        public DateTime FinishTime
+        public DateEpoch FinishTime
         {
             get;
             set;
         }
 
-        public DateTime LastModifiedTime
+        public DateEpoch LastModifiedTime
         {
             get;
             set;

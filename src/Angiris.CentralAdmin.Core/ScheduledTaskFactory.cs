@@ -25,53 +25,50 @@ namespace Angiris.CentralAdmin.Core
 
             persistenceStore = DataProviderFactory.GetDocDBQueuedTaskStore<FlightCrawlEntity>();
             persistenceStore.Initialize();
+    
+            var crawlRequests = FakeDataRepo.GenerateRandomFlightCrawlRequests(500);
+
+           //int i = 0;
 
 
-            var crawlRequests = FakeDataRepo.GenerateRandomFlightCrawlRequests(1000);
+            //ParallelOptions pOption = new ParallelOptions();
+            //pOption.MaxDegreeOfParallelism = 20;
 
-            int i = 0;
+            var startTime = DateTime.Now;
 
-            Parallel.ForEach(crawlRequests, async(r) =>  {
-            //crawlRequests.ForEach(async(r) =>  {
+  
+            var result = Parallel.ForEach(crawlRequests, (r) =>  {
+            //crawlRequests.ForEach((r) =>  {
 
-                var currentTime = DateTime.UtcNow;
-                r.CreateTime = currentTime;
-                r.LastModifiedTime = currentTime;
-                r.Status = Angiris.Core.Models.TaskStatus.New;
-                r.TaskID = Guid.NewGuid();
-               
-
-                await SaveTaskResult(r);
-                var sendResult = await queueManager.SendMessage(r);
-                if(sendResult)
+                Task.Run(async () =>
                 {
-                    r.Status = Angiris.Core.Models.TaskStatus.Queueing;
-                    await UpdateTaskResult(r);
-                }
+                    //Console.WriteLine("processing " + i.ToString());
+                    var currentTime = DateTime.UtcNow;
+                    r.CreateTime = currentTime;
+                    r.LastModifiedTime = currentTime;
+                    r.Status = Angiris.Core.Models.TaskStatus.New;
+                    r.TaskID = Guid.NewGuid();
 
-                Console.WriteLine(i++);
-                 
+
+                    await cacheStore.CreateEntity(r);
+                    var sendResult = await queueManager.SendMessage(r);
+                    if (sendResult)
+                    {
+                        r.Status = Angiris.Core.Models.TaskStatus.Queueing;
+                        r.LastModifiedTime = DateTime.UtcNow;
+                        await cacheStore.UpdateEntity(r.TaskID.ToString(), r);
+                    }
+                    await persistenceStore.CreateEntity(r);
+                    Console.WriteLine("done " + crawlRequests.IndexOf(r));
+                    
+                    //Console.WriteLine(i++);
+                }).Wait();
             });
 
+            var endTime = DateTime.Now;
+            Console.WriteLine("End in " + (endTime - startTime).TotalSeconds + " seconds");
         }
  
-
-        private async Task SaveTaskResult(FlightCrawlEntity crawlTask)
-        {
-            await cacheStore.CreateEntity(crawlTask);
-            await persistenceStore.CreateEntity(crawlTask); // can't we wait for its end?
-
-            return;
-        }
-
-        private async Task UpdateTaskResult(FlightCrawlEntity crawlTask)
-        {
-            await cacheStore.UpdateEntity(crawlTask.TaskID.ToString(), crawlTask);
-            await persistenceStore.UpdateEntity(crawlTask.TaskID.ToString(), crawlTask); // can't we wait for its end?
-
-            return;
-        }
-         
 
     }
 }

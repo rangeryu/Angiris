@@ -11,9 +11,12 @@ namespace Angiris.CentralAdmin.TestConsole
     {
         static void Main(string[] args)
         {
+
+
+
             ScheduledFlightCrawlRequestFactory flightCrawlRequestFactory = new ScheduledFlightCrawlRequestFactory();
 
-            var startTime = DateTime.Now;
+            
             var task = Task.Run(async () => {
 
                 try
@@ -28,8 +31,7 @@ namespace Angiris.CentralAdmin.TestConsole
 
             });
             task.Wait();
-            var endTime = DateTime.Now;
-            Console.WriteLine("End in " + (endTime - startTime).TotalSeconds + " seconds");
+
             Console.ReadLine();
         }
 

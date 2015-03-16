@@ -39,14 +39,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Angiris.Backend.Crawlers", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Angiris.Core.Utility", "src\Angiris.Core.Utility\Angiris.Core.Utility.csproj", "{5F7EDD79-050E-4025-ACBE-C8407A5CB3BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Angiris.CentralAdmin.TestConsole", "Angiris.CentralAdmin.TestConsole\Angiris.CentralAdmin.TestConsole.csproj", "{69376E2B-D3FC-4B42-B4B8-35BFBB4DA4E8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FCB872BA-49ED-4D43-9707-3A9095444060}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Angiris.CentralAdmin.TestConsole", "src\Angiris.CentralAdmin.TestConsole\Angiris.CentralAdmin.TestConsole.csproj", "{69376E2B-D3FC-4B42-B4B8-35BFBB4DA4E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

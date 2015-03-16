@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Angiris.Core.Utility;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,8 +39,8 @@ namespace Angiris.Core.Models
         public string DeptureCity { get; set; }
         // 到达城市三字码
         public string ArrivalCity { get; set; }
-        // 起飞日期
-        public DateTime FlightDate { get; set; }
+        // 起飞日期      
+        public DateEpoch FlightDate { get; set; }
     }
 
     // 航班查询响应实体 （任务输出）
@@ -49,15 +51,16 @@ namespace Angiris.Core.Models
         // 航班号
         public string FlightNumber { get; set; }
         // 起飞日期
-        public DateTime FlightDate { get; set; }
+        public DateEpoch FlightDate { get; set; }
         //出发城市
         public string DeptureCity { get; set; }
         // 到达城市
         public string ArrivalCity { get; set; }
         // 起飞时间
-        public DateTime DeptureTime { get; set; }
+        public DateEpoch DeptureTime { get; set; }
         // 到达时间
-        public DateTime ArrivalTime { get; set; }
+        [JsonConverter(typeof(EpochDateTimeConverter))]
+        public DateEpoch ArrivalTime { get; set; }
         // 舱位信息
         public IEnumerable<FlightCabin> FlightCabins { get; set; }
     }

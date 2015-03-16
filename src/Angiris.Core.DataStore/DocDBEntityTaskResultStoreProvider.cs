@@ -25,15 +25,17 @@
         {
             client = new DocumentClient(new Uri(this.HostName), this.AuthKey);
             database = GetOrCreateDatabaseAsync(this.DatabaseId).GetAwaiter().GetResult();
-            collection = GetOrCreateCollectionAsync(database.SelfLink, this.CollectionId).GetAwaiter().GetResult();
 
+            //Caution - test only
+            DeleteCollectionAsync(this.CollectionId).GetAwaiter().GetResult();
+            collection = GetOrCreateCollectionAsync(database.SelfLink, this.CollectionId).GetAwaiter().GetResult();
         }
 
         public async Task<T> CreateEntity(T entity)
         {
-            dynamic docEntity = new { id = entity.TaskID, Data = entity};
+            //dynamic docEntity = new { id = entity.TaskID, Data = entity};
 
-            Document created = await client.CreateDocumentAsync(collection.SelfLink, docEntity);
+            Document created = await client.CreateDocumentAsync(collection.SelfLink, entity);
             if (created != null)
                 return entity;
             else
@@ -44,9 +46,9 @@
         {
             dynamic doc = client.CreateDocumentQuery(collection.SelfLink).Where(d => d.Id == id).AsEnumerable().FirstOrDefault();
 
-            if (doc != null && doc.Data != null)
+            if (doc != null)
             {
-                var entity = (T)doc.Data;
+                var entity = (T)doc;
                 return entity;
             }
             else
@@ -58,11 +60,11 @@
         {
             if (entity.TaskID.ToString() == id)
             {
-                dynamic docEntity = new { id = entity.TaskID, Data = entity };
+                //dynamic docEntity = new { id = entity.TaskID, Data = entity };
                 Document doc = client.CreateDocumentQuery(collection.SelfLink).Where(d => d.Id == id).AsEnumerable().FirstOrDefault();
                 if (doc != null)
                 {
-                    Document updated = await client.ReplaceDocumentAsync(doc.SelfLink, docEntity);
+                    Document updated = await client.ReplaceDocumentAsync(doc.SelfLink, entity);
                     if (updated != null)
                         return entity;
                 }
@@ -136,6 +138,15 @@
             }
 
             return collection;
+        }
+
+        private async Task DeleteCollectionAsync(string id)
+        {
+            DocumentCollection collection = client.CreateDocumentCollectionQuery(database.SelfLink).Where(c => c.Id == id).ToArray().FirstOrDefault();
+            if (collection != null)
+            {
+                collection = await client.DeleteDocumentCollectionAsync(collection.SelfLink);
+            }
         }
     }
 }

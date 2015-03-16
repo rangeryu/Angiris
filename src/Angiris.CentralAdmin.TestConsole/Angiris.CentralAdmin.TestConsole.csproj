@@ -49,7 +49,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\Angiris.CentralAdmin.Core\Angiris.CentralAdmin.Core.csproj">
+    <ProjectReference Include="..\Angiris.CentralAdmin.Core\Angiris.CentralAdmin.Core.csproj">
       <Project>{94db60bc-b1b0-4de9-909d-3d32925413c0}</Project>
       <Name>Angiris.CentralAdmin.Core</Name>
     </ProjectReference>
