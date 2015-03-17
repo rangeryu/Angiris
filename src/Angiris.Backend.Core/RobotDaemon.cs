@@ -16,7 +16,16 @@ using Angiris.Core.DataStore;
         PerfCounter perfCounter;
         INoSQLStoreProvider<DaemonStatus> daemonStatusStore;
 
-		public List<TaskRobot> TaskRobotList
+        public RobotDaemon()
+        {
+            TaskRobotList = new List<FlightCrawlRobot>();
+            StatusData = new DaemonStatus() { StartTime = DateTime.UtcNow, InstanceName = System.Environment.MachineName };
+            perfCounter = new PerfCounter();
+            daemonStatusStore = DataProviderFactory.GetRedisDaemonStatusProvider();
+            
+        }
+
+        public List<FlightCrawlRobot> TaskRobotList
 		{
 			get;
 			private set;
@@ -24,42 +33,64 @@ using Angiris.Core.DataStore;
 
         public async Task Start()
 		{
-            TaskRobotList = new List<TaskRobot>();
-            StatusData = new DaemonStatus() { StartTime = DateTime.UtcNow, InstanceName = System.Environment.MachineName };
-            perfCounter = new PerfCounter();
-            daemonStatusStore = DataProviderFactory.GetRedisDaemonStatusProvider();
-            await SyncStatus();
+            this.StatusData.IsStarted = true;
+
+            int robotCount = 10;
+            int robotCountP0 = 5;
+
+            for (int i = 0; i < robotCount;i++ )
+            {
+                CreateTaskRobot(false);
+            }
+
+            for (int i = 0; i < robotCountP0; i++)
+            {
+                CreateTaskRobot(true);
+            }
+
+            while(this.StatusData.IsStarted)
+            {
+                await SyncStatus();
+                await Task.Delay(5000);
+            }
+
+            
 		}
 
 		public async Task SyncStatus()
 		{
-
             StatusData.MemoryRatio = perfCounter.GetMemoryRatio();
             StatusData.CPURatio = perfCounter.GetCPURatio();
             StatusData.LastUpdated = DateTime.UtcNow;
             StatusData.Remark = "Uptime: " + (StatusData.LastUpdated - StatusData.StartTime).ToString();
+            StatusData.CrawlerCount = this.TaskRobotList.Count;
 
             await daemonStatusStore.UpdateEntity(StatusData.InstanceName, StatusData);
-
-
             //sync robot resouce plan here from central admin.
 
 		}
 
         public async Task Stop()
 		{
-			throw new System.NotImplementedException();
+            await Task.Run(() =>
+            {
+                foreach (var robot in this.TaskRobotList)
+                {
+                    robot.Stop();
+                    robot.Dispose();
+                }
+                this.TaskRobotList.Clear();
+                this.StatusData.IsStarted = false;
+            });
 		}
 
-        public async Task CreateTaskRobot()
+        public void CreateTaskRobot(bool isP0)
 		{
-			throw new System.NotImplementedException();
+            FlightCrawlRobot robot = new FlightCrawlRobot(isP0);
+            robot.Start();
+            this.TaskRobotList.Add(robot);
 		}
-
-        public async Task DisposeTaskRobot()
-		{
-			throw new System.NotImplementedException();
-		}
+ 
 
 	}
 }

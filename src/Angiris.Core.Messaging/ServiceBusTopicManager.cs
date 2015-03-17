@@ -62,9 +62,15 @@ using System.Threading.Tasks;
                 try
                 {
                     var queueDescription = new QueueDescription(this.queueName);
-                    queueDescription.EnablePartitioning = true;
+                    
+                    //1 min lock duration is the default value
+                    //https://msdn.microsoft.com/en-us/library/microsoft.servicebus.messaging.queuedescription.lockduration.aspx
+                    queueDescription.LockDuration = TimeSpan.FromMinutes(1);
+                    //Partitioning Messaging Entities https://msdn.microsoft.com/en-us/library/azure/dn520246.aspx
+                    //queueDescription.EnablePartitioning = true;
+                    
                     // Set the maximum delivery count for messages. A message is automatically deadlettered after this number of deliveries.  Default value is 10.
-                    //queueDescription.MaxDeliveryCount = 3;
+                    queueDescription.MaxDeliveryCount = 3;
 
                     this.QueueInfo = manager.CreateQueue(queueDescription);
                 }
@@ -129,7 +135,7 @@ using System.Threading.Tasks;
             {
                 var brokeredMsg = new BrokeredMessage(msg);
                 brokeredMsg.MessageId = msg.TaskID.ToString();
-
+                
                 sbMsgList.Add(brokeredMsg);
             }
 
@@ -149,7 +155,7 @@ using System.Threading.Tasks;
 
 
 
-        public void StartReceiveMessages(Func<TMsgBody, Task> processMessageTask)
+        public void StartReceiveMessages(Action<TMsgBody> processMessageTask)
         {
             // Setup the options for the message pump.
             var options = new OnMessageOptions();
@@ -172,7 +178,7 @@ using System.Threading.Tasks;
 
                         var msgBody = msg.GetBody<TMsgBody>();
                         // Execute processing task here
-                        await processMessageTask(msgBody);
+                        processMessageTask(msgBody);
 
                         switch (msgBody.Status)
                         {

@@ -14,6 +14,7 @@ namespace Angiris.Core.Models
         Completed = 3,
         Failed = 4,
         InDeadletter = 5,
+        TimedOut = 6
         
     }
 }

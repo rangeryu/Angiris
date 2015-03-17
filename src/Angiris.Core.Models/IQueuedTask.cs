@@ -11,7 +11,7 @@ namespace Angiris.Core.Models
     {
         [JsonProperty(PropertyName = "id")]
         Guid TaskID { get; set; }
-        string LogData { get; set; }
+        List<string> LogData { get; set; }
 
         DateEpoch CreateTime { get; set; }
 
@@ -20,5 +20,7 @@ namespace Angiris.Core.Models
         DateEpoch LastModifiedTime { get; set; }
 
         TaskStatus Status { get; set; }
+
+        int MaxExecutionTimeInMS { get; set; }
     }
 }

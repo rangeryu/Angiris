@@ -15,7 +15,9 @@ namespace Angiris.Core.Models
         public int NetworRatio { get; set; }
         public int CrawlerCount { get; set; }
         public DateTime LastUpdated { get; set; }
-
+        public List<string> LogData { get; set; }
         public string Remark { get; set; }
+
+        public bool IsStarted { get; set; }
     }
 }

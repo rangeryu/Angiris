@@ -54,6 +54,7 @@
     <Compile Include="IEntitySnapshot.cs" />
     <Compile Include="IQueuedTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RobotStatus.cs" />
     <Compile Include="TaskStatusEnum.cs" />
   </ItemGroup>
   <ItemGroup>

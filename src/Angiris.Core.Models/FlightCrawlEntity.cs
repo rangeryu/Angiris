@@ -43,10 +43,11 @@ namespace Angiris.Core.Models
             set;
         }
 
-        public string LogData
+        private List<string> logData = new List<string>();
+        public List<string> LogData
         {
-            get;
-            set;
+            get { return logData; }
+            set { logData = value; }
         }
 
         public DateEpoch CreateTime
@@ -66,5 +67,14 @@ namespace Angiris.Core.Models
             get;
             set;
         }
+
+
+        public int MaxExecutionTimeInMS
+        {
+            get;
+            set;
+        }
+
+ 
     }
 }

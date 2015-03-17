@@ -11,6 +11,7 @@ namespace Angiris.CentralAdmin.Core
 {
     public class ScheduledFlightCrawlRequestFactory
     {
+        IQueueTopicManager<FlightCrawlEntity> queueManagerP0;
         IQueueTopicManager<FlightCrawlEntity> queueManager;
         INoSQLStoreProvider<FlightCrawlEntity> cacheStore;
         INoSQLStoreProvider<FlightCrawlEntity> persistenceStore;
@@ -20,6 +21,9 @@ namespace Angiris.CentralAdmin.Core
             queueManager = QueueManagerFactory.CreateFlightCrawlEntityQueueMgr();
             queueManager.Initialize();
 
+            queueManagerP0 = QueueManagerFactory.CreateFlightCrawlEntityQueueMgr(true);
+            queueManagerP0.Initialize();
+
             cacheStore = DataProviderFactory.GetRedisQueuedTaskStore<FlightCrawlEntity>();
             cacheStore.Initialize();
 
@@ -27,7 +31,7 @@ namespace Angiris.CentralAdmin.Core
             persistenceStore.Initialize();
     
             var crawlRequests = FakeDataRepo.GenerateRandomFlightCrawlRequests(500);
-
+            var crawlRequestsP0 = FakeDataRepo.GenerateRandomFlightCrawlRequests(100);
            //int i = 0;
 
 
@@ -36,8 +40,7 @@ namespace Angiris.CentralAdmin.Core
 
             var startTime = DateTime.Now;
 
-  
-            var result = Parallel.ForEach(crawlRequests, (r) =>  {
+            var result = Parallel.ForEach(crawlRequests.Concat(crawlRequestsP0), (r) =>  {
             //crawlRequests.ForEach((r) =>  {
 
                 Task.Run(async () =>
@@ -51,7 +54,16 @@ namespace Angiris.CentralAdmin.Core
 
 
                     await cacheStore.CreateEntity(r);
-                    var sendResult = await queueManager.SendMessage(r);
+                    bool sendResult;
+                    if(crawlRequestsP0.Contains(r))
+                    {
+                        sendResult = await queueManagerP0.SendMessage(r);
+                    }
+                    else
+                    {
+                        sendResult = await queueManager.SendMessage(r);
+                    }
+
                     if (sendResult)
                     {
                         r.Status = Angiris.Core.Models.TaskStatus.Queueing;

@@ -8,15 +8,16 @@
 
 	public class QueueManagerFactory
 	{
-        public static IQueueTopicManager<FlightCrawlEntity> CreateFlightCrawlEntityQueueMgr()
+        public static IQueueTopicManager<FlightCrawlEntity> CreateFlightCrawlEntityQueueMgr(bool isHighPriority = false)
         {
             //TODO extract configs from hardcode.
 
-            string topicName = "entity-crawl";
+            string topicName = isHighPriority ? "flight-crawl-p0" : "flight-crawl-p1";
             string connString = "Endpoint=sb://angiris-demo.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=z/GrYTgcgt3Fm2Ys2cF74w2WNftSn0kc/zAHA+OUVK4=";
             
             return new ServiceBusQueueManager<FlightCrawlEntity>(topicName, connString);
         }
+ 
 	}
 }
 

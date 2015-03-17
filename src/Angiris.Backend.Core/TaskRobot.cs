@@ -1,61 +1,31 @@
 ﻿namespace Angiris.Backend.Core
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
+    using Angiris.Core.Messaging;
+    using Angiris.Core.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
 
-	public abstract class TaskRobot
+    public abstract class TaskRobot
 	{
-		public virtual object TaskCompleted
-		{
-			get;
-			set;
-		}
+        public event EventHandler TaskCompleted;		 
 
-		public virtual object TaskFailed
-		{
-			get;
-			set;
-		}
+		public event EventHandler TaskFailed;
 
-		public virtual object TimeOut
-		{
-			get;
-			set;
-		}
+        public event EventHandler TimeOut;
+		 
 
-		public virtual object Status
-		{
-			get;
-			set;
-		}
 
-		public virtual object QueueTopicMgr
-		{
-			get;
-			set;
-		}
+ 
+		public abstract void Start();
 
-		public virtual void Start()
-		{
-			throw new System.NotImplementedException();
-		}
 
-		public virtual void Stop()
-		{
-			throw new System.NotImplementedException();
-		}
+        public abstract void Stop();
 
-		public virtual void Dispose()
-		{
-			throw new System.NotImplementedException();
-		}
+        public abstract void Dispose();
 
-		public virtual void ExecuteTask()
-		{
-			throw new System.NotImplementedException();
-		}
+        public abstract void ExecuteTask();
 
 	}
 }

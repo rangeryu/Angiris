@@ -39,14 +39,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="CrawlRobot.cs" />
+    <Compile Include="FlightCrawlRobot.cs" />
     <Compile Include="PerfCounter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RobotDaemon.cs" />
     <Compile Include="TaskRobot.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Angiris.Backend.Crawlers\Angiris.Backend.Crawlers.csproj">
+      <Project>{d16f4580-577c-4ba9-ab41-e228b3ca3d4a}</Project>
+      <Name>Angiris.Backend.Crawlers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Angiris.Core.DataStore\Angiris.Core.DataStore.csproj">
       <Project>{3fa45c27-bbc9-461c-86e6-9200e336c69e}</Project>
       <Name>Angiris.Core.DataStore</Name>

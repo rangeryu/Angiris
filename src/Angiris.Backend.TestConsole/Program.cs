@@ -12,14 +12,18 @@ namespace Angiris.Backend.TestConsole
     {
         static void Main(string[] args)
         {
-            PerfCounter counter = new PerfCounter();
+            RobotDaemon daemon = new RobotDaemon();
 
-            while(true)
-            {
-                Console.WriteLine("CPU " + counter.GetCPURatio());
-                Console.WriteLine("Memory " + counter.GetMemoryRatio());
-                Thread.Sleep(1000);
-            }
+            Console.WriteLine("Starting");
+
+            Task daemonStartTask = daemon.Start();
+
+            Console.WriteLine("press any key to exit.");
+
+            Console.ReadLine();
+
+            daemon.Stop().Wait();
+
         }
     }
 }
