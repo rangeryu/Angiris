@@ -155,10 +155,14 @@ using System.Threading.Tasks;
 
 
 
+        /// <summary>
+        /// bind action to client.OnMessageAsync. so it must be called only once.
+        /// </summary>
+        /// <param name="processMessageTask"></param>
         public void StartReceiveMessages(Action<TMsgBody> processMessageTask)
         {
             // Setup the options for the message pump.
-            var options = new OnMessageOptions();
+            var  options = new OnMessageOptions();
 
             // When AutoComplete is disabled, you have to manually complete/abandon the messages and handle errors, if any.
             options.AutoComplete = false;

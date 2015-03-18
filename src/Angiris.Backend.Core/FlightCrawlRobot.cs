@@ -40,8 +40,8 @@
             persistenceStore.Initialize();
 
             queueManager.Initialize();
-            queueManager.StartReceiveMessages((entity) => {
-                this.ProcessTask(entity).Wait();
+            queueManager.StartReceiveMessages( async (entity) => {
+               await this.ProcessTask(entity);//.Wait(); //todo 
             });
 
             this.Status.StartTime = DateTime.UtcNow;

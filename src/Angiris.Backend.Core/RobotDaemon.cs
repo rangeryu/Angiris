@@ -37,17 +37,17 @@
 
             this.StatusData.IsStarted = true;
 
-            int robotCount = 2;
-            int robotCountP0 = 2;
+            int robotCount = 1;
+            int robotCountP0 = 1;
 
             for (int i = 0; i < robotCount;i++ )
             {
-                CreateTaskRobot(false);
+                await CreateTaskRobot(false);
             }
 
             for (int i = 0; i < robotCountP0; i++)
             {
-                CreateTaskRobot(true);
+                await CreateTaskRobot(true);
             }
 
             while(this.StatusData.IsStarted)
@@ -95,11 +95,14 @@
             });
 		}
 
-        public void CreateTaskRobot(bool isP0)
+        public async Task CreateTaskRobot(bool isP0)
 		{
-            FlightCrawlRobot robot = new FlightCrawlRobot(isP0);
-            robot.Start();
-            this.TaskRobotList.Add(robot);
+            await Task.Run(() =>
+            {
+                FlightCrawlRobot robot = new FlightCrawlRobot(isP0);
+                robot.Start();
+                this.TaskRobotList.Add(robot);
+            });
 		}
  
 

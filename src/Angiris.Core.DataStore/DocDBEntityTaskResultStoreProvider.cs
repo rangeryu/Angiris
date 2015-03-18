@@ -23,12 +23,23 @@
 
         public void Initialize()
         {
-            client = new DocumentClient(new Uri(this.HostName), this.AuthKey);
-            database = GetOrCreateDatabaseAsync(this.DatabaseId).GetAwaiter().GetResult();
+            //perf tips: http://azure.microsoft.com/blog/2015/01/20/performance-tips-for-azure-documentdb-part-1-2/
+            if(client == null)
+            {
+                client = new DocumentClient(new Uri(this.HostName), this.AuthKey, new ConnectionPolicy
+                {
+                    ConnectionMode = ConnectionMode.Direct,
+                    ConnectionProtocol = Protocol.Tcp
+                });
 
-            //Caution - test only
-            //DeleteCollectionAsync(this.CollectionId).GetAwaiter().GetResult();
-            collection = GetOrCreateCollectionAsync(database.SelfLink, this.CollectionId).GetAwaiter().GetResult();
+                client.OpenAsync().Wait();
+            }
+
+            if (database == null)
+                database = GetOrCreateDatabaseAsync(this.DatabaseId).GetAwaiter().GetResult();
+
+            if (collection == null)
+                collection = GetOrCreateCollectionAsync(database.SelfLink, this.CollectionId).GetAwaiter().GetResult();
         }
 
         public async Task<T> CreateEntity(T entity)
@@ -44,15 +55,18 @@
 
         public async Task<T> ReadEntity(string id)
         {
-            dynamic doc = client.CreateDocumentQuery(collection.SelfLink).Where(d => d.Id == id).AsEnumerable().FirstOrDefault();
+            return await Task.Run(() => {
 
-            if (doc != null)
-            {
-                var entity = (T)doc;
-                return entity;
-            }
-            else
-                return default(T);
+                dynamic doc = client.CreateDocumentQuery(collection.SelfLink).Where(d => d.Id == id).AsEnumerable().FirstOrDefault();
+
+                if (doc != null)
+                {
+                    var entity = (T)doc;
+                    return entity;
+                }
+                else
+                    return default(T);
+            });
 
         }
 
