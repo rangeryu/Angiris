@@ -40,7 +40,7 @@ namespace Angiris.Backend.Crawlers
                     Random rnd = new Random(DateTime.UtcNow.Millisecond);
                     var resource = fakeResource[rnd.Next(0, fakeResource.Length - 1)];
 
-                    var result = await httpClient.GetAsync("resource");
+                    var result = await httpClient.GetAsync(resource);
 
                     if (result.IsSuccessStatusCode)
                     {
@@ -48,7 +48,7 @@ namespace Angiris.Backend.Crawlers
 
                         var flightReq = this.CrawlEntity.RequestData;
 
-                        for (int r = 0; r < rnd.Next(0, 4); r++)
+                        for (int r = 0; r < rnd.Next(1, 4); r++)
                         {
                             var flightResp = new FlightResponse()
                             {

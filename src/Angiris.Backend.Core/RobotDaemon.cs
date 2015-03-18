@@ -6,7 +6,7 @@
 	using System.Linq;
 	using System.Text;
     using Angiris.Core.Models;
-using Angiris.Core.DataStore;
+    using Angiris.Core.DataStore;
     using System.Threading.Tasks;
 
 	public class RobotDaemon
@@ -33,10 +33,12 @@ using Angiris.Core.DataStore;
 
         public async Task Start()
 		{
+            daemonStatusStore.Initialize();
+
             this.StatusData.IsStarted = true;
 
-            int robotCount = 10;
-            int robotCountP0 = 5;
+            int robotCount = 2;
+            int robotCountP0 = 2;
 
             for (int i = 0; i < robotCount;i++ )
             {
@@ -64,10 +66,19 @@ using Angiris.Core.DataStore;
             StatusData.LastUpdated = DateTime.UtcNow;
             StatusData.Remark = "Uptime: " + (StatusData.LastUpdated - StatusData.StartTime).ToString();
             StatusData.CrawlerCount = this.TaskRobotList.Count;
+            StatusData.RobotStatusList = this.TaskRobotList.Select(r => r.Status).ToList();
 
-            await daemonStatusStore.UpdateEntity(StatusData.InstanceName, StatusData);
+            try
+            { 
+                await daemonStatusStore.UpdateEntity(StatusData.InstanceName, StatusData);
+                Console.WriteLine(this.StatusData);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             //sync robot resouce plan here from central admin.
-
+            
 		}
 
         public async Task Stop()

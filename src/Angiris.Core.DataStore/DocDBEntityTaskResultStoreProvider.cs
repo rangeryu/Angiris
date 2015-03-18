@@ -27,7 +27,7 @@
             database = GetOrCreateDatabaseAsync(this.DatabaseId).GetAwaiter().GetResult();
 
             //Caution - test only
-            DeleteCollectionAsync(this.CollectionId).GetAwaiter().GetResult();
+            //DeleteCollectionAsync(this.CollectionId).GetAwaiter().GetResult();
             collection = GetOrCreateCollectionAsync(database.SelfLink, this.CollectionId).GetAwaiter().GetResult();
         }
 
@@ -140,9 +140,9 @@
             return collection;
         }
 
-        private async Task DeleteCollectionAsync(string id)
+        public async Task DeleteCollectionAsync(string collectionId)
         {
-            DocumentCollection collection = client.CreateDocumentCollectionQuery(database.SelfLink).Where(c => c.Id == id).ToArray().FirstOrDefault();
+            DocumentCollection collection = client.CreateDocumentCollectionQuery(database.SelfLink).Where(c => c.Id == collectionId).ToArray().FirstOrDefault();
             if (collection != null)
             {
                 collection = await client.DeleteDocumentCollectionAsync(collection.SelfLink);

@@ -59,7 +59,6 @@ namespace Angiris.Core.Models
         // 起飞时间
         public DateEpoch DeptureTime { get; set; }
         // 到达时间
-        [JsonConverter(typeof(EpochDateTimeConverter))]
         public DateEpoch ArrivalTime { get; set; }
         // 舱位信息
         public IEnumerable<FlightCabin> FlightCabins { get; set; }

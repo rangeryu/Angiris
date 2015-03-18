@@ -39,49 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GeneratedCode\APIWorker\IBackendAPIService.cs" />
-    <Compile Include="GeneratedCode\APIWorker\IQueryWorker.cs" />
-    <Compile Include="GeneratedCode\DataStore\DataProviderFactory.cs" />
-    <Compile Include="GeneratedCode\DataStore\DocDBEntitySnapshotStoreProvider.cs" />
-    <Compile Include="GeneratedCode\DataStore\DocDBEntityTaskResultStoreProvider.cs" />
-    <Compile Include="GeneratedCode\DataStore\EntityCacheStoreProvider.cs" />
-    <Compile Include="GeneratedCode\DataStore\EntitySnapshot.cs" />
-    <Compile Include="GeneratedCode\DataStore\EntitySnapshotStoreProvider.cs" />
-    <Compile Include="GeneratedCode\DataStore\EntityTaskResultStoreProvider.cs" />
-    <Compile Include="GeneratedCode\DataStore\IEntityQuery.cs" />
-    <Compile Include="GeneratedCode\DataStore\IEntitySnapshot.cs" />
-    <Compile Include="GeneratedCode\DataStore\IEntityTaskResult.cs" />
-    <Compile Include="GeneratedCode\DataStore\INoSQLDataProvider.cs" />
-    <Compile Include="GeneratedCode\DataStore\MongoDBEntitySnapshotStoreProvider.cs" />
-    <Compile Include="GeneratedCode\DataStore\RedisEntityCacheStoreProvider.cs" />
-    <Compile Include="GeneratedCode\DataStore\RedisEntityTaskResultStoreProvider.cs" />
-    <Compile Include="GeneratedCode\EntitySnapshot.cs">
-      <SourceModelReference>modelbus://ModelStoreAdapter.1.0/Angiris.ModelingProject/EntitySnapshot/D:\DevDevDev\RangerYuGitRepo\Angiris\Angiris.ModelingProject\Angiris.ModelingProject.modelproj%252fe0780b8f-704e-4cd9-8483-2b4418fc04f6</SourceModelReference>
-    </Compile>
-    <Compile Include="GeneratedCode\IBackendAPIService.cs">
-      <SourceModelReference>modelbus://ModelStoreAdapter.1.0/Angiris.ModelingProject/IBackendAPIService/D:\DevDevDev\RangerYuGitRepo\Angiris\Angiris.ModelingProject\Angiris.ModelingProject.modelproj%252f38ec311b-fce0-4f7d-8356-e04ad69043f5</SourceModelReference>
-    </Compile>
-    <Compile Include="GeneratedCode\IEntityQuery.cs">
-      <SourceModelReference>modelbus://ModelStoreAdapter.1.0/Angiris.ModelingProject/IEntityQuery/D:\DevDevDev\RangerYuGitRepo\Angiris\Angiris.ModelingProject\Angiris.ModelingProject.modelproj%252ff71fd0cc-4665-4a9b-8774-fd046397eb94</SourceModelReference>
-    </Compile>
-    <Compile Include="GeneratedCode\IEntitySnapshot.cs">
-      <SourceModelReference>modelbus://ModelStoreAdapter.1.0/Angiris.ModelingProject/IEntitySnapshot/D:\DevDevDev\RangerYuGitRepo\Angiris\Angiris.ModelingProject\Angiris.ModelingProject.modelproj%252f6a9ade24-0bbc-4a34-943e-b5b714e8d4ac</SourceModelReference>
-    </Compile>
-    <Compile Include="GeneratedCode\IEntityTaskResult.cs">
-      <SourceModelReference>modelbus://ModelStoreAdapter.1.0/Angiris.ModelingProject/IEntityTaskResult/D:\DevDevDev\RangerYuGitRepo\Angiris\Angiris.ModelingProject\Angiris.ModelingProject.modelproj%252f7d093f9c-93c0-47a0-a56f-ee01a2d08135</SourceModelReference>
-    </Compile>
-    <Compile Include="GeneratedCode\IQueryAPI.cs" />
-    <Compile Include="GeneratedCode\IQueryWorker.cs">
-      <SourceModelReference>modelbus://ModelStoreAdapter.1.0/Angiris.ModelingProject/IQueryWorker/D:\DevDevDev\RangerYuGitRepo\Angiris\Angiris.ModelingProject\Angiris.ModelingProject.modelproj%252fab1b29f1-cd20-4267-ba81-fd989d09018f</SourceModelReference>
-    </Compile>
-    <Compile Include="GeneratedCode\QueueManager\KafkaTopicManager.cs" />
-    <Compile Include="GeneratedCode\QueueManager\QueueManagerFactory.cs" />
-    <Compile Include="GeneratedCode\QueueManager\QueueTopicManager.cs" />
-    <Compile Include="GeneratedCode\QueueManager\ServiceBusTopicManager.cs" />
-    <Compile Include="GeneratedCode\TaskConsumerFarm\CrawlRobot.cs" />
-    <Compile Include="GeneratedCode\TaskConsumerFarm\QueryRobot.cs" />
-    <Compile Include="GeneratedCode\TaskConsumerFarm\RobotDaemon.cs" />
-    <Compile Include="GeneratedCode\TaskConsumerFarm\TaskRobot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

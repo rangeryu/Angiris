@@ -6,6 +6,7 @@
     using Angiris.Core.Models;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Threading;
@@ -40,7 +41,7 @@
 
             queueManager.Initialize();
             queueManager.StartReceiveMessages((entity) => {
-                ProcessTask(entity).Wait();
+                this.ProcessTask(entity).Wait();
             });
 
             this.Status.StartTime = DateTime.UtcNow;
@@ -62,44 +63,56 @@
 
         protected async Task ProcessTask(FlightCrawlEntity crawlEntity)
         {
-            Interlocked.Increment(ref totalReceivedCount);
-            Interlocked.Increment(ref concurrentJobCount);
-
-            crawlEntity.Status = Angiris.Core.Models.TaskStatus.Processing;
-            crawlEntity.LastModifiedTime = DateTime.UtcNow;
-
-            await cacheStore.UpdateEntity(crawlEntity.TaskID.ToString(), crawlEntity);
-
-            var task = ExecuteTask(crawlEntity);
-
-            if (crawlEntity.MaxExecutionTimeInMS == 0)
+            try
             {
-                crawlEntity.MaxExecutionTimeInMS = 50 * 1000;//50 seconds
-            }
-             
+                
 
-            if (await Task.WhenAny(task, Task.Delay(crawlEntity.MaxExecutionTimeInMS)) == task)
-            {
-                // task completed within timeout
-               
-                crawlEntity.FinishTime = DateTime.UtcNow;  
-            }
-            else
-            {
-                // timeout logic
+                Interlocked.Increment(ref totalReceivedCount);
+                Interlocked.Increment(ref concurrentJobCount);
+
+                crawlEntity.Status = Angiris.Core.Models.TaskStatus.Processing;
                 crawlEntity.LastModifiedTime = DateTime.UtcNow;
-                crawlEntity.Status = Angiris.Core.Models.TaskStatus.TimedOut;
+
+                await cacheStore.UpdateEntity(crawlEntity.TaskID.ToString(), crawlEntity);
+
+
+
+                if (crawlEntity.MaxExecutionTimeInMS == 0)
+                {
+                    crawlEntity.MaxExecutionTimeInMS = 50 * 1000;//50 seconds
+                }
+
+                var task = ExecuteTask(crawlEntity);
+
+                if (await Task.WhenAny(task, Task.Delay(crawlEntity.MaxExecutionTimeInMS)) == task)
+                {
+                    // task completed within timeout
+
+                    crawlEntity.FinishTime = DateTime.UtcNow;
+                }
+                else
+                {
+                    // timeout logic
+                    crawlEntity.LastModifiedTime = DateTime.UtcNow;
+                    crawlEntity.Status = Angiris.Core.Models.TaskStatus.TimedOut;
+                }
+
+                Interlocked.Decrement(ref concurrentJobCount);
+                this.Status.TaskReceivedCount = totalReceivedCount;
+                this.Status.ConcurrentJobCount = concurrentJobCount;
+
+                await cacheStore.UpdateEntity(crawlEntity.TaskID.ToString(), crawlEntity);
+                await persistenceStore.UpdateEntity(crawlEntity.TaskID.ToString(), crawlEntity);
+
+                Console.WriteLine("done " + crawlEntity.TaskID.ToString());
             }
-
-            await cacheStore.UpdateEntity(crawlEntity.TaskID.ToString(), crawlEntity);
-            await persistenceStore.UpdateEntity(crawlEntity.TaskID.ToString(), crawlEntity);
-
-            Interlocked.Decrement(ref concurrentJobCount);
-            this.Status.TaskReceivedCount = totalReceivedCount;
-            this.Status.ConcurrentJobCount = concurrentJobCount;
+            catch(Exception ex)
+            {
+                Trace.WriteLine(ex.Message);
+            }
         }
 
-        public async Task ExecuteTask(FlightCrawlEntity crawlEntity)
+        protected async Task ExecuteTask(FlightCrawlEntity crawlEntity)
         {
             FlightCrawlerBase crawler = FlightCrawlerFactory.Create(crawlEntity);
 

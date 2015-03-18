@@ -30,17 +30,21 @@ namespace Angiris.CentralAdmin.Core
             persistenceStore = DataProviderFactory.GetDocDBQueuedTaskStore<FlightCrawlEntity>();
             persistenceStore.Initialize();
     
+
+            
+
             var crawlRequests = FakeDataRepo.GenerateRandomFlightCrawlRequests(500);
             var crawlRequestsP0 = FakeDataRepo.GenerateRandomFlightCrawlRequests(100);
            //int i = 0;
 
+            var allrequests = crawlRequests.Concat(crawlRequestsP0).OrderBy(r => Guid.NewGuid()).ToList();
 
             //ParallelOptions pOption = new ParallelOptions();
             //pOption.MaxDegreeOfParallelism = 20;
 
             var startTime = DateTime.Now;
 
-            var result = Parallel.ForEach(crawlRequests.Concat(crawlRequestsP0), (r) =>  {
+            var result = Parallel.ForEach(allrequests, (r) =>  {
             //crawlRequests.ForEach((r) =>  {
 
                 Task.Run(async () =>
