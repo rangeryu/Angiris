@@ -25,7 +25,7 @@
 
         void Initialize();
 
-        void StartReceiveMessages(Action<TMsgBody> processMessageTask);
+        void StartReceiveMessages(Func<TMsgBody,Task> processMessageTask);
 
         Task Stop();
 

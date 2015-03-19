@@ -15,8 +15,55 @@
     public class FlightCrawlRobot 
     {
         IQueueTopicManager<FlightCrawlEntity> queueManager;
-        INoSQLStoreProvider<FlightCrawlEntity> cacheStore;
-        INoSQLStoreProvider<FlightCrawlEntity> persistenceStore;
+
+
+        private static object syncRoot_cache = new Object();
+        //INoSQLStoreProvider<FlightCrawlEntity> cacheStore;
+
+        private static INoSQLStoreProvider<FlightCrawlEntity> _cacheStore;
+        private INoSQLStoreProvider<FlightCrawlEntity> cacheStore
+        {
+            get
+            {
+                if (_cacheStore == null)
+                {
+                    lock (syncRoot_cache)
+                    {
+                        if (_cacheStore == null)
+                        {
+                            _cacheStore = DataProviderFactory.GetRedisQueuedTaskStore<FlightCrawlEntity>();
+                            _cacheStore.Initialize();
+                        }
+                    }
+                }
+                return _cacheStore;
+            }
+        }
+
+        private static object syncRoot_persistence = new Object();
+
+        private static INoSQLStoreProvider<FlightCrawlEntity> _persistenceStore;
+        private INoSQLStoreProvider<FlightCrawlEntity> persistenceStore
+        {
+            get
+            {
+                if (_persistenceStore == null)
+                {
+                    lock (syncRoot_persistence)
+                    {
+                        if (_persistenceStore == null)
+                        {
+                            _persistenceStore = DataProviderFactory.GetDocDBQueuedTaskStore<FlightCrawlEntity>();
+                            _persistenceStore.Initialize();
+                        }
+                    }
+                }
+                return _persistenceStore;
+            }
+        }
+
+
+
         public RobotStatus Status
         {
             get;
@@ -31,32 +78,38 @@
             
         }
 
-        public void Start()
+        public void Initialize()
         {
-            cacheStore = DataProviderFactory.GetRedisQueuedTaskStore<FlightCrawlEntity>();
-            cacheStore.Initialize();
-
-            persistenceStore = DataProviderFactory.GetDocDBQueuedTaskStore<FlightCrawlEntity>();
-            persistenceStore.Initialize();
+            var cs = this.cacheStore;
+            var ps = this.persistenceStore;
 
             queueManager.Initialize();
-            queueManager.StartReceiveMessages( async (entity) => {
-               await this.ProcessTask(entity);//.Wait(); //todo 
-            });
+        }
+        
+        public void Start()
+        {
+            //cacheStore = DataProviderFactory.GetRedisQueuedTaskStore<FlightCrawlEntity>();
+            //cacheStore.Initialize();
+
+            //persistenceStore = DataProviderFactory.GetDocDBQueuedTaskStore<FlightCrawlEntity>();
+            //persistenceStore.Initialize();
+
+            //TODO: need to have a better implementation for singleton of the instance.
+
 
             this.Status.StartTime = DateTime.UtcNow;
             this.Status.Name = "FlightCrawlRobot | " + this.queueManager.TopicName;
+            queueManager.StartReceiveMessages(async (entity) =>
+            {
+                await this.ProcessTask(entity);
+            });
         }
 
-        public void Stop()
+        public async Task Stop()
         {
-            queueManager.Stop().Wait();
+           await queueManager.Stop();
         }
-
-        public void Dispose()
-        {
-             //TODO
-        }
+ 
 
         int totalReceivedCount = 0;
         int concurrentJobCount = 0;
@@ -104,11 +157,11 @@
                 await cacheStore.UpdateEntity(crawlEntity.TaskID.ToString(), crawlEntity);
                 await persistenceStore.UpdateEntity(crawlEntity.TaskID.ToString(), crawlEntity);
 
-                Console.WriteLine("done " + crawlEntity.TaskID.ToString());
+                Trace.TraceInformation("done by Robot {0} @{1}",crawlEntity.TaskID.ToString(),DateTime.Now);
             }
             catch(Exception ex)
             {
-                Trace.WriteLine(ex.Message);
+                Trace.TraceError(ex.Message);
             }
         }
 

@@ -16,22 +16,26 @@ namespace Angiris.CentralAdmin.TestConsole
 
             ScheduledFlightCrawlRequestFactory flightCrawlRequestFactory = new ScheduledFlightCrawlRequestFactory();
 
-            
-            var task = Task.Run(async () => {
-
-                try
+            //while (true)
+            {
+                Console.WriteLine("Message Number:");
+                int totalMsg = int.Parse(Console.ReadLine());
+                var task = Task.Run(async () =>
                 {
-                    await flightCrawlRequestFactory.StartPushTaskMessages();
-                }
-                catch(Exception ex)
-                {
-                    Console.WriteLine(ex.Message + System.Environment.NewLine + ex.InnerException.Message);
-                }
-                
 
-            });
-            task.Wait();
+                    try
+                    {
+                        await flightCrawlRequestFactory.StartPushTaskMessages(totalMsg);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message + System.Environment.NewLine + ex.InnerException.Message);
+                    }
 
+
+                });
+                task.Wait();
+            }
             Console.ReadLine();
         }
 

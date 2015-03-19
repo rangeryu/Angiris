@@ -8,6 +8,7 @@
     using Angiris.Core.Models;
     using Angiris.Core.DataStore;
     using System.Threading.Tasks;
+    using System.Diagnostics;
 
 	public class RobotDaemon
 	{
@@ -37,18 +38,22 @@
 
             this.StatusData.IsStarted = true;
 
-            int robotCount = 1;
-            int robotCountP0 = 1;
+            int robotCount = 2;
+            int robotCountP0 = 2;
 
+            Trace.TraceInformation("Creating robots...");
             for (int i = 0; i < robotCount;i++ )
             {
-                await CreateTaskRobot(false);
+                CreateTaskRobot(false);
             }
 
             for (int i = 0; i < robotCountP0; i++)
             {
-                await CreateTaskRobot(true);
+                CreateTaskRobot(true);
             }
+
+            Trace.TraceInformation("Starting robots...");
+            this.TaskRobotList.ForEach(r => r.Start());
 
             while(this.StatusData.IsStarted)
             {
@@ -71,7 +76,7 @@
             try
             { 
                 await daemonStatusStore.UpdateEntity(StatusData.InstanceName, StatusData);
-                Console.WriteLine(this.StatusData);
+                Console.WriteLine(this.StatusData.ToString());
             }
             catch(Exception ex)
             {
@@ -83,26 +88,30 @@
 
         public async Task Stop()
 		{
-            await Task.Run(() =>
+            Trace.TraceInformation("Stopping Daemon in 30 seconds");
+
+            this.StatusData.IsStarted = false;
+            await this.SyncStatus();
+
+            List<Task> stopTasks = new List<Task>();
+            foreach (var robot in this.TaskRobotList)
             {
-                foreach (var robot in this.TaskRobotList)
-                {
-                    robot.Stop();
-                    robot.Dispose();
-                }
-                this.TaskRobotList.Clear();
-                this.StatusData.IsStarted = false;
-            });
+                stopTasks.Add(robot.Stop());
+            }
+            Task.WaitAll(stopTasks.ToArray(), 30000);
+            this.TaskRobotList.Clear();
+
+            await this.SyncStatus();
 		}
 
-        public async Task CreateTaskRobot(bool isP0)
+        public void CreateTaskRobot(bool isP0)
 		{
-            await Task.Run(() =>
-            {
+            //await Task.Run(() =>
+           // {
                 FlightCrawlRobot robot = new FlightCrawlRobot(isP0);
-                robot.Start();
+                robot.Initialize();
                 this.TaskRobotList.Add(robot);
-            });
+           // });
 		}
  
 

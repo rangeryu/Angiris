@@ -16,7 +16,7 @@ namespace Angiris.CentralAdmin.Core
         INoSQLStoreProvider<FlightCrawlEntity> cacheStore;
         INoSQLStoreProvider<FlightCrawlEntity> persistenceStore;
  
-        public async Task StartPushTaskMessages()
+        public async Task StartPushTaskMessages(int totalMessages)
         {
             queueManager = QueueManagerFactory.CreateFlightCrawlEntityQueueMgr();
             queueManager.Initialize();
@@ -29,12 +29,12 @@ namespace Angiris.CentralAdmin.Core
 
             persistenceStore = DataProviderFactory.GetDocDBQueuedTaskStore<FlightCrawlEntity>();
             persistenceStore.Initialize();
-    
 
-            
 
-            var crawlRequests = FakeDataRepo.GenerateRandomFlightCrawlRequests(500);
-            var crawlRequestsP0 = FakeDataRepo.GenerateRandomFlightCrawlRequests(100);
+
+
+            var crawlRequests = FakeDataRepo.GenerateRandomFlightCrawlRequests(Convert.ToInt32(totalMessages*0.8));
+            var crawlRequestsP0 = FakeDataRepo.GenerateRandomFlightCrawlRequests(Convert.ToInt32(totalMessages * 0.2));
            //int i = 0;
 
             var allrequests = crawlRequests.Concat(crawlRequestsP0).OrderBy(r => Guid.NewGuid()).ToList();

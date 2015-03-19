@@ -33,7 +33,11 @@ namespace Angiris.Backend.Crawlers
             {
                 using (HttpClient httpClient = new HttpClient())
                 {
-                    string[] fakeResource = { "http://www.bing.com", "http://www.microsoft.com", "http://azure.microsoft.com/en-us/", "https://msdn.microsoft.com/en-US/", "http://www.kjt.com/" };
+                    string[] fakeResource = { "http://www.microsoft.com/privacystatement/en-us/bingandmsn/default.aspx"
+                                                , "http://www.bing.com/search?q=azure%20service%20bus"
+                                                , "http://azure.microsoft.com/blog/"
+                                                , "https://msdn.microsoft.com/en-US/"
+                                                , "http://www.kjt.com/" };
 
                     string[] cabinNames = { "First Class", "Business Class", "Business Class", "Economy Class", "Economy Class", "Economy Class", "Economy Class" };
 
@@ -82,19 +86,24 @@ namespace Angiris.Backend.Crawlers
 
                         }
 
-                        this.CrawlEntity.Status = Core.Models.TaskStatus.Completed;                        
+                        this.CrawlEntity.Status = Core.Models.TaskStatus.Completed;
                         this.CrawlEntity.FinishTime = DateTime.UtcNow;
 
 
                     }
                     else
+                    {
                         this.CrawlEntity.Status = Core.Models.TaskStatus.Failed;
+                        this.CrawlEntity.LogData.Add(DateTime.UtcNow.ToString() + ", " + result.StatusCode.ToString());
+                    }
                 }
 
             }
             catch(Exception ex)
             {
                 this.CrawlEntity.Status = Core.Models.TaskStatus.Failed;
+                this.CrawlEntity.LogData.Add(DateTime.UtcNow.ToString() + ", " + ex.Message + ", " + ex.InnerException + ", " + ex.StackTrace);
+
             }
 
             this.CrawlEntity.LastModifiedTime = DateTime.UtcNow;

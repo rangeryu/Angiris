@@ -32,9 +32,22 @@ namespace Angiris.Core.Models
                + "CrawlerCount:{4}\r\n"
                + "LastUpdated:{5}\r\n"
                + "Remark:{6}\r\n"
-               + "IsStarted:{7}\r\n",
-               this.InstanceName, this.StartTime, this.CPURatio, this.MemoryRatio, this.CrawlerCount, this.LastUpdated, this.Remark, this.IsStarted
+               + "IsStarted:{7}\r\n"
+               + "TotalTasks:{8}\r\n"
+               + "TotalConcurrent:{9}\r\n",
+               this.InstanceName, this.StartTime, this.CPURatio, this.MemoryRatio, this.CrawlerCount, this.LastUpdated, this.Remark, this.IsStarted,
+               RobotStatusList.Sum(r=>r.TaskReceivedCount),
+               RobotStatusList.Sum(r=>r.ConcurrentJobCount)
                 );
+
+           RobotStatusList.ForEach(r => {
+
+               output += string.Format("--RobotName:{0}\r\n"
+                                           + "----ConcurrentTasks:{1}\r\n"
+                                           + "----TaskReceivedCount:{2}\r\n",
+                                            r.Name, r.ConcurrentJobCount, r.TaskReceivedCount);
+           
+           });
 
            return output;
         }

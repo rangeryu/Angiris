@@ -27,6 +27,11 @@ using System.Threading.Tasks;
             private set;
         }
 
+        public int MaxConcurrentCalls
+        {
+            get;
+            private set;
+        }
 
 
         private ManualResetEvent pauseProcessingEvent;
@@ -42,10 +47,11 @@ using System.Threading.Tasks;
             private set;
         }
 
-        public ServiceBusQueueManager(string topicName, string connectionString)
+        public ServiceBusQueueManager(string topicName, string connectionString, int maxConcurrentCalls = 10)
         {
             this.TopicName = topicName;
             this.ConnectionString = connectionString;
+            this.MaxConcurrentCalls = maxConcurrentCalls;
             this.pauseProcessingEvent = new ManualResetEvent(true);
         }
         public void Initialize()
@@ -159,7 +165,7 @@ using System.Threading.Tasks;
         /// bind action to client.OnMessageAsync. so it must be called only once.
         /// </summary>
         /// <param name="processMessageTask"></param>
-        public void StartReceiveMessages(Action<TMsgBody> processMessageTask)
+        public void StartReceiveMessages(Func<TMsgBody,Task> processMessageTask)
         {
             // Setup the options for the message pump.
             var  options = new OnMessageOptions();
@@ -168,35 +174,44 @@ using System.Threading.Tasks;
             options.AutoComplete = false;
             options.MaxConcurrentCalls = 10;
             options.ExceptionReceived += this.OptionsOnExceptionReceived;
-
+            
             //this.client.PrefetchCount = 10;
             // Use of Service Bus OnMessage message pump. The OnMessage method must be called once, otherwise an exception will occur.
             this.client.OnMessageAsync(
                 async (msg) =>
                 {
-                    // Will block the current thread if Stop is called.
-                    this.pauseProcessingEvent.WaitOne();
-
-                    try
+                    //await Task.Run(async () =>
                     {
 
-                        var msgBody = msg.GetBody<TMsgBody>();
-                        // Execute processing task here
-                        processMessageTask(msgBody);
+                        // Will block the current thread if Stop is called.
+                        this.pauseProcessingEvent.WaitOne();
 
-                        switch (msgBody.Status)
+                        try
                         {
-                            case Models.TaskStatus.Completed: await msg.CompleteAsync(); break;
-                            case Models.TaskStatus.InDeadletter: await msg.DeadLetterAsync(); break;
-                            default: await msg.AbandonAsync(); break;
-                        }
-                    }
-                    catch(Exception ex)
-                    {
-                        Trace.TraceError("Exception in QueueClient.OnMessageAsync: {0}", ex.Message);
-                        msg.Abandon();
-                    }
 
+                            var msgBody = msg.GetBody<TMsgBody>();
+
+                            Trace.TraceInformation("Start to process task {0} @{1}", msgBody.TaskID, DateTime.Now);
+                            // Execute processing task here
+                            await processMessageTask(msgBody);
+                            
+
+                            Trace.TraceInformation("done task {0} @{1}", msgBody.TaskID, DateTime.Now);
+                            switch (msgBody.Status)
+                            {
+                                case Models.TaskStatus.Completed: await msg.CompleteAsync(); break;
+                                case Models.TaskStatus.InDeadletter: await msg.DeadLetterAsync(); break;
+                                default: await msg.AbandonAsync(); break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Trace.TraceError("Exception in QueueClient.OnMessageAsync: {0}", ex.Message);
+                            msg.Abandon();
+                        }
+
+                    }
+                    //);
                 },
                 options);
         }
