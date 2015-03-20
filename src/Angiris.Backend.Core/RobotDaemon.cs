@@ -38,8 +38,8 @@
 
             this.StatusData.IsStarted = true;
 
-            int robotCount = 2;
-            int robotCountP0 = 2;
+            int robotCount = 10;
+            int robotCountP0 = 10;
 
             Trace.TraceInformation("Creating robots...");
             for (int i = 0; i < robotCount;i++ )
@@ -58,7 +58,7 @@
             while(this.StatusData.IsStarted)
             {
                 await SyncStatus();
-                await Task.Delay(5000);
+                await Task.Delay(3000);
             }
 
             

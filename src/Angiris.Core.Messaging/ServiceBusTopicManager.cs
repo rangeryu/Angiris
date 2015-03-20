@@ -73,8 +73,9 @@ using System.Threading.Tasks;
                     //https://msdn.microsoft.com/en-us/library/microsoft.servicebus.messaging.queuedescription.lockduration.aspx
                     queueDescription.LockDuration = TimeSpan.FromMinutes(1);
                     //Partitioning Messaging Entities https://msdn.microsoft.com/en-us/library/azure/dn520246.aspx
-                    //queueDescription.EnablePartitioning = true;
-                    
+                    queueDescription.EnablePartitioning = true;
+                    queueDescription.EnableBatchedOperations = true;
+                    queueDescription.EnableExpress = true;
                     // Set the maximum delivery count for messages. A message is automatically deadlettered after this number of deliveries.  Default value is 10.
                     queueDescription.MaxDeliveryCount = 3;
 
@@ -111,7 +112,8 @@ using System.Threading.Tasks;
   
             // Create the queue client. By default, the PeekLock method is used.
             this.client = QueueClient.CreateFromConnectionString(this.ConnectionString, this.queueName);
-
+           
+            
         }
 
         public async Task<bool> SendMessage(TMsgBody msg)
@@ -169,13 +171,13 @@ using System.Threading.Tasks;
         {
             // Setup the options for the message pump.
             var  options = new OnMessageOptions();
-
+           
             // When AutoComplete is disabled, you have to manually complete/abandon the messages and handle errors, if any.
             options.AutoComplete = false;
-            options.MaxConcurrentCalls = 10;
+            options.MaxConcurrentCalls = 20;
             options.ExceptionReceived += this.OptionsOnExceptionReceived;
             
-            //this.client.PrefetchCount = 10;
+            this.client.PrefetchCount = 10;
             // Use of Service Bus OnMessage message pump. The OnMessage method must be called once, otherwise an exception will occur.
             this.client.OnMessageAsync(
                 async (msg) =>
