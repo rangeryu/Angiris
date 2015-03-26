@@ -33,6 +33,12 @@ using System.Threading.Tasks;
             private set;
         }
 
+        public int ClientPrefetchCount
+        {
+            get;
+            private set;
+        }
+
 
         private ManualResetEvent pauseProcessingEvent;
         private QueueClient client;
@@ -47,11 +53,12 @@ using System.Threading.Tasks;
             private set;
         }
 
-        public ServiceBusQueueManager(string topicName, string connectionString, int maxConcurrentCalls = 10)
+        public ServiceBusQueueManager(string topicName, string connectionString, int maxConcurrentCalls = 10, int clientPrefetchCount = 100)
         {
             this.TopicName = topicName;
             this.ConnectionString = connectionString;
             this.MaxConcurrentCalls = maxConcurrentCalls;
+            this.ClientPrefetchCount = clientPrefetchCount;
             this.pauseProcessingEvent = new ManualResetEvent(true);
         }
         public void Initialize()
@@ -174,10 +181,10 @@ using System.Threading.Tasks;
            
             // When AutoComplete is disabled, you have to manually complete/abandon the messages and handle errors, if any.
             options.AutoComplete = false;
-            options.MaxConcurrentCalls = 20;
+            options.MaxConcurrentCalls = this.MaxConcurrentCalls;
             options.ExceptionReceived += this.OptionsOnExceptionReceived;
-            
-            this.client.PrefetchCount = 10;
+
+            this.client.PrefetchCount = this.ClientPrefetchCount;
             // Use of Service Bus OnMessage message pump. The OnMessage method must be called once, otherwise an exception will occur.
             this.client.OnMessageAsync(
                 async (msg) =>

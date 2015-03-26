@@ -38,8 +38,8 @@
 
             this.StatusData.IsStarted = true;
 
-            int robotCount = 10;
-            int robotCountP0 = 10;
+            int robotCount = 7;
+            int robotCountP0 = 3;
 
             Trace.TraceInformation("Creating robots...");
             for (int i = 0; i < robotCount;i++ )
@@ -76,11 +76,11 @@
             try
             { 
                 await daemonStatusStore.UpdateEntity(StatusData.InstanceName, StatusData);
-                Console.WriteLine(this.StatusData.ToString());
+                Trace.TraceInformation(this.StatusData.ToString());
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Trace.TraceError(ex.Message);
             }
             //sync robot resouce plan here from central admin.
             

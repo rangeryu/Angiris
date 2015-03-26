@@ -85,8 +85,8 @@ namespace Angiris.CentralAdmin.Core
                         string taskID = r.TaskID.ToString();
 
 
-                        var getStatusTask = GetQueuedStatusAsync(taskID, 60, 1000);
-                        var msGetStatusTimeout = 60000; //1 min
+                        var getStatusTask = GetQueuedStatusAsync(taskID, 120, 1000);
+                        var msGetStatusTimeout = 120000; //1 min
                         var getStatusTaskStart = DateTime.UtcNow;
                         if (await Task.WhenAny(getStatusTask, Task.Delay(msGetStatusTimeout)) == getStatusTask)
                         {
@@ -98,7 +98,7 @@ namespace Angiris.CentralAdmin.Core
                         }
                         else
                         {
-                            Console.WriteLine("Task " + taskID + " reached max timeout of " + msGetStatusTimeout.ToString() + "ms");
+                            Console.WriteLine("Task " + taskID + " reached max timeout of " + msGetStatusTimeout.ToString() + "ms. ");
                         }
                     });
 

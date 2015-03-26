@@ -86,16 +86,18 @@ namespace Angiris.Backend.Crawlers
 
                         }
 
-                        this.CrawlEntity.Status = Core.Models.TaskStatus.Completed;
+                        
                         this.CrawlEntity.FinishTime = DateTime.UtcNow;
 
 
                     }
                     else
                     {
-                        this.CrawlEntity.Status = Core.Models.TaskStatus.Failed;
+                        //this.CrawlEntity.Status = Core.Models.TaskStatus.Failed;
                         this.CrawlEntity.LogData.Add(DateTime.UtcNow.ToString() + ", " + result.StatusCode.ToString());
                     }
+
+                    this.CrawlEntity.Status = Core.Models.TaskStatus.Completed;
                 }
 
             }
