@@ -14,7 +14,7 @@ namespace Angiris.CentralAdmin.Core
         IQueueTopicManager<FlightCrawlEntity> queueManagerP0;
         IQueueTopicManager<FlightCrawlEntity> queueManager;
         INoSQLStoreProvider<FlightCrawlEntity> cacheStore;
-        INoSQLStoreProvider<FlightCrawlEntity> persistenceStore;
+        //INoSQLStoreProvider<FlightCrawlEntity> persistenceStore;
  
         public async Task StartPushTaskMessages(int totalMessages)
         {
@@ -27,8 +27,8 @@ namespace Angiris.CentralAdmin.Core
             cacheStore = DataProviderFactory.GetRedisQueuedTaskStore<FlightCrawlEntity>();
             cacheStore.Initialize();
 
-            persistenceStore = DataProviderFactory.GetDocDBQueuedTaskStore<FlightCrawlEntity>();
-            persistenceStore.Initialize();
+            //persistenceStore = DataProviderFactory.GetDocDBQueuedTaskStore<FlightCrawlEntity>();
+            //persistenceStore.Initialize();
 
 
 
@@ -44,7 +44,9 @@ namespace Angiris.CentralAdmin.Core
 
             var startTime = DateTime.Now;
 
-            var result = Parallel.ForEach(allrequests, (r) =>  {
+            List<Task> displayResultTaskList = new List<Task>();
+
+            var pRequestSendingResult = Parallel.ForEach(allrequests, (r) =>  {
             //crawlRequests.ForEach((r) =>  {
 
                 Task.Run(async () =>
@@ -73,16 +75,81 @@ namespace Angiris.CentralAdmin.Core
                         r.Status = Angiris.Core.Models.TaskStatus.Queueing;
                         r.LastModifiedTime = DateTime.UtcNow;
                         await cacheStore.UpdateEntity(r.TaskID.ToString(), r);
+
+                        Console.WriteLine("done sending out task message " + r.TaskID.ToString());
                     }
-                    await persistenceStore.CreateEntity(r);
-                    Console.WriteLine("done " + crawlRequests.IndexOf(r));
-                    
+                    //await persistenceStore.CreateEntity(r);
+
+                    var displayResultTask = Task.Run(async () =>
+                    {
+                        string taskID = r.TaskID.ToString();
+
+
+                        var getStatusTask = GetQueuedStatusAsync(taskID, 60, 1000);
+                        var msGetStatusTimeout = 60000; //1 min
+                        var getStatusTaskStart = DateTime.UtcNow;
+                        if (await Task.WhenAny(getStatusTask, Task.Delay(msGetStatusTimeout)) == getStatusTask)
+                        {
+                            var taskExecutionLength = DateTime.UtcNow - getStatusTaskStart;
+                            var getStatusTaskResult = getStatusTask.Result;
+
+                            Console.WriteLine("Task " + getStatusTaskResult.TaskID.ToString() + " completed in "
+                                + taskExecutionLength.TotalSeconds.ToString("F") + "");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Task " + taskID + " reached max timeout of " + msGetStatusTimeout.ToString() + "ms");
+                        }
+                    });
+
+                    displayResultTaskList.Add(displayResultTask);
+
                     //Console.WriteLine(i++);
                 }).Wait();
             });
 
+            Task.WaitAll(displayResultTaskList.ToArray());
+
             var endTime = DateTime.Now;
             Console.WriteLine("End in " + (endTime - startTime).TotalSeconds + " seconds");
+        }
+
+   
+
+        private async Task<IQueuedTask> GetQueuedStatusAsync(string taskID, int maxAttempts, int waitPeriodInMilliSeconds)
+        {
+            int attempts = 1;
+            IQueuedTask output = null;
+
+            while(attempts <= maxAttempts)
+            {
+                try
+                {                
+
+                    var result = await cacheStore.ReadEntity(taskID);
+
+                    if (result != null && result.Status == Angiris.Core.Models.TaskStatus.Completed)
+                    {
+                        output = result;
+                        break;
+                    }
+                    else
+                        await Task.Delay(TimeSpan.FromMilliseconds(waitPeriodInMilliSeconds));
+
+                }
+                catch(Exception ex)
+                {
+
+                }
+                finally
+                {
+                    attempts++;
+                }                
+            }
+
+            return output;
+
+
         }
  
 
