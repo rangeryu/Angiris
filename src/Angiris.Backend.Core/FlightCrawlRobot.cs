@@ -16,71 +16,27 @@
     {
         IQueueTopicManager<FlightCrawlEntity> queueManager;
 
-
-        private static object syncRoot_cache = new Object();
-        //INoSQLStoreProvider<FlightCrawlEntity> cacheStore;
-
-        private static INoSQLStoreProvider<FlightCrawlEntity> _cacheStore;
         private INoSQLStoreProvider<FlightCrawlEntity> CacheStore
         {
             get
             {
-                if (_cacheStore == null)
-                {
-                    lock (syncRoot_cache)
-                    {
-                        if (_cacheStore == null)
-                        {
-                            _cacheStore = DataProviderFactory.GetRedisQueuedTaskStore<FlightCrawlEntity>();
-                            _cacheStore.Initialize();
-                        }
-                    }
-                }
-                return _cacheStore;
+                return DataProviderFactory.SingletonRedisQueuedTaskStore;
             }
         }
-
-        private static object syncRoot_persistence = new Object();
-
-        private static INoSQLStoreProvider<FlightCrawlEntity> _persistenceStore;
+ 
         private INoSQLStoreProvider<FlightCrawlEntity> PersistenceStore
         {
             get
             {
-                if (_persistenceStore == null)
-                {
-                    lock (syncRoot_persistence)
-                    {
-                        if (_persistenceStore == null)
-                        {
-                            _persistenceStore = DataProviderFactory.GetDocDBQueuedTaskStore<FlightCrawlEntity>();
-                            _persistenceStore.Initialize();
-                        }
-                    }
-                }
-                return _persistenceStore;
+                return DataProviderFactory.SingletonDocDBQueuedTaskStore;
             }
         }
-
-        private static object syncRoot_EntityDatabase = new Object();
-
-        private static RedisFlightEntityDatabase _flightEntityDatabase;
+         
         private RedisFlightEntityDatabase FlightEntityDatabase
         {
             get
             {
-                if (_flightEntityDatabase == null)
-                {
-                    lock (syncRoot_EntityDatabase)
-                    {
-                        if (_flightEntityDatabase == null)
-                        {
-                            _flightEntityDatabase = DataProviderFactory.GetRedisFlightEntityDatabase();
-                            _flightEntityDatabase.Initialize();
-                        }
-                    }
-                }
-                return _flightEntityDatabase;
+                return DataProviderFactory.SingletonFlightEntityDatabase;
             }
         }
 

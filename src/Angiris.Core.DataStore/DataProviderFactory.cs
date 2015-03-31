@@ -56,6 +56,74 @@ using System.Text;
         }
 
 
+        private static object syncRoot_flightEntityDatabase = new Object();
+
+        private static RedisFlightEntityDatabase _flightEntityDatabase;
+        public static RedisFlightEntityDatabase SingletonFlightEntityDatabase
+        {
+            get
+            {
+                if (_flightEntityDatabase == null)
+                {
+                    lock (syncRoot_flightEntityDatabase)
+                    {
+                        if (_flightEntityDatabase == null)
+                        {
+                            _flightEntityDatabase = GetRedisFlightEntityDatabase();
+                            _flightEntityDatabase.Initialize();
+                        }
+                    }
+                }
+                return _flightEntityDatabase;
+            }
+        }
+
+
+        private static object syncRoot_docDBQueuedTaskStore = new Object();
+
+        private static DocDBQueuedTaskStoreProvider<FlightCrawlEntity> _docDBQueuedTaskStore;
+        public static DocDBQueuedTaskStoreProvider<FlightCrawlEntity> SingletonDocDBQueuedTaskStore
+        {
+            get
+            {
+                if (_docDBQueuedTaskStore == null)
+                {
+                    lock (syncRoot_docDBQueuedTaskStore)
+                    {
+                        if (_docDBQueuedTaskStore == null)
+                        {
+                            _docDBQueuedTaskStore = DataProviderFactory.GetDocDBQueuedTaskStore<FlightCrawlEntity>();
+                            _docDBQueuedTaskStore.Initialize();
+                        }
+                    }
+                }
+                return _docDBQueuedTaskStore;
+            }
+        }
+
+        private static object syncRoot_RedisQueuedTaskStore = new Object();
+        //INoSQLStoreProvider<FlightCrawlEntity> cacheStore;
+
+        private static RedisQueuedTaskStoreProvider<FlightCrawlEntity> _redisQueuedTaskStore;
+        public static RedisQueuedTaskStoreProvider<FlightCrawlEntity> SingletonRedisQueuedTaskStore
+        {
+            get
+            {
+                if (_redisQueuedTaskStore == null)
+                {
+                    lock (syncRoot_RedisQueuedTaskStore)
+                    {
+                        if (_redisQueuedTaskStore == null)
+                        {
+                            _redisQueuedTaskStore = DataProviderFactory.GetRedisQueuedTaskStore<FlightCrawlEntity>();
+                            _redisQueuedTaskStore.Initialize();
+                        }
+                    }
+                }
+                return _redisQueuedTaskStore;
+            }
+        }
+
 	}
 }
 

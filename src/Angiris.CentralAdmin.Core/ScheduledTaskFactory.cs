@@ -92,7 +92,7 @@ namespace Angiris.CentralAdmin.Core
 
 
                         var getStatusTask = GetQueuedStatusAsync(taskID, 120, 1000);
-                        var msGetStatusTimeout = 120000; //1 min
+                        var msGetStatusTimeout = 120000; //2 min
                         var getStatusTaskStart = DateTime.UtcNow;
                         if (await Task.WhenAny(getStatusTask, Task.Delay(msGetStatusTimeout)) == getStatusTask)
                         {

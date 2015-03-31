@@ -36,7 +36,7 @@ namespace Angiris.Core.Models
         // 航司名称
         public string Company { get; set; }
         // 起飞城市三字码
-        public string DeptureCity { get; set; }
+        public string DepartureCity { get; set; }
         // 到达城市三字码
         public string ArrivalCity { get; set; }
         // 起飞日期      
@@ -53,11 +53,11 @@ namespace Angiris.Core.Models
         // 起飞日期
         public DateEpoch FlightDate { get; set; }
         //出发城市
-        public string DeptureCity { get; set; }
+        public string DepartureCity { get; set; }
         // 到达城市
         public string ArrivalCity { get; set; }
         // 起飞时间
-        public DateEpoch DeptureTime { get; set; }
+        public DateEpoch DepartureTime { get; set; }
         // 到达时间
         public DateEpoch ArrivalTime { get; set; }
         // 舱位信息

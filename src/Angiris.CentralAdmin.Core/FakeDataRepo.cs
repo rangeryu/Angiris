@@ -39,7 +39,7 @@ namespace Angiris.CentralAdmin.Core
             var cityList = FakeFlightDataSource.CityNameList;
             var companyList = FakeFlightDataSource.CompanyNameList;
 
-            output.DeptureCity = cityList[rnd.Next(0, cityList.Count - 1)];
+            output.DepartureCity = cityList[rnd.Next(0, cityList.Count - 1)];
             output.ArrivalCity = cityList[rnd.Next(0, cityList.Count - 1)];
             output.Company = companyList[rnd.Next(0, companyList.Count - 1)];
 

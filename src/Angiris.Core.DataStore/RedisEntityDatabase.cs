@@ -52,13 +52,15 @@ namespace Angiris.Core.DataStore
         public async Task<FlightResponse> CreateOrUpdateEntity(FlightResponse entity)
         {
             string keyFormat = "{0}-{1}-{2:yyyyMMdd}";
-            string keyName = string.Format(keyFormat, entity.DeptureCity, entity.ArrivalCity, entity.FlightDate.Date);
+            string keyName = string.Format(keyFormat, entity.DepartureCity, entity.ArrivalCity, entity.FlightDate.Date);
 
             string hashName = entity.FlightNumber;
 
             string value = JsonConvert.SerializeObject(entity);
 
             TimeSpan expiry = (entity.FlightDate.Date.Date - DateTime.UtcNow.Date).Add(DefaultExpiryAfterFlight);
+
+            entity.TimeStamp = DateTime.UtcNow;
 
             try
             {
@@ -75,15 +77,22 @@ namespace Angiris.Core.DataStore
         public async Task<IEnumerable<FlightResponse>> QueryEntities(FlightRequest flightRequest)
         {
             string keyFormat = "{0}-{1}-{2:yyyyMMdd}";
-            string keyName = string.Format(keyFormat, flightRequest.DeptureCity, flightRequest.ArrivalCity, flightRequest.FlightDate.Date);
+            string keyName = string.Format(keyFormat, flightRequest.DepartureCity, flightRequest.ArrivalCity, flightRequest.FlightDate.Date);
 
-            var flightResponses = (await database.HashValuesAsync(keyName)).Select(v => JsonConvert.DeserializeObject<FlightResponse>(v));
-            if(!string.IsNullOrEmpty(flightRequest.Company))
+            try
             {
-                flightResponses = flightResponses.Where(r => r.Company == r.Company);
-            }
+                var flightResponses = (await database.HashValuesAsync(keyName)).Select(v => JsonConvert.DeserializeObject<FlightResponse>(v));
+                if (!string.IsNullOrEmpty(flightRequest.Company))
+                {
+                    flightResponses = flightResponses.Where(r => r.Company == r.Company);
+                }
 
-            return flightResponses;
+                return flightResponses;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public void Dispose()
