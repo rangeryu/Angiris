@@ -92,11 +92,7 @@
             if (doc != null)
                 await client.DeleteDocumentAsync(doc.SelfLink);
         }
-
-        public async Task<IEnumerable<T>> QueryEntities()
-        {
-            throw new NotImplementedException();
-        }
+ 
 
         public string HostName
         {

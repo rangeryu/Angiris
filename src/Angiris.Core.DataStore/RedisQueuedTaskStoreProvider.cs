@@ -16,7 +16,7 @@
         {
             var value = JsonConvert.SerializeObject(entity);
 
-            if (await database.StringSetAsync(entity.TaskID.ToString(), value, expiry: this.Expiry))
+            if (await database.StringSetAsync(entity.TaskID.ToString(), value, expiry: this.DefaultExpiry))
                 return entity;
             else
                 return default(T);
@@ -35,7 +35,7 @@
         {
             var value = JsonConvert.SerializeObject(entity);
 
-            if (await database.StringSetAsync(id, value, expiry: this.Expiry))
+            if (await database.StringSetAsync(id, value, expiry: this.DefaultExpiry))
                 return entity;
             else
                 return default(T);
@@ -46,28 +46,23 @@
            await database.KeyDeleteAsync(id);
         }
 
-        public async Task<IEnumerable<T>> QueryEntities()
-        {
-            throw new NotImplementedException();
-        }
+ 
 
-        public RedisQueuedTaskStoreProvider(string connString, TimeSpan expiry)
+        public RedisQueuedTaskStoreProvider(string connString, TimeSpan defaultExpiry, int dbIndexId = 0)
         {
             this.ConfigOption = ConfigurationOptions.Parse(connString);
             this.ConfigOption.ConnectRetry = 5;
             this.ConfigOption.SyncTimeout = 10000;
             this.ConfigOption.ConnectTimeout = 10000;
- 
-            this.Expiry = expiry;
+
+            this.DefaultExpiry = defaultExpiry;
+            this.DBIndexId = dbIndexId;
         }
 
         public void Initialize()
         {
-
-            Connection = ConnectionMultiplexer.Connect(this.ConfigOption);
-            
-            
-            database = Connection.GetDatabase();
+            Connection = ConnectionMultiplexer.Connect(this.ConfigOption); 
+            database = Connection.GetDatabase(this.DBIndexId);
         }
 
         public ConfigurationOptions ConfigOption
@@ -81,11 +76,13 @@
             private set;
         }
 
-        private IDatabase database;
+        public int DBIndexId { get; private set; }
 
+        private IDatabase database;
+        
  
 
-        public TimeSpan Expiry
+        public TimeSpan DefaultExpiry
         {
             get;
             private set;

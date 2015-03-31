@@ -34,7 +34,7 @@ namespace Angiris.CentralAdmin.Core
 
             Random rnd = new Random(DateTime.Now.Millisecond);
 
-            output.FlightDate = DateTime.UtcNow.AddDays(rnd.Next(0, 30));
+            output.FlightDate = DateTime.UtcNow.AddDays(rnd.Next(0, 15));
 
             var cityList = FakeFlightDataSource.CityNameList;
             var companyList = FakeFlightDataSource.CompanyNameList;

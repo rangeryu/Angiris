@@ -9,6 +9,7 @@
     using Angiris.Core.DataStore;
     using System.Threading.Tasks;
     using System.Diagnostics;
+    using Angiris.Core.Messaging;
 
 	public class RobotDaemon
 	{
@@ -38,8 +39,8 @@
 
             this.StatusData.IsStarted = true;
 
-            int robotCount = 7;
-            int robotCountP0 = 3;
+            int robotCount = 3;
+            int robotCountP0 = 2;
 
             Trace.TraceInformation("Creating robots...");
             for (int i = 0; i < robotCount;i++ )
@@ -105,14 +106,17 @@
 		}
 
         public void CreateTaskRobot(bool isP0)
-		{
+        {
             //await Task.Run(() =>
-           // {
-                FlightCrawlRobot robot = new FlightCrawlRobot(isP0);
-                robot.Initialize();
-                this.TaskRobotList.Add(robot);
-           // });
-		}
+            // {
+            var qMgrProfile = QueueMgrProfile.Default;
+            qMgrProfile.IsHighPriority = isP0;
+
+            FlightCrawlRobot robot = new FlightCrawlRobot(qMgrProfile);
+            robot.Initialize();
+            this.TaskRobotList.Add(robot);
+            // });
+        }
  
 
 	}

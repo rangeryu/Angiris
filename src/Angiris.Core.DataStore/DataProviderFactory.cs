@@ -14,9 +14,23 @@ using System.Text;
             string key = "kYi4cUJPM4o/jDEfWiXR89994u0xG9AMHbL/AyVMczw=";
             TimeSpan expiry = TimeSpan.FromMinutes(30);
             string connString = string.Format("{0},ssl=true,password={1}", host, key);
-            RedisQueuedTaskStoreProvider<T> provider = new RedisQueuedTaskStoreProvider<T>(connString, expiry);
+            int dbIndex = 0;
+            RedisQueuedTaskStoreProvider<T> provider = new RedisQueuedTaskStoreProvider<T>(connString,  expiry, dbIndex);
             return provider;
 		}
+
+        public static RedisFlightEntityDatabase GetRedisFlightEntityDatabase()
+        {
+            string host = "Angiris-Demo-Cache.redis.cache.windows.net";
+            string key = "kYi4cUJPM4o/jDEfWiXR89994u0xG9AMHbL/AyVMczw=";
+            string connString = string.Format("{0},ssl=true,password={1}", host, key);
+            int dbIndex = 1;
+            TimeSpan expiryAfterLight = TimeSpan.FromDays(2);
+
+            RedisFlightEntityDatabase database = new RedisFlightEntityDatabase(connString, dbIndex, expiryAfterLight);
+            return database;
+
+        }
 
         public static RedisDaemonStatusProvider GetRedisDaemonStatusProvider()
         {
@@ -24,7 +38,8 @@ using System.Text;
             string key = "kYi4cUJPM4o/jDEfWiXR89994u0xG9AMHbL/AyVMczw=";
             string connString = string.Format("{0},ssl=true,password={1}", host, key);
             string keyname = "Telemetry-DaemonStatus";
-            RedisDaemonStatusProvider provider = new RedisDaemonStatusProvider(connString, keyname);
+            int dbIndex = 2;
+            RedisDaemonStatusProvider provider = new RedisDaemonStatusProvider(connString, dbIndex, keyname);
             return provider;
         }
 
@@ -39,6 +54,7 @@ using System.Text;
             return provider;
 
         }
+
 
 	}
 }

@@ -60,7 +60,7 @@ namespace Angiris.Backend.Crawlers
                                 Company = flightReq.Company,
                                 DeptureCity = flightReq.DeptureCity,
                                 FlightDate = flightReq.FlightDate,
-                                FlightNumber = rnd.Next(1000, 9999).ToString(),
+                                FlightNumber = rnd.Next(1000, 1050).ToString(),
                                 ArrivalTime = flightReq.FlightDate.Date.AddHours(rnd.Next(1, 20)),
                                 DeptureTime = flightReq.FlightDate.Date.AddHours(rnd.Next(1, 10))
                             };

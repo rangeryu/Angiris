@@ -18,10 +18,16 @@ namespace Angiris.CentralAdmin.Core
  
         public async Task StartPushTaskMessages(int totalMessages)
         {
-            queueManager = QueueManagerFactory.CreateFlightCrawlEntityQueueMgr();
+            var qMgrProfile= QueueMgrProfile.Default;
+            qMgrProfile.IsHighPriority = false;
+
+            queueManager = QueueManagerFactory.CreateFlightCrawlEntityQueueMgr(qMgrProfile);
             queueManager.Initialize();
 
-            queueManagerP0 = QueueManagerFactory.CreateFlightCrawlEntityQueueMgr(true);
+            var qMgrProfileP0 = QueueMgrProfile.Default;
+            qMgrProfileP0.IsHighPriority = true;
+
+            queueManagerP0 = QueueManagerFactory.CreateFlightCrawlEntityQueueMgr(qMgrProfileP0);
             queueManagerP0.Initialize();
 
             cacheStore = DataProviderFactory.GetRedisQueuedTaskStore<FlightCrawlEntity>();

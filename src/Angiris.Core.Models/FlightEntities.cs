@@ -62,6 +62,8 @@ namespace Angiris.Core.Models
         public DateEpoch ArrivalTime { get; set; }
         // 舱位信息
         public IEnumerable<FlightCabin> FlightCabins { get; set; }
+
+        public DateEpoch TimeStamp { get; set; }
     }
 
 

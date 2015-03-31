@@ -45,7 +45,7 @@
 
         public async Task DeleteEntity(string id)
         {
-            database.HashDelete(this.DaemonStatusHashKeyName, id);
+            await database.HashDeleteAsync(this.DaemonStatusHashKeyName, id);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@
 
         }
 
-        public RedisDaemonStatusProvider(string connString, string daemonStatusHashKeyName)
+        public RedisDaemonStatusProvider(string connString, int dbIndex, string daemonStatusHashKeyName)
         {
             this.ConfigOption = ConfigurationOptions.Parse(connString);
             this.ConfigOption.ConnectRetry = 5;
@@ -68,12 +68,13 @@
             this.ConfigOption.ConnectTimeout = 10000;
 
             this.DaemonStatusHashKeyName = daemonStatusHashKeyName;
+            DBIndexId = dbIndex;
         }
 
         public void Initialize()
         {
-            Connection = ConnectionMultiplexer.Connect(this.ConfigOption);    
-            database = Connection.GetDatabase();
+            Connection = ConnectionMultiplexer.Connect(this.ConfigOption);
+            database = Connection.GetDatabase(DBIndexId);
         }
 
         public ConfigurationOptions ConfigOption
@@ -89,6 +90,7 @@
 
         private IDatabase database;
 
+        public int DBIndexId { get; private set; }
  
         public string DaemonStatusHashKeyName { get; private set; }
 

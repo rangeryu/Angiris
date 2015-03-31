@@ -16,8 +16,6 @@
         Task<T> UpdateEntity(string id, T entity);
 
         Task DeleteEntity(string id);
-
-		Task<IEnumerable<T>> QueryEntities();
  
 
 	}

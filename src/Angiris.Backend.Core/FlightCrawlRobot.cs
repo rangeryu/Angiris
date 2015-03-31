@@ -21,7 +21,7 @@
         //INoSQLStoreProvider<FlightCrawlEntity> cacheStore;
 
         private static INoSQLStoreProvider<FlightCrawlEntity> _cacheStore;
-        private INoSQLStoreProvider<FlightCrawlEntity> cacheStore
+        private INoSQLStoreProvider<FlightCrawlEntity> CacheStore
         {
             get
             {
@@ -43,7 +43,7 @@
         private static object syncRoot_persistence = new Object();
 
         private static INoSQLStoreProvider<FlightCrawlEntity> _persistenceStore;
-        private INoSQLStoreProvider<FlightCrawlEntity> persistenceStore
+        private INoSQLStoreProvider<FlightCrawlEntity> PersistenceStore
         {
             get
             {
@@ -62,6 +62,27 @@
             }
         }
 
+        private static object syncRoot_EntityDatabase = new Object();
+
+        private static RedisFlightEntityDatabase _flightEntityDatabase;
+        private RedisFlightEntityDatabase FlightEntityDatabase
+        {
+            get
+            {
+                if (_flightEntityDatabase == null)
+                {
+                    lock (syncRoot_EntityDatabase)
+                    {
+                        if (_flightEntityDatabase == null)
+                        {
+                            _flightEntityDatabase = DataProviderFactory.GetRedisFlightEntityDatabase();
+                            _flightEntityDatabase.Initialize();
+                        }
+                    }
+                }
+                return _flightEntityDatabase;
+            }
+        }
 
 
         public RobotStatus Status
@@ -70,9 +91,9 @@
             set;
         }
 
-        public FlightCrawlRobot(bool isHighPriority = false)
+        public FlightCrawlRobot(QueueMgrProfile profile)
         {
-            queueManager = QueueManagerFactory.CreateFlightCrawlEntityQueueMgr(isHighPriority);
+            queueManager = QueueManagerFactory.CreateFlightCrawlEntityQueueMgr(profile);
             this.Status = new RobotStatus();
             this.Status.Id = Guid.NewGuid();
             
@@ -80,8 +101,8 @@
 
         public void Initialize()
         {
-            var cs = this.cacheStore;
-            var ps = this.persistenceStore;
+            var cs = this.CacheStore;
+            var ps = this.PersistenceStore;
 
             queueManager.Initialize();
         }
@@ -126,7 +147,7 @@
                 crawlEntity.Status = Angiris.Core.Models.TaskStatus.Processing;
                 crawlEntity.LastModifiedTime = DateTime.UtcNow;
 
-                await cacheStore.UpdateEntity(crawlEntity.TaskID.ToString(), crawlEntity);
+                await CacheStore.UpdateEntity(crawlEntity.TaskID.ToString(), crawlEntity);
 
 
 
@@ -142,6 +163,11 @@
                     // task completed within timeout
 
                     crawlEntity.FinishTime = DateTime.UtcNow;
+
+                    crawlEntity.ResponseData.ForEach(async(r) =>
+                    {
+                        await FlightEntityDatabase.CreateOrUpdateEntity(r);
+                    });
                 }
                 else
                 {
@@ -154,8 +180,8 @@
                 this.Status.TaskReceivedCount = totalReceivedCount;
                 this.Status.ConcurrentJobCount = concurrentJobCount;
 
-                await cacheStore.UpdateEntity(crawlEntity.TaskID.ToString(), crawlEntity);
-                await persistenceStore.UpdateEntity(crawlEntity.TaskID.ToString(), crawlEntity);
+                await CacheStore.UpdateEntity(crawlEntity.TaskID.ToString(), crawlEntity);
+                await PersistenceStore.UpdateEntity(crawlEntity.TaskID.ToString(), crawlEntity);
 
                 Trace.TraceInformation("done by Robot {0} @{1}",crawlEntity.TaskID.ToString(),DateTime.Now);
             }
