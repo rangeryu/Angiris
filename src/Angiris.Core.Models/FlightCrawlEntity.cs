@@ -36,8 +36,8 @@ namespace Angiris.Core.Models
             set;
         }
 
-        [JsonProperty(PropertyName = "id", ItemConverterType = typeof(GuidConverter))]
-        public Guid TaskID
+        [JsonProperty(PropertyName = "id")]
+        public string TaskID
         {
             get;
             set;

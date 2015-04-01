@@ -18,7 +18,7 @@ namespace Angiris.APIService.Core
             }
         }
 
-        public IEnumerable<FlightResponse> QueryEntities(FlightRequest[] flightRequests)
+        public IEnumerable<FlightResponse> QueryEntities(params FlightRequest[] flightRequests)
         {
             var requests = flightRequests.Where(r => !string.IsNullOrEmpty(r.ArrivalCity) && !string.IsNullOrEmpty(r.DepartureCity) && r.FlightDate > DateTime.UtcNow.Date.AddMonths(-1))
                 .Distinct().ToList();
@@ -34,7 +34,7 @@ namespace Angiris.APIService.Core
                 }
             );
 
-            results = results.Distinct().ToList();
+            results = results.ToList();
            
             return results;
         }

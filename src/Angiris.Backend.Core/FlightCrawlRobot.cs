@@ -103,7 +103,7 @@
                 crawlEntity.Status = Angiris.Core.Models.TaskStatus.Processing;
                 crawlEntity.LastModifiedTime = DateTime.UtcNow;
 
-                await CacheStore.UpdateEntity(crawlEntity.TaskID.ToString(), crawlEntity);
+                await CacheStore.UpdateEntity(crawlEntity.TaskID, crawlEntity);
 
 
 
@@ -136,10 +136,10 @@
                 this.Status.TaskReceivedCount = totalReceivedCount;
                 this.Status.ConcurrentJobCount = concurrentJobCount;
 
-                await CacheStore.UpdateEntity(crawlEntity.TaskID.ToString(), crawlEntity);
-                await PersistenceStore.UpdateEntity(crawlEntity.TaskID.ToString(), crawlEntity);
+                await CacheStore.UpdateEntity(crawlEntity.TaskID, crawlEntity);
+                await PersistenceStore.UpdateEntity(crawlEntity.TaskID, crawlEntity);
 
-                Trace.TraceInformation("done by Robot {0} @{1}",crawlEntity.TaskID.ToString(),DateTime.Now);
+                Trace.TraceInformation("done by Robot {0} @{1}",crawlEntity.TaskID,DateTime.Now);
             }
             catch(Exception ex)
             {

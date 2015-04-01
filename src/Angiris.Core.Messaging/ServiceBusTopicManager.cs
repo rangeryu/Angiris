@@ -126,7 +126,7 @@ using System.Threading.Tasks;
         public async Task<bool> SendMessage(TMsgBody msg)
         {
             var brokeredMsg = new BrokeredMessage(msg);
-            brokeredMsg.MessageId = msg.TaskID.ToString();
+            brokeredMsg.MessageId = msg.TaskID;
 
             try
             {
@@ -149,7 +149,7 @@ using System.Threading.Tasks;
             foreach(var msg in messages)
             {
                 var brokeredMsg = new BrokeredMessage(msg);
-                brokeredMsg.MessageId = msg.TaskID.ToString();
+                brokeredMsg.MessageId = msg.TaskID;
                 
                 sbMsgList.Add(brokeredMsg);
             }

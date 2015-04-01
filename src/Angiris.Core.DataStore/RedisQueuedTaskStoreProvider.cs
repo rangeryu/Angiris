@@ -16,7 +16,7 @@
         {
             var value = JsonConvert.SerializeObject(entity);
 
-            if (await database.StringSetAsync(entity.TaskID.ToString(), value, expiry: this.DefaultExpiry))
+            if (await database.StringSetAsync(entity.TaskID, value, expiry: this.DefaultExpiry))
                 return entity;
             else
                 return default(T);

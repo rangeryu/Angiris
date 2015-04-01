@@ -3,6 +3,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using Angiris.APIService.WebApp.Areas.HelpPage.ModelDescriptions;
 using Angiris.APIService.WebApp.Areas.HelpPage.Models;
+using System.Linq;
 
 namespace Angiris.APIService.WebApp.Areas.HelpPage.Controllers
 {
@@ -58,6 +59,13 @@ namespace Angiris.APIService.WebApp.Areas.HelpPage.Controllers
             }
 
             return View(ErrorViewName);
+        }
+
+        public ActionResult Wadl(string controllerDescriptor)
+        {
+            var apiDescriptions = Configuration.Services.GetApiExplorer().ApiDescriptions;
+            var apisWithHelp = apiDescriptions.Select(api => Configuration.GetHelpPageApiModel(api.GetFriendlyId()));
+            return View(apisWithHelp);
         }
     }
 }

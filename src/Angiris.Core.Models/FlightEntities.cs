@@ -1,4 +1,5 @@
-﻿using Angiris.Core.Utility;
+﻿using Angiris.Core.Models;
+using Angiris.Core.Utility;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace Angiris.Core.Models
     }
 
     // 航班查询请求实体（任务输入）
-    public class FlightRequest
+    public class FlightRequest : IEquatable<FlightRequest>
     {
         // 航司名称
         public string Company { get; set; }
@@ -41,6 +42,29 @@ namespace Angiris.Core.Models
         public string ArrivalCity { get; set; }
         // 起飞日期      
         public DateEpoch FlightDate { get; set; }
+
+        public string DistinctHash   
+            {
+                get
+                {
+                    return string.Format("{0}-{1}-{2:yyyyMMdd}-{3}", DepartureCity, ArrivalCity, FlightDate.Date, Company);
+                }
+            }
+
+
+        public bool Equals(FlightRequest other)
+        {
+            return DistinctHash.Equals(other.DistinctHash);
+        }
+
+        public override int GetHashCode()
+        {
+            return DistinctHash.GetHashCode();
+        }
+        public override string ToString()
+        {
+            return DistinctHash;
+        }
     }
 
     // 航班查询响应实体 （任务输出）

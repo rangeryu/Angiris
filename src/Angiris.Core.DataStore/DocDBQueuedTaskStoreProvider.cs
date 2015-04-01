@@ -72,7 +72,7 @@
 
         public async Task<T> UpdateEntity(string id, T entity)
         {
-            if (entity.TaskID.ToString() == id)
+            if (entity.TaskID == id)
             {
                 //dynamic docEntity = new { id = entity.TaskID, Data = entity };
                 Document doc = client.CreateDocumentQuery(collection.SelfLink).Where(d => d.Id == id).AsEnumerable().FirstOrDefault();

@@ -62,7 +62,7 @@ namespace Angiris.CentralAdmin.Core
                     r.CreateTime = currentTime;
                     r.LastModifiedTime = currentTime;
                     r.Status = Angiris.Core.Models.TaskStatus.New;
-                    r.TaskID = Guid.NewGuid();
+                    r.TaskID = r.RequestData.DistinctHash;
 
 
                     await cacheStore.CreateEntity(r);
@@ -80,15 +80,15 @@ namespace Angiris.CentralAdmin.Core
                     {
                         r.Status = Angiris.Core.Models.TaskStatus.Queueing;
                         r.LastModifiedTime = DateTime.UtcNow;
-                        await cacheStore.UpdateEntity(r.TaskID.ToString(), r);
+                        await cacheStore.UpdateEntity(r.TaskID, r);
 
-                        Console.WriteLine("done sending out task message " + r.TaskID.ToString());
+                        Console.WriteLine("done sending out task message " + r.TaskID);
                     }
                     //await persistenceStore.CreateEntity(r);
 
                     var displayResultTask = Task.Run(async () =>
                     {
-                        string taskID = r.TaskID.ToString();
+                        string taskID = r.TaskID;
 
 
                         var getStatusTask = GetQueuedStatusAsync(taskID, 120, 1000);
@@ -99,7 +99,7 @@ namespace Angiris.CentralAdmin.Core
                             var taskExecutionLength = DateTime.UtcNow - getStatusTaskStart;
                             var getStatusTaskResult = getStatusTask.Result;
 
-                            Console.WriteLine("Task " + getStatusTaskResult.TaskID.ToString() + " completed in "
+                            Console.WriteLine("Task " + getStatusTaskResult.TaskID + " completed in "
                                 + taskExecutionLength.TotalSeconds.ToString("F") + "");
                         }
                         else
