@@ -1,0 +1,101 @@
+﻿{
+    "status": "OK",
+    "result": {
+        "maplat": "37.3382",
+        "maplng": "-121.867905",
+        "mapzoom": "14",
+        "spaces": [
+            {
+                "country": "US",
+                "company": "San José Department of Transportation",
+                "street": "883 East Santa Clara Street",
+                "city": "San Jose",
+                "postcode": "95116",
+                "surface": "2",
+                "height": "999",
+                "num": "3",
+                "distance": 517,
+                "openinghours": [
+                    {
+                        "days": 127,
+                        "from": "0900",
+                        "to": "1800"
+                    }
+                ],
+                "priceschema": {
+                    "currency": "$",
+                    "currency_code": "USD",
+                    "prices": [
+                        {
+                            "costs": [
+                                {
+                                    "amount": "0",
+                                    "dur": "120",
+                                    "text": "$0.00"
+                                }
+                            ],
+                            
+                            "times": [
+                                {
+                                    "day": "127",
+                                    "from": "0900",
+                                    "to": "1800"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "id": "437824",
+                "type": "meter",
+                "url": "http://en.parkopedia.com/parking/meter/883_east_santa_clara_street/95110/san_jose/",
+                "pr": false,
+                "icon": {
+                    "tag": "meter"
+                },
+                "phone": "(408) 535-3850",
+                "lat": "37.344560",
+                "lng": "-121.872759",
+                "filters": "101,1,"
+            }
+        ],
+        "filters": [
+            {
+                "x": true,
+                "label": "Height",
+                "type": "height"
+            },
+            {
+                "label": "Park and Ride"
+            },
+            {
+                "label": "Free"
+            },
+            {
+                "label": "Accepts Credit Cards"
+            },
+            {
+                "label": "Disabled Spaces"
+            },
+            {
+                "label": "Covered"
+            },
+            {
+                "label": "Motorcycle Spaces"
+            },
+            {
+                "label": "Electric Car Charging"
+            },
+            {
+                "label": "Parking Lots"
+            },
+            {
+                "label": "Street Parking"
+            },
+            {
+                "x": true,
+                "label": "Map Zones",
+                "type": "zones"
+            }
+        ]
+    }
+}
