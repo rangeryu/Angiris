@@ -57,9 +57,6 @@
 
         public void Initialize()
         {
-            var cs = this.CacheStore;
-            var ps = this.PersistenceStore;
-
             queueManager.Initialize();
         }
         
