@@ -10,6 +10,7 @@
     using System.Threading.Tasks;
     using System.Diagnostics;
     using Angiris.Core.Messaging;
+    using System.Net;
 
 	public class RobotDaemon
 	{
@@ -35,6 +36,9 @@
 
         public async Task Start()
 		{
+            //https://msdn.microsoft.com/en-us/library/system.net.servicepointmanager.defaultconnectionlimit(v=vs.110).aspx
+            ServicePointManager.DefaultConnectionLimit = 50;
+
             daemonStatusStore.Initialize();
 
             this.StatusData.IsStarted = true;

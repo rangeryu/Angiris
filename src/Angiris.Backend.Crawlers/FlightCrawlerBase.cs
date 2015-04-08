@@ -42,7 +42,7 @@ namespace Angiris.Backend.Crawlers
                     string[] cabinNames = { "First Class", "Business Class", "Business Class", "Economy Class", "Economy Class", "Economy Class", "Economy Class" };
 
                     Random rnd = new Random(DateTime.UtcNow.Millisecond);
-                    var resource = fakeResource[rnd.Next(0, fakeResource.Length - 1)];
+                    var resource = fakeResource[rnd.Next(0, fakeResource.Length)] + "?rnd=" + rnd.Next().ToString();
 
                     var result = await httpClient.GetAsync(resource);
 
@@ -76,7 +76,7 @@ namespace Angiris.Backend.Crawlers
                                     FuelFee = rnd.Next(100, 1000),
                                     InsurancePrice = rnd.Next(100, 1000),
                                     OtherFee = rnd.Next(100, 1000),
-                                    CabinName = cabinNames[rnd.Next(0, cabinNames.Length - 1)]
+                                    CabinName = cabinNames[rnd.Next(0, cabinNames.Length)]
                                 };
                                 cabins.Add(flightCabin);
                             }
