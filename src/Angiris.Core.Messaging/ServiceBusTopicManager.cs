@@ -1,7 +1,7 @@
 ﻿namespace Angiris.Core.Messaging
 
 {
-    using Angiris.Core.Models;
+using Angiris.Core.Models;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using System;

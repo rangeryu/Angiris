@@ -28,9 +28,9 @@ namespace Angiris.Core.DataStore
             private set;
         }
 
-        public int DBIndexId { get; private set; }
+        public int DbIndexId { get; private set; }
 
-        private IDatabase database;
+        private IDatabase _database;
 
         public RedisFlightEntityDatabase(string connString, int dbIndexId, TimeSpan defaultExpiryAfterFlight)
         {
@@ -39,14 +39,14 @@ namespace Angiris.Core.DataStore
             this.ConfigOption.SyncTimeout = 10000;
             this.ConfigOption.ConnectTimeout = 10000;
  
-            this.DBIndexId = dbIndexId;
+            this.DbIndexId = dbIndexId;
             this.DefaultExpiryAfterFlight = defaultExpiryAfterFlight;
         }
 
         public void Initialize()
         {
             Connection = ConnectionMultiplexer.Connect(this.ConfigOption);
-            database = Connection.GetDatabase(this.DBIndexId);
+            _database = Connection.GetDatabase(this.DbIndexId);
         }
 
         public async Task<FlightResponse> CreateOrUpdateEntity(FlightResponse entity)
@@ -64,8 +64,8 @@ namespace Angiris.Core.DataStore
 
             try
             {
-                await database.HashSetAsync(keyName, hashName, value);
-                database.KeyExpire(keyName, expiry);
+                await _database.HashSetAsync(keyName, hashName, value);
+                _database.KeyExpire(keyName, expiry);
                 return entity;
             }
             catch
@@ -81,12 +81,12 @@ namespace Angiris.Core.DataStore
 
             try
             {
-                var flightResponses = (await database.HashValuesAsync(keyName)).Select(v => JsonConvert.DeserializeObject<FlightResponse>(v));
+                var flightResponses = (await _database.HashValuesAsync(keyName)).Select(v => JsonConvert.DeserializeObject<FlightResponse>(v));
                 if (!string.IsNullOrEmpty(flightRequest.Company))
                 {
-                    flightResponses = flightResponses.Where(r => r.Company == r.Company);
+                    flightResponses = flightResponses.Where(r => r.Company == flightRequest.Company);
                 }
-
+                    
                 return flightResponses;
             }
             catch

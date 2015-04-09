@@ -25,9 +25,9 @@ using System.Text;
             string key = "kYi4cUJPM4o/jDEfWiXR89994u0xG9AMHbL/AyVMczw=";
             string connString = string.Format("{0},ssl=true,password={1}", host, key);
             int dbIndex = 1;
-            TimeSpan expiryAfterLight = TimeSpan.FromDays(2);
+            TimeSpan expiryAfterFlight = TimeSpan.FromDays(2);
 
-            RedisFlightEntityDatabase database = new RedisFlightEntityDatabase(connString, dbIndex, expiryAfterLight);
+            RedisFlightEntityDatabase database = new RedisFlightEntityDatabase(connString, dbIndex, expiryAfterFlight);
             return database;
 
         }

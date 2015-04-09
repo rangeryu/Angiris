@@ -44,7 +44,7 @@
             this.StatusData.IsStarted = true;
 
             int robotCount = 3;
-            int robotCountP0 = 2;
+            int robotCountP0 = 4;
 
             Trace.TraceInformation("Creating robots...");
             for (int i = 0; i < robotCount;i++ )
