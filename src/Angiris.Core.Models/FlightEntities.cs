@@ -43,13 +43,13 @@ namespace Angiris.Core.Models
         // 起飞日期      
         public DateEpoch FlightDate { get; set; }
 
-        public string DistinctHash   
+        public string DistinctHash
+        {
+            get
             {
-                get
-                {
-                    return string.Format("{0}-{1}-{2:yyyyMMdd}-{3}", DepartureCity, ArrivalCity, FlightDate.Date, Company);
-                }
+                return ToDistinctHash(this);
             }
+        }
 
 
         public bool Equals(FlightRequest other)
@@ -65,6 +65,11 @@ namespace Angiris.Core.Models
         {
             return DistinctHash;
         }
+
+        public static string ToDistinctHash(FlightRequest entity)
+        {
+            return string.Format("{0}-{1}-{2:yyyyMMdd}-{3}", entity.DepartureCity, entity.ArrivalCity, entity.FlightDate.Date, entity.Company);
+        }
     }
 
     // 航班查询响应实体 （任务输出）
@@ -74,8 +79,17 @@ namespace Angiris.Core.Models
         public string Company { get; set; }
         // 航班号
         public string FlightNumber { get; set; }
+
+        private DateEpoch flightDate;
         // 起飞日期
-        public DateEpoch FlightDate { get; set; }
+        public DateEpoch FlightDate
+        {
+            get { return flightDate; }
+            set
+            {
+                flightDate = value.Date.Date;//force to 12:00AM.
+            }
+        }
         //出发城市
         public string DepartureCity { get; set; }
         // 到达城市
@@ -88,6 +102,20 @@ namespace Angiris.Core.Models
         public IEnumerable<FlightCabin> FlightCabins { get; set; }
 
         public DateEpoch TimeStamp { get; set; }
+
+        [JsonProperty(PropertyName = "id")]
+        public string Id
+        {
+            get
+            {
+                return ToDistinctHash(this.FlightNumber, this.FlightDate);
+            }
+        }
+
+        public static string ToDistinctHash(string flightNumber, DateTime flightDate)
+        {
+            return string.Format("{0}-{1:yyyyMMdd}", flightNumber, flightDate.Date);
+        }
     }
 
 

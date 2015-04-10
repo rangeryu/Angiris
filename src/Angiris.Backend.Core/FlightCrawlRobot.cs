@@ -16,7 +16,7 @@
     {
         IQueueTopicManager<FlightCrawlEntity> queueManager;
 
-        private INoSQLStoreProvider<FlightCrawlEntity> CacheStore
+        private INoSQLStoreProvider<FlightCrawlEntity> TaskCacheStore
         {
             get
             {
@@ -24,13 +24,13 @@
             }
         }
  
-        private INoSQLStoreProvider<FlightCrawlEntity> PersistenceStore
-        {
-            get
-            {
-                return DataProviderFactory.SingletonDocDBQueuedTaskStore;
-            }
-        }
+        //private INoSQLStoreProvider<FlightCrawlEntity> PersistenceStore
+        //{
+        //    get
+        //    {
+        //        return DataProviderFactory.SingletonDocDBQueuedTaskStore;
+        //    }
+        //}
          
         private RedisFlightEntityDatabase FlightEntityDatabase
         {
@@ -40,6 +40,13 @@
             }
         }
 
+        private DocDBFlightEntityDatabase DocDBFlightEntityDatabase
+        {
+            get
+            {
+                return DataProviderFactory.SingletonDocDBFlightEntityDatabase;
+            }
+        }
 
         public RobotStatus Status
         {
@@ -100,7 +107,7 @@
                 crawlEntity.Status = Angiris.Core.Models.TaskStatus.Processing;
                 crawlEntity.LastModifiedTime = DateTime.UtcNow;
 
-                await CacheStore.UpdateEntity(crawlEntity.TaskID, crawlEntity);
+                await TaskCacheStore.UpdateEntity(crawlEntity.TaskID, crawlEntity);
 
 
 
@@ -117,10 +124,12 @@
 
                     crawlEntity.FinishTime = DateTime.UtcNow;
 
-                    crawlEntity.ResponseData.ForEach(async(r) =>
+                    Parallel.ForEach(crawlEntity.ResponseData, async (r) =>
                     {
                         await FlightEntityDatabase.CreateOrUpdateEntity(r);
+                        await DocDBFlightEntityDatabase.CreateOrUpdateEntity(r);
                     });
+               
                 }
                 else
                 {
@@ -133,8 +142,8 @@
                 this.Status.TaskReceivedCount = totalReceivedCount;
                 this.Status.ConcurrentJobCount = concurrentJobCount;
 
-                await CacheStore.UpdateEntity(crawlEntity.TaskID, crawlEntity);
-                await PersistenceStore.UpdateEntity(crawlEntity.TaskID, crawlEntity);
+                await TaskCacheStore.UpdateEntity(crawlEntity.TaskID, crawlEntity);
+                //await PersistenceStore.UpdateEntity(crawlEntity.TaskID, crawlEntity);
 
                 Trace.TraceInformation("done by Robot {0} @{1}",crawlEntity.TaskID,DateTime.Now);
             }

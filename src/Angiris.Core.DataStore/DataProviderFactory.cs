@@ -32,6 +32,18 @@ using System.Text;
 
         }
 
+        public static DocDBFlightEntityDatabase GetDocDBFlightEntityDatabase()
+        {
+            string host = "https://angiris-demo.documents.azure.com:443";
+            string key = "dCvlAX1QGxPnjSqpcDsH0DdKu7zuOxvwAv9q1Zb9bQOnGcqyBQJheNAoQTz8YarSG+/Y0I6iCCVSdjz6IVV6Mw==";
+            string databaseId = "EntitySnapshots";
+            string collectionId = "FlightEntities";
+
+            DocDBFlightEntityDatabase provider = new DocDBFlightEntityDatabase(host, key, databaseId, collectionId);
+            return provider;
+
+        }
+
         public static RedisDaemonStatusProvider GetRedisDaemonStatusProvider()
         {
             string host = "Angiris-Demo-Cache.redis.cache.windows.net";
@@ -53,6 +65,29 @@ using System.Text;
             DocDBQueuedTaskStoreProvider<T> provider = new DocDBQueuedTaskStoreProvider<T>(host, key, databaseId, collectionId);
             return provider;
 
+        }
+
+
+        private static object syncRoot_docDBFlightEntityDatabase = new Object();
+
+        private static DocDBFlightEntityDatabase _docDBFlightEntityDatabase;
+        public static DocDBFlightEntityDatabase SingletonDocDBFlightEntityDatabase
+        {
+            get
+            {
+                if (_docDBFlightEntityDatabase == null)
+                {
+                    lock (syncRoot_docDBFlightEntityDatabase)
+                    {
+                        if (_docDBFlightEntityDatabase == null)
+                        {
+                            _docDBFlightEntityDatabase = GetDocDBFlightEntityDatabase();
+                            _docDBFlightEntityDatabase.Initialize();
+                        }
+                    }
+                }
+                return _docDBFlightEntityDatabase;
+            }
         }
 
 
