@@ -121,8 +121,8 @@ namespace Angiris.Core.Models
 
     public class FakeFlightDataSource
     {
-        public static List<string> CompanyNameList = new List<string>() { "SPRING", "AIRASIA"};
-        public static List<string> CityNameList = new List<string>() { "aaa", "bbb", "ccc", "ddd", "eee", "fff", "ggg" };
+        public static List<string> CompanyNameList = new List<string>() { "SPRING", "AIRASIA","SOUTHERN","EASTERN","TIGER","SCOTT","JETBLUE"};
+        public static List<string> CityNameList = new List<string>() { "aaa", "bbb", "ccc", "ddd", "eee", "fff", "ggg","hhh","iii","jjj","kkk" };
 
 
     }

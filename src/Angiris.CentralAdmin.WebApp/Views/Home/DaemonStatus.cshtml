@@ -1,0 +1,20 @@
+﻿@model  List<Angiris.Core.Models.DaemonStatus>
+@{
+    ViewBag.Title = "DaemonStatus";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DaemonStatus</h2>
+
+<ul class="list-inline">
+
+
+    @foreach (var daemonStatus in Model)
+    {
+        <li>
+          @Html.Raw(daemonStatus.ToString().Replace("\r\n", "<br />"));
+
+        </li>
+    }
+
+</ul>

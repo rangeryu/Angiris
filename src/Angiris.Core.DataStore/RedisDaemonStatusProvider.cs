@@ -54,8 +54,10 @@
         /// <returns></returns>
         public async Task<IEnumerable<DaemonStatus>> QueryEntities()
         {
-            var values = await database.HashGetAllAsync(this.DaemonStatusHashKeyName);
-            var output = values.Select(v => JsonConvert.DeserializeObject<DaemonStatus>(v.Value)).ToList();
+            //var values = await database.HashGetAllAsync(this.DaemonStatusHashKeyName);
+            var values = database.HashGetAll(this.DaemonStatusHashKeyName);
+            var output = values.Select(v => JsonConvert.DeserializeObject<DaemonStatus>(v.Value))
+                .Where(s => s.LastUpdated > DateTime.UtcNow.AddDays(-1)).ToList();
             return output;
 
         }
@@ -75,6 +77,9 @@
         {
             Connection = ConnectionMultiplexer.Connect(this.ConfigOption);
             database = Connection.GetDatabase(DBIndexId);
+
+            if (database != null)
+                this.IsInitialized = true;
         }
 
         public ConfigurationOptions ConfigOption
@@ -94,7 +99,7 @@
  
         public string DaemonStatusHashKeyName { get; private set; }
 
-
+        public bool IsInitialized { get; private set; }
         public void Dispose()
         {
             if (Connection != null)

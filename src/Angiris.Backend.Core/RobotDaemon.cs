@@ -95,7 +95,6 @@
 		{
             Trace.TraceInformation("Stopping Daemon in 30 seconds");
 
-            this.StatusData.IsStarted = false;
             await this.SyncStatus();
 
             List<Task> stopTasks = new List<Task>();
@@ -107,6 +106,9 @@
             this.TaskRobotList.Clear();
 
             await this.SyncStatus();
+
+            this.StatusData.IsStarted = false;
+
 		}
 
         public void CreateTaskRobot(bool isP0)

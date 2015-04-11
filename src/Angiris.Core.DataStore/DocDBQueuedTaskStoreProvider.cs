@@ -10,7 +10,10 @@
     using System.Text;
     using System.Threading.Tasks;
 
-	 
+	/// <summary>
+	/// Obsoleted.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
     public class DocDBQueuedTaskStoreProvider<T> : IDisposable, INoSQLStoreProvider<T> where T : IQueuedTask
 	{
         public DocDBQueuedTaskStoreProvider(string serviceEndpoint, string authKey, string databaseId, string collectionId)

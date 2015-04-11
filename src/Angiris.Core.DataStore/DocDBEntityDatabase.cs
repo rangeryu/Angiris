@@ -29,6 +29,7 @@
         IReliableReadWriteDocumentClient _client;
         Database _database;
         DocumentCollection _collection;
+        public bool IsInitialized { get; private set; }
 
         public void Initialize()
         {
@@ -52,6 +53,8 @@
 
             if (_collection == null)
                 _collection = GetOrCreateCollectionAsync(_database.SelfLink, this.CollectionId).GetAwaiter().GetResult();
+
+            IsInitialized = true;
         }
 
         public async Task<FlightResponse> CreateEntity(FlightResponse entity)

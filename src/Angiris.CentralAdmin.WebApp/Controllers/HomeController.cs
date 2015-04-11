@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Angiris.CentralAdmin.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,8 @@ namespace Angiris.CentralAdmin.WebApp.Controllers
 {
     public class HomeController : Controller
     {
+        TelemetryService svc = new TelemetryService();
+
         public ActionResult Index()
         {
             return View();
@@ -25,6 +28,15 @@ namespace Angiris.CentralAdmin.WebApp.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult DaemonStatus()
+        {
+            var telemetrydata = svc.GetAllDaemonStatusList().Result;
+
+
+
+            return View(telemetrydata);
         }
     }
 }

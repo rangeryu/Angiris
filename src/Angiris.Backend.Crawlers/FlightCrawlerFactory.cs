@@ -16,8 +16,8 @@ namespace Angiris.Backend.Crawlers
             switch(crawlEntity.RequestData.Company.ToUpper())
             {
                 case "AIRASIA": crawler = new AirAsiaFlightCrawler(); break;
-                case "SPRING": crawler = new SpringFlightCrawler(); break; 
-                default: break;
+                case "SPRING": crawler = new SpringFlightCrawler(); break;
+                default: crawler = new FakeFlightCrawler(); break;
             }
 
             return crawler;

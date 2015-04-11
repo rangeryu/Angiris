@@ -18,7 +18,7 @@ namespace Angiris.Backend.Crawlers
         public override async Task StartProcessing()
         {
             await base.StartProcessing();
-            this.CrawlEntity.ResponseData.ForEach(r => r.Company = "Spring");
+            //this.CrawlEntity.ResponseData.ForEach(r => r.Company = "Spring");
 
         }
     }

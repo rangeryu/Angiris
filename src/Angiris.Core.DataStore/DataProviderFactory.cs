@@ -75,11 +75,11 @@ using System.Text;
         {
             get
             {
-                if (_docDBFlightEntityDatabase == null)
+                if (_docDBFlightEntityDatabase == null || !_docDBFlightEntityDatabase.IsInitialized)
                 {
                     lock (syncRoot_docDBFlightEntityDatabase)
                     {
-                        if (_docDBFlightEntityDatabase == null)
+                        if (_docDBFlightEntityDatabase == null || !_docDBFlightEntityDatabase.IsInitialized)
                         {
                             _docDBFlightEntityDatabase = GetDocDBFlightEntityDatabase();
                             _docDBFlightEntityDatabase.Initialize();
@@ -98,11 +98,11 @@ using System.Text;
         {
             get
             {
-                if (_flightEntityDatabase == null)
+                if (_flightEntityDatabase == null || !_flightEntityDatabase.IsInitialized )
                 {
                     lock (syncRoot_flightEntityDatabase)
                     {
-                        if (_flightEntityDatabase == null)
+                        if (_flightEntityDatabase == null || !_flightEntityDatabase.IsInitialized)
                         {
                             _flightEntityDatabase = GetRedisFlightEntityDatabase();
                             _flightEntityDatabase.Initialize();
@@ -114,27 +114,27 @@ using System.Text;
         }
 
 
-        private static object syncRoot_docDBQueuedTaskStore = new Object();
+        //private static object syncRoot_docDBQueuedTaskStore = new Object();
 
-        private static DocDBQueuedTaskStoreProvider<FlightCrawlEntity> _docDBQueuedTaskStore;
-        public static DocDBQueuedTaskStoreProvider<FlightCrawlEntity> SingletonDocDBQueuedTaskStore
-        {
-            get
-            {
-                if (_docDBQueuedTaskStore == null)
-                {
-                    lock (syncRoot_docDBQueuedTaskStore)
-                    {
-                        if (_docDBQueuedTaskStore == null)
-                        {
-                            _docDBQueuedTaskStore = DataProviderFactory.GetDocDBQueuedTaskStore<FlightCrawlEntity>();
-                            _docDBQueuedTaskStore.Initialize();
-                        }
-                    }
-                }
-                return _docDBQueuedTaskStore;
-            }
-        }
+        //private static DocDBQueuedTaskStoreProvider<FlightCrawlEntity> _docDBQueuedTaskStore;
+        //public static DocDBQueuedTaskStoreProvider<FlightCrawlEntity> SingletonDocDBQueuedTaskStore
+        //{
+        //    get
+        //    {
+        //        if (_docDBQueuedTaskStore == null)
+        //        {
+        //            lock (syncRoot_docDBQueuedTaskStore)
+        //            {
+        //                if (_docDBQueuedTaskStore == null)
+        //                {
+        //                    _docDBQueuedTaskStore = DataProviderFactory.GetDocDBQueuedTaskStore<FlightCrawlEntity>();
+        //                    _docDBQueuedTaskStore.Initialize();
+        //                }
+        //            }
+        //        }
+        //        return _docDBQueuedTaskStore;
+        //    }
+        //}
 
         private static object syncRoot_RedisQueuedTaskStore = new Object();
         //INoSQLStoreProvider<FlightCrawlEntity> cacheStore;
@@ -144,11 +144,11 @@ using System.Text;
         {
             get
             {
-                if (_redisQueuedTaskStore == null)
+                if (_redisQueuedTaskStore == null || !_redisQueuedTaskStore.IsInitialized)
                 {
                     lock (syncRoot_RedisQueuedTaskStore)
                     {
-                        if (_redisQueuedTaskStore == null)
+                        if (_redisQueuedTaskStore == null || !_redisQueuedTaskStore.IsInitialized)
                         {
                             _redisQueuedTaskStore = DataProviderFactory.GetRedisQueuedTaskStore<FlightCrawlEntity>();
                             _redisQueuedTaskStore.Initialize();
@@ -159,6 +159,28 @@ using System.Text;
             }
         }
 
+
+        private static object syncRoot_RedisDaemonStatusProvider = new Object();
+
+        private static RedisDaemonStatusProvider _redisDaemonStatusProvider;
+        public static RedisDaemonStatusProvider SingletonRedisDaemonStatusProvider
+        {
+            get
+            {
+                if (_redisDaemonStatusProvider == null || !_redisDaemonStatusProvider.IsInitialized)
+                {
+                    lock (syncRoot_RedisDaemonStatusProvider)
+                    {
+                        if (_redisDaemonStatusProvider == null || !_redisDaemonStatusProvider.IsInitialized)
+                        {
+                            _redisDaemonStatusProvider = DataProviderFactory.GetRedisDaemonStatusProvider();
+                            _redisDaemonStatusProvider.Initialize();
+                        }
+                    }
+                }
+                return _redisDaemonStatusProvider;
+            }
+        }
 	}
 }
 

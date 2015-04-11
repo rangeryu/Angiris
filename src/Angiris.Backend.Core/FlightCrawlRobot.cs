@@ -59,6 +59,9 @@
             queueManager = QueueManagerFactory.CreateFlightCrawlEntityQueueMgr(profile);
             this.Status = new RobotStatus();
             this.Status.Id = Guid.NewGuid();
+            var aaa = this.FlightEntityDatabase;
+            var ccc = this.TaskCacheStore;
+            var bbb = this.DocDBFlightEntityDatabase;
             
         }
 
@@ -126,8 +129,17 @@
 
                     Parallel.ForEach(crawlEntity.ResponseData, async (r) =>
                     {
-                        await FlightEntityDatabase.CreateOrUpdateEntity(r);
-                        await DocDBFlightEntityDatabase.CreateOrUpdateEntity(r);
+                        try
+                        {
+                            await FlightEntityDatabase.CreateOrUpdateEntity(r);
+                            await DocDBFlightEntityDatabase.CreateOrUpdateEntity(r);
+                        }
+                        catch(Exception ex)
+                        {
+                            string errorMsg = string.Format("Exception on CreateOrUpdateEntity, {0},{1},{2}", r.Id, ex.Message, ex.InnerException.Message);
+                            Trace.TraceWarning(errorMsg);
+                            crawlEntity.LogData.Add(errorMsg);
+                        }
                     });
                
                 }

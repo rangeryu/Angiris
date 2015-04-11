@@ -63,6 +63,9 @@
         {
             Connection = ConnectionMultiplexer.Connect(this.ConfigOption); 
             database = Connection.GetDatabase(this.DBIndexId);
+
+            if (Connection != null)
+                IsInitialized = true;
         }
 
         public ConfigurationOptions ConfigOption
@@ -79,8 +82,8 @@
         public int DBIndexId { get; private set; }
 
         private IDatabase database;
-        
- 
+
+        public bool IsInitialized { get; private set; }
 
         public TimeSpan DefaultExpiry
         {

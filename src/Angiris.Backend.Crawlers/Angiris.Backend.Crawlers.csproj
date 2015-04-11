@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AirAsiaFlightCrawler.cs" />
+    <Compile Include="FakeFlightCrawler.cs" />
     <Compile Include="FlightCrawlerBase.cs" />
     <Compile Include="FlightCrawlerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

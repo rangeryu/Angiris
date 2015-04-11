@@ -19,29 +19,30 @@ namespace Angiris.CentralAdmin.Core
             {
                 var crawlRequest = new FlightCrawlEntity()
                 {                   
-                    RequestData = GenerateRandomFlightRequest()
+                    RequestData = GenerateRandomFlightRequest(i)
                 };                
 
                 output.Add(crawlRequest);
             }
+ 
 
             return output;
         }
 
-        public static FlightRequest GenerateRandomFlightRequest()
+        public static FlightRequest GenerateRandomFlightRequest(int rndIndex)
         {
             var output = new FlightRequest();
 
-            Random rnd = new Random(DateTime.Now.Millisecond);
+            Random rnd = new Random(DateTime.Now.Millisecond * rndIndex);
 
             output.FlightDate = DateTime.UtcNow.AddDays(rnd.Next(0, 15));
 
             var cityList = FakeFlightDataSource.CityNameList;
             var companyList = FakeFlightDataSource.CompanyNameList;
 
-            output.DepartureCity = cityList[rnd.Next(0, cityList.Count - 1)];
-            output.ArrivalCity = cityList[rnd.Next(0, cityList.Count - 1)];
-            output.Company = companyList[rnd.Next(0, companyList.Count - 1)];
+            output.DepartureCity = cityList[rnd.Next(0, cityList.Count)];
+            output.ArrivalCity = cityList[rnd.Next(0, cityList.Count)];
+            output.Company = companyList[rnd.Next(0, companyList.Count)];
 
             return output;
         }

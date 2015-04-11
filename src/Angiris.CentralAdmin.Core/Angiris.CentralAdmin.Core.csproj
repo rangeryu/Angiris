@@ -42,6 +42,7 @@
     <Compile Include="FakeDataRepo.cs" />
     <Compile Include="ScheduledTaskFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TelemetryService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Angiris.Core.DataStore\Angiris.Core.DataStore.csproj">

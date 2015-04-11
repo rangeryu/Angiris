@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="Angiris.AzureCloudService" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2014-06.2.4">
+  <Role name="BackendWorkerRole">
+    <Instances count="2" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="rangeryu" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEDzfZp5tULeDRFSHQcb/8NowDQYJKoZIhvcNAQEBBQAEggEAAx8NFDrprYuQVGrCmjgb+bHz0P7xKLOJ2+qTeIHflEBPgdYCEoAQzAXyPyM/7Zx8TUTylr/C3zeKJEpphoH4qong+FXIN9uKLo7lVwbhBRb5X/1NzvtfK+TA/bMk30ZwTM6NrvBnXd2+Ni8zBIOq7Sg8lcqxfBXCKbgyUG2ylmjom5r4siwBS8fMH3NFFD0OfS+d8jpjJEZcZdAhJBCR+KmDmMyQhaulHvMEgCN70uwHF9C9LVQJ2kaF9sVfrnpHek3sJ2FPi9f2dV09dxNzCspthdrWe2l5BqU5Vz57J7NDQQcGuRWVXsQvdk/zLa013wbbIeYp//9TwJ+nXQ8jHTAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECCIRcffOuzLcgBDUM4YdNal00pkH0UfjFFTy" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2016-04-11T23:59:59.0000000+08:00" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="8D87A2312C46BF536ABE744F326D087AF8269889" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+</ServiceConfiguration>

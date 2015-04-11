@@ -29,6 +29,8 @@ namespace Angiris.Core.DataStore
         }
 
         public int DbIndexId { get; private set; }
+        public bool IsInitialized { get; private set; }
+
 
         private IDatabase _database;
 
@@ -47,6 +49,9 @@ namespace Angiris.Core.DataStore
         {
             Connection = ConnectionMultiplexer.Connect(this.ConfigOption);
             _database = Connection.GetDatabase(this.DbIndexId);
+
+            if (_database != null)
+                IsInitialized = true;
         }
 
         public async Task<FlightResponse> CreateOrUpdateEntity(FlightResponse entity)
