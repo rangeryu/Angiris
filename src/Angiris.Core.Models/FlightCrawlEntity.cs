@@ -16,16 +16,16 @@ namespace Angiris.Core.Models
             set;
         }
 
-        private List<FlightResponse> responseData = new List<FlightResponse>();
+        private List<FlightResponse> _responseData = new List<FlightResponse>();
         public List<FlightResponse> ResponseData
         {
             get
             {
-                return responseData; 
+                return _responseData; 
             }
             set
             {
-                responseData = value;
+                _responseData = value;
             }                
         }
 
@@ -37,17 +37,17 @@ namespace Angiris.Core.Models
         }
 
         [JsonProperty(PropertyName = "id")]
-        public string TaskID
+        public string TaskId
         {
             get;
             set;
         }
 
-        private List<string> logData = new List<string>();
+        private List<string> _logData = new List<string>();
         public List<string> LogData
         {
-            get { return logData; }
-            set { logData = value; }
+            get { return _logData; }
+            set { _logData = value; }
         }
 
         public DateEpoch CreateTime
@@ -69,7 +69,7 @@ namespace Angiris.Core.Models
         }
 
 
-        public int MaxExecutionTimeInMS
+        public int MaxExecutionTimeInMs
         {
             get;
             set;

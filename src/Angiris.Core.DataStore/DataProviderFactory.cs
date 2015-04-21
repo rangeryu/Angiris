@@ -1,10 +1,11 @@
 ﻿namespace Angiris.Core.DataStore
 {
-	using Angiris.Core.Models;
+using Angiris.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 
 	public class DataProviderFactory
 	{
@@ -27,22 +28,13 @@ using System.Text;
             int dbIndex = 1;
             TimeSpan expiryAfterFlight = TimeSpan.FromDays(2);
 
-            RedisFlightEntityDatabase database = new RedisFlightEntityDatabase(connString, dbIndex, expiryAfterFlight);
+            RedisFlightEntityDatabase database = new RedisFlightEntityDatabase(connString, expiryAfterFlight, dbIndex);
             return database;
 
+            
         }
 
-        public static DocDBFlightEntityDatabase GetDocDBFlightEntityDatabase()
-        {
-            string host = "https://angiris-demo.documents.azure.com:443";
-            string key = "dCvlAX1QGxPnjSqpcDsH0DdKu7zuOxvwAv9q1Zb9bQOnGcqyBQJheNAoQTz8YarSG+/Y0I6iCCVSdjz6IVV6Mw==";
-            string databaseId = "EntitySnapshots";
-            string collectionId = "FlightEntities";
 
-            DocDBFlightEntityDatabase provider = new DocDBFlightEntityDatabase(host, key, databaseId, collectionId);
-            return provider;
-
-        }
 
         public static RedisDaemonStatusProvider GetRedisDaemonStatusProvider()
         {
@@ -55,43 +47,55 @@ using System.Text;
             return provider;
         }
 
-        public static DocDBQueuedTaskStoreProvider<T> GetDocDBQueuedTaskStore<T>() where T : IQueuedTask
+        public static DocDbFlightEntityDatabase GetDocDBFlightEntityDatabase()
         {
             string host = "https://angiris-demo.documents.azure.com:443";
             string key = "dCvlAX1QGxPnjSqpcDsH0DdKu7zuOxvwAv9q1Zb9bQOnGcqyBQJheNAoQTz8YarSG+/Y0I6iCCVSdjz6IVV6Mw==";
-            string databaseId = "EntityTaskResults";
-            string collectionId = "QueuedTask";
+            string databaseId = "EntitySnapshots";
+            string collectionId = "FlightEntities";
 
-            DocDBQueuedTaskStoreProvider<T> provider = new DocDBQueuedTaskStoreProvider<T>(host, key, databaseId, collectionId);
+            DocDbFlightEntityDatabase provider = new DocDbFlightEntityDatabase(host, key, databaseId, collectionId);
             return provider;
 
         }
 
+        //public static DocDbQueuedTaskStoreProvider<T> GetDocDBQueuedTaskStore<T>() where T : IQueuedTask
+        //{
+        //    string host = "https://angiris-demo.documents.azure.com:443";
+        //    string key = "dCvlAX1QGxPnjSqpcDsH0DdKu7zuOxvwAv9q1Zb9bQOnGcqyBQJheNAoQTz8YarSG+/Y0I6iCCVSdjz6IVV6Mw==";
+        //    string databaseId = "EntityTaskResults";
+        //    string collectionId = "QueuedTask";
 
-        private static object syncRoot_docDBFlightEntityDatabase = new Object();
+        //    DocDbQueuedTaskStoreProvider<T> provider = new DocDbQueuedTaskStoreProvider<T>(host, key, databaseId, collectionId);
+        //    return provider;
 
-        private static DocDBFlightEntityDatabase _docDBFlightEntityDatabase;
-        public static DocDBFlightEntityDatabase SingletonDocDBFlightEntityDatabase
+        //}
+
+
+        private static readonly object syncRoot_docDBFlightEntityDatabase = new Object();
+
+        private static DocDbFlightEntityDatabase _docDbFlightEntityDatabase;
+        public static DocDbFlightEntityDatabase SingletonDocDbFlightEntityDatabase
         {
             get
             {
-                if (_docDBFlightEntityDatabase == null || !_docDBFlightEntityDatabase.IsInitialized)
+                if (_docDbFlightEntityDatabase == null || !_docDbFlightEntityDatabase.IsInitialized)
                 {
                     lock (syncRoot_docDBFlightEntityDatabase)
                     {
-                        if (_docDBFlightEntityDatabase == null || !_docDBFlightEntityDatabase.IsInitialized)
+                        if (_docDbFlightEntityDatabase == null || !_docDbFlightEntityDatabase.IsInitialized)
                         {
-                            _docDBFlightEntityDatabase = GetDocDBFlightEntityDatabase();
-                            _docDBFlightEntityDatabase.Initialize();
+                            _docDbFlightEntityDatabase = GetDocDBFlightEntityDatabase();
+                            _docDbFlightEntityDatabase.Initialize();
                         }
                     }
                 }
-                return _docDBFlightEntityDatabase;
+                return _docDbFlightEntityDatabase;
             }
         }
 
 
-        private static object syncRoot_flightEntityDatabase = new Object();
+        private static readonly object syncRoot_flightEntityDatabase = new Object();
 
         private static RedisFlightEntityDatabase _flightEntityDatabase;
         public static RedisFlightEntityDatabase SingletonFlightEntityDatabase
@@ -136,7 +140,7 @@ using System.Text;
         //    }
         //}
 
-        private static object syncRoot_RedisQueuedTaskStore = new Object();
+        private static readonly object syncRoot_RedisQueuedTaskStore = new Object();
         //INoSQLStoreProvider<FlightCrawlEntity> cacheStore;
 
         private static RedisQueuedTaskStoreProvider<FlightCrawlEntity> _redisQueuedTaskStore;
@@ -160,7 +164,7 @@ using System.Text;
         }
 
 
-        private static object syncRoot_RedisDaemonStatusProvider = new Object();
+        private static readonly object syncRoot_RedisDaemonStatusProvider = new Object();
 
         private static RedisDaemonStatusProvider _redisDaemonStatusProvider;
         public static RedisDaemonStatusProvider SingletonRedisDaemonStatusProvider

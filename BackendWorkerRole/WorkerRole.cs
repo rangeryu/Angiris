@@ -10,14 +10,17 @@ using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage;
 using Angiris.Backend.Core;
+using Microsoft.Azure;
+using Newtonsoft.Json;
+
 
 namespace BackendWorkerRole
 {
     public class WorkerRole : RoleEntryPoint
     {
         //private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-        private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
-        private RobotDaemon daemonInstance;
+        private readonly ManualResetEvent _runCompleteEvent = new ManualResetEvent(false);
+        private RobotDaemon _daemonInstance;
 
         public override void Run()
         {
@@ -25,11 +28,26 @@ namespace BackendWorkerRole
 
             try
             {
-                daemonInstance.Start().Wait();
+                //TODO retrive config from central admin
+
+                // xml encoded string: 
+                //raw in cfg:  { &quot;FlightCrawlRobotP0&quot;:3,&quot;FlightCrawlRobotP1&quot;:2 } 
+                //read by API: { "FlightCrawlRobotP0":3,"FlightCrawlRobotP1":2 }
+                var daemonCfgStr = CloudConfigurationManager.GetSetting("Angiris.DaemonConfig");
+
+                var daemonCfg = JsonConvert.DeserializeObject<Angiris.Core.Models.DaemonConfig>(daemonCfgStr);
+
+                //var daemonCfg = new Angiris.Core.Models.DaemonConfig
+                //{
+                //    FlightCrawlRobotP0 = 3,
+                //    FlightCrawlRobotP1 = 2
+                //};
+
+                _daemonInstance.Start(daemonCfg).Wait();
             }
             finally
             {
-                this.runCompleteEvent.Set();
+                this._runCompleteEvent.Set();
             }
         }
 
@@ -41,7 +59,7 @@ namespace BackendWorkerRole
             // For information on handling configuration changes
             // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
 
-            daemonInstance = new RobotDaemon();
+            _daemonInstance = new RobotDaemon();
 
             bool result = base.OnStart();
             
@@ -54,9 +72,9 @@ namespace BackendWorkerRole
         {
             Trace.TraceInformation("BackendWorkerRole is stopping");
 
-            daemonInstance.Stop().Wait();
+            _daemonInstance.Stop().Wait();
             //this.cancellationTokenSource.Cancel();
-            this.runCompleteEvent.WaitOne();
+            this._runCompleteEvent.WaitOne();
 
             base.OnStop();
 

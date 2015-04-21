@@ -10,7 +10,7 @@ namespace Angiris.Core.Models
     public interface IQueuedTask
     {
         [JsonProperty(PropertyName = "id")]
-        string TaskID { get; set; }
+        string TaskId { get; set; }
         List<string> LogData { get; set; }
 
         DateEpoch CreateTime { get; set; }
@@ -21,6 +21,6 @@ namespace Angiris.Core.Models
 
         TaskStatus Status { get; set; }
 
-        int MaxExecutionTimeInMS { get; set; }
+        int MaxExecutionTimeInMs { get; set; }
     }
 }

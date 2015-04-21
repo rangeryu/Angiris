@@ -9,50 +9,14 @@ using System.Threading.Tasks;
 
 namespace Angiris.Core.DataStore
 {
-    public class RedisFlightEntityDatabase 
+    public class RedisFlightEntityDatabase : RedisProviderBase
     {
-        public ConfigurationOptions ConfigOption
+
+        public RedisFlightEntityDatabase(string connString, TimeSpan defaultExpiry, int dbIndexId = 0)
+            : base(connString, defaultExpiry, dbIndexId)
         {
-            get;
-            private set;
-        }
-        public ConnectionMultiplexer Connection
-        {
-            get;
-            private set;
         }
 
-        public TimeSpan DefaultExpiryAfterFlight
-        {
-            get;
-            private set;
-        }
-
-        public int DbIndexId { get; private set; }
-        public bool IsInitialized { get; private set; }
-
-
-        private IDatabase _database;
-
-        public RedisFlightEntityDatabase(string connString, int dbIndexId, TimeSpan defaultExpiryAfterFlight)
-        {
-            this.ConfigOption = ConfigurationOptions.Parse(connString);
-            this.ConfigOption.ConnectRetry = 5;
-            this.ConfigOption.SyncTimeout = 10000;
-            this.ConfigOption.ConnectTimeout = 10000;
- 
-            this.DbIndexId = dbIndexId;
-            this.DefaultExpiryAfterFlight = defaultExpiryAfterFlight;
-        }
-
-        public void Initialize()
-        {
-            Connection = ConnectionMultiplexer.Connect(this.ConfigOption);
-            _database = Connection.GetDatabase(this.DbIndexId);
-
-            if (_database != null)
-                IsInitialized = true;
-        }
 
         public async Task<FlightResponse> CreateOrUpdateEntity(FlightResponse entity)
         {
@@ -63,14 +27,14 @@ namespace Angiris.Core.DataStore
 
             string value = JsonConvert.SerializeObject(entity);
 
-            TimeSpan expiry = (entity.FlightDate.Date.Date - DateTime.UtcNow.Date).Add(DefaultExpiryAfterFlight);
+            TimeSpan expiry = (entity.FlightDate.Date.Date - DateTime.UtcNow.Date).Add(DefaultExpiry);
 
             entity.TimeStamp = DateTime.UtcNow;
 
             try
             {
-                await _database.HashSetAsync(keyName, hashName, value);
-                _database.KeyExpire(keyName, expiry);
+                await Database.HashSetAsync(keyName, hashName, value);
+                Database.KeyExpire(keyName, expiry);
                 return entity;
             }
             catch
@@ -86,7 +50,7 @@ namespace Angiris.Core.DataStore
 
             try
             {
-                var flightResponses = (await _database.HashValuesAsync(keyName)).Select(v => JsonConvert.DeserializeObject<FlightResponse>(v));
+                var flightResponses = (await Database.HashValuesAsync(keyName)).Select(v => JsonConvert.DeserializeObject<FlightResponse>(v));
                 if (!string.IsNullOrEmpty(flightRequest.Company))
                 {
                     flightResponses = flightResponses.Where(r => r.Company == flightRequest.Company);
@@ -99,11 +63,6 @@ namespace Angiris.Core.DataStore
                 return null;
             }
         }
-
-        public void Dispose()
-        {
-            if (Connection != null)
-                Connection.Close();
-        }
+ 
     }
 }

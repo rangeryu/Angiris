@@ -13,7 +13,7 @@ namespace Angiris.CentralAdmin.Core
     {
         IQueueTopicManager<FlightCrawlEntity> queueManagerP0;
         IQueueTopicManager<FlightCrawlEntity> queueManager;
-        INoSQLStoreProvider<FlightCrawlEntity> cacheStore;
+        INoSqlStoreProvider<FlightCrawlEntity> cacheStore;
         //INoSQLStoreProvider<FlightCrawlEntity> persistenceStore;
  
         public async Task StartPushTaskMessages(int totalMessages)
@@ -62,7 +62,7 @@ namespace Angiris.CentralAdmin.Core
                     r.CreateTime = currentTime;
                     r.LastModifiedTime = currentTime;
                     r.Status = Angiris.Core.Models.TaskStatus.New;
-                    r.TaskID = r.RequestData.DistinctHash;
+                    r.TaskId = r.RequestData.DistinctHash;
 
 
                     await cacheStore.CreateEntity(r);
@@ -80,15 +80,15 @@ namespace Angiris.CentralAdmin.Core
                     {
                         r.Status = Angiris.Core.Models.TaskStatus.Queueing;
                         r.LastModifiedTime = DateTime.UtcNow;
-                        await cacheStore.UpdateEntity(r.TaskID, r);
+                        await cacheStore.UpdateEntity(r.TaskId, r);
 
-                        Console.WriteLine("done sending out task message " + r.TaskID);
+                        Console.WriteLine("done sending out task message " + r.TaskId);
                     }
                     //await persistenceStore.CreateEntity(r);
 
                     var displayResultTask = Task.Run(async () =>
                     {
-                        string taskID = r.TaskID;
+                        string taskID = r.TaskId;
 
 
                         var getStatusTask = GetQueuedStatusAsync(taskID, 120, 1000);
@@ -99,7 +99,7 @@ namespace Angiris.CentralAdmin.Core
                             var taskExecutionLength = DateTime.UtcNow - getStatusTaskStart;
                             var getStatusTaskResult = getStatusTask.Result;
 
-                            Console.WriteLine("Task " + getStatusTaskResult.TaskID + " completed in "
+                            Console.WriteLine("Task " + getStatusTaskResult.TaskId + " completed in "
                                 + taskExecutionLength.TotalSeconds.ToString("F") + "");
                         }
                         else

@@ -9,12 +9,12 @@
     using Newtonsoft.Json;
     using System.Threading.Tasks;
 
-    public class RedisDaemonStatusProvider : INoSQLStoreProvider<DaemonStatus> 
+    public class RedisDaemonStatusProvider : RedisProviderBase, INoSqlStoreProvider<DaemonStatus> 
 	{
         
         public async Task<DaemonStatus> CreateEntity(DaemonStatus entity)
         {
-            if (await database.HashSetAsync(this.DaemonStatusHashKeyName, entity.InstanceName, JsonConvert.SerializeObject(entity)))
+            if (await Database.HashSetAsync(this.DaemonStatusHashKeyName, entity.InstanceName, JsonConvert.SerializeObject(entity)))
                 return entity;
             else
                 return default(DaemonStatus);
@@ -22,7 +22,7 @@
 
         public async Task<DaemonStatus> ReadEntity(string id)
         {
-            var value = await database.HashGetAsync(this.DaemonStatusHashKeyName, id);
+            var value = await Database.HashGetAsync(this.DaemonStatusHashKeyName, id);
             if (value.IsNullOrEmpty)
                 return default(DaemonStatus);
             else
@@ -37,7 +37,7 @@
         {
             var value = JsonConvert.SerializeObject(entity);
 
-            if (await database.HashSetAsync(this.DaemonStatusHashKeyName, entity.InstanceName, value))
+            if (await Database.HashSetAsync(this.DaemonStatusHashKeyName, entity.InstanceName, value))
                 return entity;
             else
                 return default(DaemonStatus);
@@ -45,66 +45,32 @@
 
         public async Task DeleteEntity(string id)
         {
-            await database.HashDeleteAsync(this.DaemonStatusHashKeyName, id);
+            await Database.HashDeleteAsync(this.DaemonStatusHashKeyName, id);
         }
 
         /// <summary>
         /// list all exisiting daemon entries
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<DaemonStatus>> QueryEntities()
+        public async Task<IEnumerable<DaemonStatus>> GetAll()
         {
             //var values = await database.HashGetAllAsync(this.DaemonStatusHashKeyName);
-            var values = database.HashGetAll(this.DaemonStatusHashKeyName);
+            var values = await Database.HashGetAllAsync(this.DaemonStatusHashKeyName);
             var output = values.Select(v => JsonConvert.DeserializeObject<DaemonStatus>(v.Value))
                 .Where(s => s.LastUpdated > DateTime.UtcNow.AddDays(-1)).ToList();
             return output;
 
         }
 
-        public RedisDaemonStatusProvider(string connString, int dbIndex, string daemonStatusHashKeyName)
+        public RedisDaemonStatusProvider(string connString, int dbIndex, string daemonStatusHashKeyName):
+            base(connString, TimeSpan.MaxValue, dbIndex)
         {
-            this.ConfigOption = ConfigurationOptions.Parse(connString);
-            this.ConfigOption.ConnectRetry = 5;
-            this.ConfigOption.SyncTimeout = 10000;
-            this.ConfigOption.ConnectTimeout = 10000;
-
             this.DaemonStatusHashKeyName = daemonStatusHashKeyName;
-            DBIndexId = dbIndex;
         }
 
-        public void Initialize()
-        {
-            Connection = ConnectionMultiplexer.Connect(this.ConfigOption);
-            database = Connection.GetDatabase(DBIndexId);
-
-            if (database != null)
-                this.IsInitialized = true;
-        }
-
-        public ConfigurationOptions ConfigOption
-        {
-            get;
-            private set;
-        }
-        public ConnectionMultiplexer Connection
-        {
-            get;
-            private set;
-        }
-
-        private IDatabase database;
-
-        public int DBIndexId { get; private set; }
  
         public string DaemonStatusHashKeyName { get; private set; }
 
-        public bool IsInitialized { get; private set; }
-        public void Dispose()
-        {
-            if (Connection != null)
-                Connection.Close();
-        }
     }
 }
 

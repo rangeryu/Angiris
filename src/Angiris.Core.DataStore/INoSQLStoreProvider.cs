@@ -6,9 +6,9 @@
 	using System.Text;
     using System.Threading.Tasks;
 
-	public interface INoSQLStoreProvider<T> : IDisposable
+	public interface INoSqlStoreProvider<T> : IDisposable
 	{
-        void Initialize();
+        //void Initialize();
 		Task<T> CreateEntity(T entity);
 
         Task<T> ReadEntity(string id);

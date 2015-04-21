@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DaemonConfig.cs" />
     <Compile Include="DaemonStatus.cs" />
     <Compile Include="DateEpoch.cs" />
     <Compile Include="FlightCrawlEntity.cs" />

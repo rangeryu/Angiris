@@ -9,14 +9,17 @@
     using Newtonsoft.Json;
     using System.Threading.Tasks;
 
-    public class RedisQueuedTaskStoreProvider<T> : INoSQLStoreProvider<T> where T : IQueuedTask
+    public class RedisQueuedTaskStoreProvider<T> :  RedisProviderBase, INoSqlStoreProvider<T> where T : IQueuedTask
 	{
+        public RedisQueuedTaskStoreProvider(string connString, TimeSpan defaultExpiry, int dbIndexId = 0) : base(connString, defaultExpiry, dbIndexId)
+        {
+        }
 
         public async Task<T> CreateEntity(T entity)
         {
             var value = JsonConvert.SerializeObject(entity);
 
-            if (await database.StringSetAsync(entity.TaskID, value, expiry: this.DefaultExpiry))
+            if (await Database.StringSetAsync(entity.TaskId, value, DefaultExpiry))
                 return entity;
             else
                 return default(T);
@@ -24,7 +27,7 @@
 
         public async Task<T> ReadEntity(string id)
         {
-            var value = await database.StringGetAsync(id);
+            var value = await Database.StringGetAsync(id);
 
             var obj = JsonConvert.DeserializeObject<T>(value);
             return obj;
@@ -35,7 +38,7 @@
         {
             var value = JsonConvert.SerializeObject(entity);
 
-            if (await database.StringSetAsync(id, value, expiry: this.DefaultExpiry))
+            if (await Database.StringSetAsync(id, value, DefaultExpiry))
                 return entity;
             else
                 return default(T);
@@ -43,60 +46,11 @@
 
         public async Task DeleteEntity(string id)
         {
-           await database.KeyDeleteAsync(id);
+           await Database.KeyDeleteAsync(id);
         }
-
- 
-
-        public RedisQueuedTaskStoreProvider(string connString, TimeSpan defaultExpiry, int dbIndexId = 0)
-        {
-            this.ConfigOption = ConfigurationOptions.Parse(connString);
-            this.ConfigOption.ConnectRetry = 5;
-            this.ConfigOption.SyncTimeout = 10000;
-            this.ConfigOption.ConnectTimeout = 10000;
-
-            this.DefaultExpiry = defaultExpiry;
-            this.DBIndexId = dbIndexId;
-        }
-
-        public void Initialize()
-        {
-            Connection = ConnectionMultiplexer.Connect(this.ConfigOption); 
-            database = Connection.GetDatabase(this.DBIndexId);
-
-            if (Connection != null)
-                IsInitialized = true;
-        }
-
-        public ConfigurationOptions ConfigOption
-        {
-            get;
-            private set;
-        }
-        public ConnectionMultiplexer Connection
-        {
-            get;
-            private set;
-        }
-
-        public int DBIndexId { get; private set; }
-
-        private IDatabase database;
-
-        public bool IsInitialized { get; private set; }
-
-        public TimeSpan DefaultExpiry
-        {
-            get;
-            private set;
-        }
-
-
-        public void Dispose()
-        {
-            if (Connection != null)
-                Connection.Close();
-        }
+         
     }
+
+  
 }
 

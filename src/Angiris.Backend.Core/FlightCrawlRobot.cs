@@ -1,4 +1,6 @@
-﻿namespace Angiris.Backend.Core
+﻿using System.Globalization;
+
+namespace Angiris.Backend.Core
 {
     using Angiris.Backend.Crawlers;
     using Angiris.Core.DataStore;
@@ -14,39 +16,14 @@
 
     public class FlightCrawlRobot 
     {
-        IQueueTopicManager<FlightCrawlEntity> queueManager;
 
-        private INoSQLStoreProvider<FlightCrawlEntity> TaskCacheStore
-        {
-            get
-            {
-                return DataProviderFactory.SingletonRedisQueuedTaskStore;
-            }
-        }
- 
-        //private INoSQLStoreProvider<FlightCrawlEntity> PersistenceStore
-        //{
-        //    get
-        //    {
-        //        return DataProviderFactory.SingletonDocDBQueuedTaskStore;
-        //    }
-        //}
-         
-        private RedisFlightEntityDatabase FlightEntityDatabase
-        {
-            get
-            {
-                return DataProviderFactory.SingletonFlightEntityDatabase;
-            }
-        }
+        private readonly INoSqlStoreProvider<FlightCrawlEntity> _taskCacheStore;
 
-        private DocDBFlightEntityDatabase DocDBFlightEntityDatabase
-        {
-            get
-            {
-                return DataProviderFactory.SingletonDocDBFlightEntityDatabase;
-            }
-        }
+        private readonly RedisFlightEntityDatabase _flightEntityDatabase;
+
+        private readonly DocDbFlightEntityDatabase _docDbFlightEntityDatabase;
+
+        private readonly IQueueTopicManager<FlightCrawlEntity> _queueManager;
 
         public RobotStatus Status
         {
@@ -56,34 +33,26 @@
 
         public FlightCrawlRobot(QueueMgrProfile profile)
         {
-            queueManager = QueueManagerFactory.CreateFlightCrawlEntityQueueMgr(profile);
-            this.Status = new RobotStatus();
-            this.Status.Id = Guid.NewGuid();
-            var aaa = this.FlightEntityDatabase;
-            var ccc = this.TaskCacheStore;
-            var bbb = this.DocDBFlightEntityDatabase;
-            
+            _taskCacheStore = DataProviderFactory.SingletonRedisQueuedTaskStore;
+            _flightEntityDatabase = DataProviderFactory.SingletonFlightEntityDatabase;
+            _docDbFlightEntityDatabase = DataProviderFactory.SingletonDocDbFlightEntityDatabase;
+            _queueManager = QueueManagerFactory.CreateFlightCrawlEntityQueueMgr(profile);
+
+            this.Status = new RobotStatus { Id = Guid.NewGuid() };
+
         }
 
         public void Initialize()
         {
-            queueManager.Initialize();
+            _queueManager.Initialize();
         }
         
         public void Start()
         {
-            //cacheStore = DataProviderFactory.GetRedisQueuedTaskStore<FlightCrawlEntity>();
-            //cacheStore.Initialize();
-
-            //persistenceStore = DataProviderFactory.GetDocDBQueuedTaskStore<FlightCrawlEntity>();
-            //persistenceStore.Initialize();
-
-            //TODO: need to have a better implementation for singleton of the instance.
-
-
+  
             this.Status.StartTime = DateTime.UtcNow;
-            this.Status.Name = "FlightCrawlRobot | " + this.queueManager.TopicName;
-            queueManager.StartReceiveMessages(async (entity) =>
+            this.Status.Name = "FlightCrawlRobot | " + this._queueManager.TopicName;
+            _queueManager.StartReceiveMessages(async (entity) =>
             {
                 await this.ProcessTask(entity);
             });
@@ -91,12 +60,12 @@
 
         public async Task Stop()
         {
-           await queueManager.Stop();
+           await _queueManager.Stop();
         }
  
 
-        int totalReceivedCount = 0;
-        int concurrentJobCount = 0;
+        int _totalReceivedCount = 0;
+        int _concurrentJobCount = 0;
 
         protected async Task ProcessTask(FlightCrawlEntity crawlEntity)
         {
@@ -104,24 +73,24 @@
             {
                 
 
-                Interlocked.Increment(ref totalReceivedCount);
-                Interlocked.Increment(ref concurrentJobCount);
+                Interlocked.Increment(ref _totalReceivedCount);
+                Interlocked.Increment(ref _concurrentJobCount);
 
                 crawlEntity.Status = Angiris.Core.Models.TaskStatus.Processing;
                 crawlEntity.LastModifiedTime = DateTime.UtcNow;
 
-                await TaskCacheStore.UpdateEntity(crawlEntity.TaskID, crawlEntity);
+                await _taskCacheStore.UpdateEntity(crawlEntity.TaskId, crawlEntity);
 
 
 
-                if (crawlEntity.MaxExecutionTimeInMS == 0)
+                if (crawlEntity.MaxExecutionTimeInMs == 0)
                 {
-                    crawlEntity.MaxExecutionTimeInMS = 50 * 1000;//50 seconds
+                    crawlEntity.MaxExecutionTimeInMs = 50 * 1000;//50 seconds
                 }
 
                 var task = ExecuteTask(crawlEntity);
 
-                if (await Task.WhenAny(task, Task.Delay(crawlEntity.MaxExecutionTimeInMS)) == task)
+                if (await Task.WhenAny(task, Task.Delay(crawlEntity.MaxExecutionTimeInMs)) == task)
                 {
                     // task completed within timeout
 
@@ -131,8 +100,8 @@
                     {
                         try
                         {
-                            await FlightEntityDatabase.CreateOrUpdateEntity(r);
-                            await DocDBFlightEntityDatabase.CreateOrUpdateEntity(r);
+                            await _flightEntityDatabase.CreateOrUpdateEntity(r);
+                            await _docDbFlightEntityDatabase.CreateOrUpdateEntity(r);
                         }
                         catch(Exception ex)
                         {
@@ -150,14 +119,14 @@
                     crawlEntity.Status = Angiris.Core.Models.TaskStatus.TimedOut;
                 }
 
-                Interlocked.Decrement(ref concurrentJobCount);
-                this.Status.TaskReceivedCount = totalReceivedCount;
-                this.Status.ConcurrentJobCount = concurrentJobCount;
+                Interlocked.Decrement(ref _concurrentJobCount);
+                this.Status.TaskReceivedCount = _totalReceivedCount;
+                this.Status.ConcurrentJobCount = _concurrentJobCount;
 
-                await TaskCacheStore.UpdateEntity(crawlEntity.TaskID, crawlEntity);
+                await _taskCacheStore.UpdateEntity(crawlEntity.TaskId, crawlEntity);
                 //await PersistenceStore.UpdateEntity(crawlEntity.TaskID, crawlEntity);
 
-                Trace.TraceInformation("done by Robot {0} @{1}",crawlEntity.TaskID,DateTime.Now);
+                Trace.TraceInformation("done by Robot {0} @{1}",crawlEntity.TaskId,DateTime.Now);
             }
             catch(Exception ex)
             {
@@ -184,7 +153,7 @@
                 catch(Exception ex)
                 {
                     crawlEntity.Status = Angiris.Core.Models.TaskStatus.Failed;
-                    crawlEntity.LogData.Add(DateTime.UtcNow.ToString() + ", " + ex.Message + ", " + ex.InnerException + ", " + ex.StackTrace);
+                    crawlEntity.LogData.Add(DateTime.UtcNow.ToString(CultureInfo.CurrentCulture) + ", " + ex.Message + ", " + ex.InnerException + ", " + ex.StackTrace);
                     
                 }
 
@@ -199,7 +168,7 @@
 
                 crawlEntity.Status = Angiris.Core.Models.TaskStatus.Failed;
                 
-                crawlEntity.LogData.Add(DateTime.UtcNow.ToString() + ", No crawler applicable");
+                crawlEntity.LogData.Add(DateTime.UtcNow.ToString(CultureInfo.CurrentCulture) + ", No crawler applicable");
                 
             }
 

@@ -15,9 +15,12 @@
     using System.Threading.Tasks;
 
 	 
-    public class DocDBFlightEntityDatabase  
+    /// <summary>
+    /// TODO: Extract to base class for persistant EntityDB with NOSQL Store
+    /// </summary>
+    public class DocDbFlightEntityDatabase  
 	{
-        public DocDBFlightEntityDatabase(string serviceEndpoint, string authKey, string databaseId, string collectionId)
+        public DocDbFlightEntityDatabase(string serviceEndpoint, string authKey, string databaseId, string collectionId)
         {
             this.HostName = serviceEndpoint;
             this.AuthKey = authKey;
@@ -34,27 +37,39 @@
         public void Initialize()
         {
             //perf tips: http://azure.microsoft.com/blog/2015/01/20/performance-tips-for-azure-documentdb-part-1-2/
-            if(_client == null)
+            
+            try
             {
-                var increRetry = new Incremental(3, TimeSpan.FromMilliseconds(100), TimeSpan.FromMilliseconds(200));
-                var retryStrategy = new DocumentDbRetryStrategy(increRetry);
-
-                _client = new DocumentClient(new Uri(this.HostName), this.AuthKey, new ConnectionPolicy
+                if (_client == null)
                 {
-                    ConnectionMode = ConnectionMode.Direct,
-                    ConnectionProtocol = Protocol.Tcp
-                }).AsReliable(retryStrategy);
+                    var increRetry = new Incremental(3, TimeSpan.FromMilliseconds(100), TimeSpan.FromMilliseconds(200));
+                    var retryStrategy = new DocumentDbRetryStrategy(increRetry);
 
-                _client.OpenAsync().Wait();
+                    _client = new DocumentClient(new Uri(this.HostName), this.AuthKey, new ConnectionPolicy
+                    {
+                        ConnectionMode = ConnectionMode.Direct,
+                        ConnectionProtocol = Protocol.Tcp
+                    }).AsReliable(retryStrategy);
+
+                    _client.OpenAsync().Wait();
+                }
+
+                if (_database == null)
+                    _database = GetOrCreateDatabaseAsync(this.DatabaseId).GetAwaiter().GetResult();
+
+                if (_collection == null)
+                    _collection = GetOrCreateCollectionAsync(_database.SelfLink, this.CollectionId).GetAwaiter().GetResult();
+
+                IsInitialized = true;
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine("DocDbFlightEntityDatabase Initialize " + ex.Message);
+                IsInitialized = false;
             }
 
-            if (_database == null)
-                _database = GetOrCreateDatabaseAsync(this.DatabaseId).GetAwaiter().GetResult();
 
-            if (_collection == null)
-                _collection = GetOrCreateCollectionAsync(_database.SelfLink, this.CollectionId).GetAwaiter().GetResult();
-
-            IsInitialized = true;
+          
         }
 
         public async Task<FlightResponse> CreateEntity(FlightResponse entity)

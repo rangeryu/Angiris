@@ -88,6 +88,10 @@
       <Project>{52ddd171-aafc-4e11-a121-439b0255b492}</Project>
       <Name>Angiris.Backend.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\src\Angiris.Core.Models\Angiris.Core.Models.csproj">
+      <Project>{6ad8ba4c-fed9-47c5-a08a-1acfabb58e38}</Project>
+      <Name>Angiris.Core.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

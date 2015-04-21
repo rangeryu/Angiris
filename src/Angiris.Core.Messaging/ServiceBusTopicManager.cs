@@ -17,8 +17,8 @@ using System.Threading.Tasks;
 	{
         public string TopicName
         {
-            get { return this.queueName; }
-            private set { this.queueName = value; }
+            get { return this._queueName; }
+            private set { this._queueName = value; }
         }
 
         public string ConnectionString
@@ -40,12 +40,12 @@ using System.Threading.Tasks;
         }
 
 
-        private ManualResetEvent pauseProcessingEvent;
-        private QueueClient client;
-        private TimeSpan waitTime = TimeSpan.FromSeconds(30);
+        private readonly ManualResetEvent _pauseProcessingEvent;
+        private QueueClient _client;
+        private readonly TimeSpan _waitTime = TimeSpan.FromSeconds(30);
         
         //We only use queue feature in SB. However other msg queue solution like NSQ only have "Topic".
-        private string queueName;
+        private string _queueName;
 
         public QueueDescription QueueInfo
         {
@@ -59,7 +59,7 @@ using System.Threading.Tasks;
             this.ConnectionString = connectionString;
             this.MaxConcurrentCalls = maxConcurrentCalls;
             this.ClientPrefetchCount = clientPrefetchCount;
-            this.pauseProcessingEvent = new ManualResetEvent(true);
+            this._pauseProcessingEvent = new ManualResetEvent(true);
         }
         public void Initialize()
         {
@@ -68,30 +68,32 @@ using System.Threading.Tasks;
 
             try
             {
-                this.QueueInfo = manager.GetQueue(this.queueName);
+                this.QueueInfo = manager.GetQueue(this._queueName);
             }
             catch (MessagingEntityNotFoundException)
             {
                 try
                 {
-                    var queueDescription = new QueueDescription(this.queueName);
-                    
+                    var queueDescription = new QueueDescription(this._queueName)
+                    {
+                        LockDuration = TimeSpan.FromMinutes(1),
+                        EnablePartitioning = true,
+                        EnableBatchedOperations = true,
+                        EnableExpress = true,
+                        MaxDeliveryCount = 3
+                    };
+
                     //1 min lock duration is the default value
                     //https://msdn.microsoft.com/en-us/library/microsoft.servicebus.messaging.queuedescription.lockduration.aspx
-                    queueDescription.LockDuration = TimeSpan.FromMinutes(1);
                     //Partitioning Messaging Entities https://msdn.microsoft.com/en-us/library/azure/dn520246.aspx
-                    queueDescription.EnablePartitioning = true;
-                    queueDescription.EnableBatchedOperations = true;
-                    queueDescription.EnableExpress = true;
                     // Set the maximum delivery count for messages. A message is automatically deadlettered after this number of deliveries.  Default value is 10.
-                    queueDescription.MaxDeliveryCount = 3;
 
                     this.QueueInfo = manager.CreateQueue(queueDescription);
                 }
                 catch (MessagingEntityAlreadyExistsException)
                 {
                     Trace.TraceWarning(
-                        "MessagingEntityAlreadyExistsException Creating Queue - Queue likely already exists for path: {0}", this.queueName);
+                        "MessagingEntityAlreadyExistsException Creating Queue - Queue likely already exists for path: {0}", this._queueName);
                 }
                 catch (MessagingException ex)
                 {
@@ -107,30 +109,29 @@ using System.Threading.Tasks;
                             throw;
                         }
 
-                        Trace.TraceWarning("MessagingException HttpStatusCode.Conflict - Queue likely already exists or is being created or deleted for path: {0}", this.queueName);
+                        Trace.TraceWarning("MessagingException HttpStatusCode.Conflict - Queue likely already exists or is being created or deleted for path: {0}", this._queueName);
                     }
                 }
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-
+                Trace.TraceWarning("ServiceBusQueueManager Initialize " + ex.Message);
             }
             
   
             // Create the queue client. By default, the PeekLock method is used.
-            this.client = QueueClient.CreateFromConnectionString(this.ConnectionString, this.queueName);
+            this._client = QueueClient.CreateFromConnectionString(this.ConnectionString, this._queueName);
            
             
         }
 
         public async Task<bool> SendMessage(TMsgBody msg)
         {
-            var brokeredMsg = new BrokeredMessage(msg);
-            brokeredMsg.MessageId = msg.TaskID;
+            var brokeredMsg = new BrokeredMessage(msg) {MessageId = msg.TaskId};
 
             try
             {
-                await this.client.SendAsync(brokeredMsg);
+                await this._client.SendAsync(brokeredMsg);
                 return true;
             }
             catch (Exception ex)
@@ -144,19 +145,13 @@ using System.Threading.Tasks;
 
         public async Task<bool> SendMessages(IEnumerable<TMsgBody> messages)
         {
-            var sbMsgList = new List<BrokeredMessage>();
+            //you should not see this code.
 
-            foreach(var msg in messages)
-            {
-                var brokeredMsg = new BrokeredMessage(msg);
-                brokeredMsg.MessageId = msg.TaskID;
-                
-                sbMsgList.Add(brokeredMsg);
-            }
+            var 傻逼消息列表 = messages.Select(msg => new BrokeredMessage(msg) {MessageId = msg.TaskId}).ToList();
 
             try
             {
-                await this.client.SendBatchAsync(sbMsgList);
+                await _client.SendBatchAsync(傻逼消息列表);
                 return true;
             }
             catch(Exception ex)
@@ -177,35 +172,31 @@ using System.Threading.Tasks;
         public void StartReceiveMessages(Func<TMsgBody,Task> processMessageTask)
         {
             // Setup the options for the message pump.
-            var  options = new OnMessageOptions();
-           
+            var options = new OnMessageOptions
+            {
+                AutoComplete = false,
+                MaxConcurrentCalls = this.MaxConcurrentCalls
+            };
+
             // When AutoComplete is disabled, you have to manually complete/abandon the messages and handle errors, if any.
-            options.AutoComplete = false;
-            options.MaxConcurrentCalls = this.MaxConcurrentCalls;
             options.ExceptionReceived += this.OptionsOnExceptionReceived;
 
-            this.client.PrefetchCount = this.ClientPrefetchCount;
+            this._client.PrefetchCount = this.ClientPrefetchCount;
             // Use of Service Bus OnMessage message pump. The OnMessage method must be called once, otherwise an exception will occur.
-            this.client.OnMessageAsync(
+            this._client.OnMessageAsync(
                 async (msg) =>
                 {
-                    //await Task.Run(async () =>
-                    {
-
                         // Will block the current thread if Stop is called.
-                        this.pauseProcessingEvent.WaitOne();
-
+                        this._pauseProcessingEvent.WaitOne();
                         try
                         {
-
                             var msgBody = msg.GetBody<TMsgBody>();
 
-                            Trace.TraceInformation("Start to process task {0} @{1}", msgBody.TaskID, DateTime.Now);
+                            Trace.TraceInformation("Start to process task {0} @{1}", msgBody.TaskId, DateTime.Now);
                             // Execute processing task here
                             await processMessageTask(msgBody);
-                            
 
-                            Trace.TraceInformation("done task {0} @{1}", msgBody.TaskID, DateTime.Now);
+                            Trace.TraceInformation("done task {0} @{1}", msgBody.TaskId, DateTime.Now);
                             switch (msgBody.Status)
                             {
                                 case Models.TaskStatus.Completed: await msg.CompleteAsync(); break;
@@ -218,9 +209,6 @@ using System.Threading.Tasks;
                             Trace.TraceError("Exception in QueueClient.OnMessageAsync: {0}", ex.Message);
                             msg.Abandon();
                         }
-
-                    }
-                    //);
                 },
                 options);
         }
@@ -228,21 +216,20 @@ using System.Threading.Tasks;
         public async Task Stop()
         {
             // Pause the processing threads
-            this.pauseProcessingEvent.Reset();
+            this._pauseProcessingEvent.Reset();
 
             // There is no clean approach to wait for the threads to complete processing.
             // We simply stop any new processing, wait for existing thread to complete, then close the message pump and then return
-            Thread.Sleep(waitTime);
+            Thread.Sleep(_waitTime);
 
-            await this.client.CloseAsync();
+            await this._client.CloseAsync();
         }
 
         private void OptionsOnExceptionReceived(object sender, ExceptionReceivedEventArgs exceptionReceivedEventArgs)
         {
-            var exceptionMessage = "null";
             if (exceptionReceivedEventArgs != null && exceptionReceivedEventArgs.Exception != null)
             {
-                exceptionMessage = exceptionReceivedEventArgs.Exception.Message;
+                var exceptionMessage = exceptionReceivedEventArgs.Exception.Message;
                 Trace.TraceError("Exception in QueueClient.ExceptionReceived: {0}", exceptionMessage);
             }
         }

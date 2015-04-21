@@ -14,7 +14,7 @@ namespace Angiris.CentralAdmin.Core
         {
             var db = DataProviderFactory.SingletonRedisDaemonStatusProvider;
 
-            var results = await db.QueryEntities();
+            var results = await db.GetAll();
 
             return results.ToList();
         }

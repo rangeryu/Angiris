@@ -16,15 +16,15 @@
 	{
         public DaemonStatus StatusData { get; private set; }
 
-        PerfCounter perfCounter;
-        INoSQLStoreProvider<DaemonStatus> daemonStatusStore;
+	    readonly PerfCounter _perfCounter;
+        readonly RedisDaemonStatusProvider _daemonStatusStore;
 
         public RobotDaemon()
         {
             TaskRobotList = new List<FlightCrawlRobot>();
             StatusData = new DaemonStatus() { StartTime = DateTime.UtcNow, InstanceName = System.Environment.MachineName };
-            perfCounter = new PerfCounter();
-            daemonStatusStore = DataProviderFactory.GetRedisDaemonStatusProvider();
+            _perfCounter = new PerfCounter();
+            _daemonStatusStore = DataProviderFactory.GetRedisDaemonStatusProvider();
             
         }
 
@@ -34,28 +34,27 @@
 			private set;
 		}
 
-        public async Task Start()
+        public async Task Start(DaemonConfig config)
 		{
             //https://msdn.microsoft.com/en-us/library/system.net.servicepointmanager.defaultconnectionlimit(v=vs.110).aspx
             ServicePointManager.DefaultConnectionLimit = 50;
 
-            daemonStatusStore.Initialize();
+            _daemonStatusStore.Initialize();
 
             this.StatusData.IsStarted = true;
-
-            int robotCount = 3;
-            int robotCountP0 = 4;
-
+ 
             Trace.TraceInformation("Creating robots...");
-            for (int i = 0; i < robotCount;i++ )
+
+            for (int i = 0; i < config.FlightCrawlRobotP0; i++)
+            {
+                CreateTaskRobot(true);
+            }
+
+            for (int i = 0; i < config.FlightCrawlRobotP1; i++)
             {
                 CreateTaskRobot(false);
             }
 
-            for (int i = 0; i < robotCountP0; i++)
-            {
-                CreateTaskRobot(true);
-            }
 
             Trace.TraceInformation("Starting robots...");
             this.TaskRobotList.ForEach(r => r.Start());
@@ -65,14 +64,13 @@
                 await SyncStatus();
                 await Task.Delay(3000);
             }
-
             
 		}
 
 		public async Task SyncStatus()
 		{
-            StatusData.MemoryRatio = perfCounter.GetMemoryRatio();
-            StatusData.CPURatio = perfCounter.GetCPURatio();
+            StatusData.MemoryRatio = _perfCounter.GetMemoryRatio();
+            StatusData.CPURatio = _perfCounter.GetCPURatio();
             StatusData.LastUpdated = DateTime.UtcNow;
             StatusData.Remark = "Uptime: " + (StatusData.LastUpdated - StatusData.StartTime).ToString();
             StatusData.CrawlerCount = this.TaskRobotList.Count;
@@ -80,7 +78,7 @@
 
             try
             { 
-                await daemonStatusStore.UpdateEntity(StatusData.InstanceName, StatusData);
+                await _daemonStatusStore.UpdateEntity(StatusData.InstanceName, StatusData);
                 Trace.TraceInformation(this.StatusData.ToString());
             }
             catch(Exception ex)
@@ -97,12 +95,10 @@
 
             await this.SyncStatus();
 
-            List<Task> stopTasks = new List<Task>();
-            foreach (var robot in this.TaskRobotList)
-            {
-                stopTasks.Add(robot.Stop());
-            }
-            Task.WaitAll(stopTasks.ToArray(), 30000);
+            int maxTimeoutMs = 30000;
+
+            Task.WaitAll(this.TaskRobotList.Select(robot => robot.Stop()).ToArray(), maxTimeoutMs);
+
             this.TaskRobotList.Clear();
 
             await this.SyncStatus();
