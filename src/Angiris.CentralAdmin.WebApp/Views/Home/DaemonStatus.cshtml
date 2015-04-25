@@ -1,6 +1,6 @@
 ﻿@model  List<Angiris.Core.Models.DaemonStatus>
 @{
-    ViewBag.Title = "DaemonStatus";
+    ViewBag.Title = "Daemon Status Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -34,11 +34,11 @@
 </div>
 
 
-@*<ul class="list-inline">
+<ul class="list-inline">
         @foreach (var daemonStatus in Model)
         {
             <li>
                 @Html.Raw(daemonStatus.ToString().Replace("\r\n", "<br />"));
             </li>
         }
-    </ul>*@
+    </ul>

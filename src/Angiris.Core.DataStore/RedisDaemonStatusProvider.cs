@@ -8,6 +8,7 @@
     using StackExchange.Redis;
     using Newtonsoft.Json;
     using System.Threading.Tasks;
+    using System.Diagnostics;
 
     public class RedisDaemonStatusProvider : RedisProviderBase, INoSqlStoreProvider<DaemonStatus> 
 	{
@@ -37,10 +38,17 @@
         {
             var value = JsonConvert.SerializeObject(entity);
 
-            if (await Database.HashSetAsync(this.DaemonStatusHashKeyName, entity.InstanceName, value))
+            try
+            {            
+                await Database.HashSetAsync(this.DaemonStatusHashKeyName, entity.InstanceName, value);
                 return entity;
-            else
+            }
+            catch (AggregateException ex)
+            {
+                Trace.TraceError("{0},{1}", "RedisDaemonStatusProvider.UpdateEntity", entity.InstanceName + " " + ex.Message);
                 return default(DaemonStatus);
+            }
+
         }
 
         public async Task DeleteEntity(string id)
@@ -54,6 +62,8 @@
         /// <returns></returns>
         public async Task<IEnumerable<DaemonStatus>> GetAll()
         {
+            //var values1 = Database.HashGetAll(this.DaemonStatusHashKeyName);
+
             //var values = await database.HashGetAllAsync(this.DaemonStatusHashKeyName);
             var values = await Database.HashGetAllAsync(this.DaemonStatusHashKeyName);
             var output = values.Select(v => JsonConvert.DeserializeObject<DaemonStatus>(v.Value))

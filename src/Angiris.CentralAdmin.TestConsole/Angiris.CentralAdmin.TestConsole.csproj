@@ -53,6 +53,10 @@
       <Project>{94db60bc-b1b0-4de9-909d-3d32925413c0}</Project>
       <Name>Angiris.CentralAdmin.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Angiris.Core.Models\Angiris.Core.Models.csproj">
+      <Project>{6ad8ba4c-fed9-47c5-a08a-1acfabb58e38}</Project>
+      <Name>Angiris.Core.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

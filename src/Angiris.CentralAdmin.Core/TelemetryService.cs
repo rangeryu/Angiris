@@ -10,7 +10,7 @@ namespace Angiris.CentralAdmin.Core
 {
     public class TelemetryService
     {
-        public async Task<List<DaemonStatus>> GetAllDaemonStatusList()
+        public async Task<List<DaemonStatus>> GetAllDaemonStatusListAsync()
         {
             var db = DataProviderFactory.SingletonRedisDaemonStatusProvider;
 

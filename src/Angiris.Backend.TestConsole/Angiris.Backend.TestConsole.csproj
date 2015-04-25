@@ -56,6 +56,10 @@
       <Project>{d16f4580-577c-4ba9-ab41-e228b3ca3d4a}</Project>
       <Name>Angiris.Backend.Crawlers</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Angiris.Core.Models\Angiris.Core.Models.csproj">
+      <Project>{6ad8ba4c-fed9-47c5-a08a-1acfabb58e38}</Project>
+      <Name>Angiris.Core.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
