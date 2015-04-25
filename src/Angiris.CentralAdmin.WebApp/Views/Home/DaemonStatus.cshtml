@@ -4,16 +4,41 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <h2>DaemonStatus</h2>
 
-<ul class="list-inline">
+<h1><img src="../../img/layout-brand-sm.png" style="margin-left:4px;" /><br />Daemon Status</h1>
+<div ng-controller="sbAppController">
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                Instance Name: @item.InstanceName <br />
+                <span style="font-size: 3.5em;">{{sender.rate}}</span> <br />
+                <span style="font-size: 1em;">msgs/sec</span>
+            </div>
+
+            <div class="col-md-8">
+                Instance Status: <span style="font-weight: bold;"></span>
+                <div class="row">
+                    <div class="col-md-2">
+                        <span style="font-size: 3.5em;">Memory Ratio: @item.MemoryRatio</span> <br />
+                        <span style="font-size: 3.5em;">CPU Ratio: @item.CPURatio</span> <br />
+                        <span style="font-size: 3.5em;">Network Ratio: @item.NetworRatio</span><br />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
 
 
-    @foreach (var daemonStatus in Model)
-    {
-        <li>
-          @Html.Raw(daemonStatus.ToString().Replace("\r\n", "<br />"));
-        </li>
-    }
-
-</ul>
+@*<ul class="list-inline">
+        @foreach (var daemonStatus in Model)
+        {
+            <li>
+                @Html.Raw(daemonStatus.ToString().Replace("\r\n", "<br />"));
+            </li>
+        }
+    </ul>*@

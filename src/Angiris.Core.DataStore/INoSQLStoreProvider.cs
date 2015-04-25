@@ -16,8 +16,7 @@
         Task<T> UpdateEntity(string id, T entity);
 
         Task DeleteEntity(string id);
- 
-
+        void Initialize(); //For Complie and Build. No need as far as I know.
 	}
 }
 
