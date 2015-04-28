@@ -11,7 +11,7 @@ namespace Angiris.CentralAdmin.WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        TelemetryService svc = new TelemetryService();
+
 
         public ActionResult Index()
         {
@@ -32,29 +32,6 @@ namespace Angiris.CentralAdmin.WebApp.Controllers
             return View();
         }
 
-        public ActionResult DaemonStatus()
-        {
 
-            var telemetrydata = new List<DaemonStatus>();
-            //await svc.GetAllDaemonStatusListAsync();
-            Task.Run(async () =>
-            {
-                telemetrydata = await svc.GetAllDaemonStatusListAsync();
-            }).Wait(); ;
-
-            //TODO: understand why the behaviors diff
-
-            //just always hang at await Database.HashGetAllAsync(this.DaemonStatusHashKeyName);
-            //1st try
-            //telemetrydata = svc.GetAllDaemonStatusListAsync().Result;
-
-            //2nd try
-            //var datatask = svc.GetAllDaemonStatusListAsync();
-            //datatask.Wait();
-            //telemetrydata = datatask.Result; 
-
-
-            return View(telemetrydata);
-        }
     }
 }

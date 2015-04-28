@@ -1,0 +1,6 @@
+﻿@model IEnumerable<Angiris.Core.Models.FlightResponse>
+           
+@foreach (var resp in Model)
+{
+    <p>@resp.FlightNumber.ToString()</p>
+}

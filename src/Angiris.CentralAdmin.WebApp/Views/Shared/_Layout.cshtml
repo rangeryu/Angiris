@@ -6,7 +6,7 @@
     <title>@ViewBag.Title - Angiris.CentralAdmin</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link rel="stylesheet" href="../../css/qunit-git.css" type="text/css" />
+    @*<link rel="stylesheet" href="../../css/qunit-git.css" type="text/css" />
     <link rel="stylesheet" href="../../css/main.css" type="text/css" />
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"> </script>
 
@@ -21,7 +21,7 @@
     <script type="text/javascript" src="../../Scripts/angular.js"></script>
 
     <script type="text/javascript" src="../../Scripts/Keys.js"></script>
-    <script type="text/javascript" src="../../Scripts/code.js"></script>
+    <script type="text/javascript" src="../../Scripts/code.js"></script>*@
 
     <!-- Syntax Highlighter -->
 </head>
@@ -39,7 +39,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Daemon Status Dashboard", "DaemonStatus", "Home")</li>
+                    <li>@Html.ActionLink("Console", "Index", "Console")</li>
+                    <li>@Html.ActionLink("Daemon Status Dashboard", "DaemonStatus", "Dashboard")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
@@ -56,6 +57,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/unobtrusive")
     @RenderSection("scripts", required: false)
 </body>
 </html>

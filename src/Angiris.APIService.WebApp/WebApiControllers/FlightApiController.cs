@@ -12,10 +12,11 @@ namespace Angiris.APIService.WebApp.WebApiControllers
     [RoutePrefix("api/flights")]
     public class FlightApiController : ApiController
     {
-        FlightQueryService flightQuerySvc = new FlightQueryService();
+        readonly FlightQueryService _flightQuerySvc = new FlightQueryService();
         
         /// <summary>
         /// Query for flight responses 
+        /// https://angirisdemo.azure-api.net/flights/query?subscription-key=73caed41790745e39d7fce419714980c
         /// </summary>
         /// <param name="query">the query syntax containing the list of flight request</param>
         /// <returns>List of FlightResponse</returns>
@@ -23,11 +24,12 @@ namespace Angiris.APIService.WebApp.WebApiControllers
         [HttpPost]
         public IEnumerable<FlightResponse> Query([FromBody]FlightQuerySyntax query)
         {
-            return flightQuerySvc.QueryEntities(query.flightRequests);
+            return _flightQuerySvc.QueryEntities(query.FlightRequests);
         }
 
         /// <summary>
         /// Query for flight responses 
+        /// https://angirisdemo.azure-api.net/flights/query[?departure][&arrival][&date][&company]&subscription-key=73caed41790745e39d7fce419714980c
         /// </summary>
         /// <param name="departure">Departure City</param>
         /// <param name="arrival">Arrival City</param>
@@ -38,7 +40,7 @@ namespace Angiris.APIService.WebApp.WebApiControllers
         [HttpGet]
         public IEnumerable<FlightResponse> Query(string departure, string arrival, string date, string company = "")
         {
-            DateTime flightDate = DateTime.UtcNow.Date;
+            DateTime flightDate;
 
             if (string.IsNullOrEmpty(departure) || string.IsNullOrEmpty(arrival) 
                 || 
@@ -49,7 +51,7 @@ namespace Angiris.APIService.WebApp.WebApiControllers
 
             FlightRequest req = new FlightRequest() { DepartureCity = departure, ArrivalCity = arrival, FlightDate = flightDate, Company = company };
 
-            return flightQuerySvc.QueryEntities(req);
+            return _flightQuerySvc.QueryEntities(req);
         }
         
 //http://localhost:58178/api/flights/query?departure=bbb&arrival=ddd&date=2015-04-03
@@ -84,6 +86,6 @@ namespace Angiris.APIService.WebApp.WebApiControllers
 
     public class FlightQuerySyntax
     {
-        public FlightRequest[] flightRequests { get; set; }
+        public FlightRequest[] FlightRequests { get; set; }
     }
 }

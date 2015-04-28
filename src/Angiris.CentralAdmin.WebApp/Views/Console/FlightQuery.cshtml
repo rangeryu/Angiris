@@ -1,0 +1,74 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using System.Collections
+@using System.Web.Mvc.Html
+@using Angiris.Core.Models
+<h2>flightquery</h2>
+
+@using (Ajax.BeginForm("_FlightQuery", "Console", new { },
+                new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "ResponseDataPanel",OnBegin = "StartLoading()",OnComplete = "EndLoading()"}
+                ))
+{
+
+    <div class="row">
+        <div class="col-md-3">
+            departure:@Html.DropDownList("departure", FakeFlightDataSource.CityNameList.Select(c => new SelectListItem() { Text = c, Value = c }))
+        </div>
+        <div class="col-md-3">
+            arrival:@Html.DropDownList("arrival", FakeFlightDataSource.CityNameList.Select(c => new SelectListItem() { Text = c, Value = c }))
+        </div>
+        <div class="col-md-3">
+            date:@Html.TextBox("date")
+        </div>
+        <div class="col-md-3">
+
+            @{
+    List<SelectListItem> companylist = FakeFlightDataSource.CompanyNameList.Select(c => new SelectListItem() { Text = c, Value = c }).ToList();
+    companylist.Insert(0, new SelectListItem() { Text = "N/A", Value = "" });
+            }
+
+            company:@Html.DropDownList("company", companylist)
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <input type="submit" value="Query" class="btn btn-default"/>
+        </div>
+        <div class="col-md-2" id="loading">
+            <p>loading...</p>
+        </div>
+    </div>
+ 
+    <div id="ResponseDataPanel">
+
+    </div>
+
+}
+<script type="text/javascript">
+
+
+    function StartLoading() {
+        $('#loading').fadeIn();
+    }
+
+    function EndLoading() {
+        $('#loading').fadeOut();
+    }
+
+ 
+
+</script>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            EndLoading();
+        });
+</script>
+
+}
