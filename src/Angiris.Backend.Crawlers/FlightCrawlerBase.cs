@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Angiris.Core.Models;
 using System.Net.Http;
+using Angiris.Core.Utility;
 
 namespace Angiris.Backend.Crawlers
 {
@@ -41,7 +42,7 @@ namespace Angiris.Backend.Crawlers
 
                     string[] cabinNames = { "First Class", "Business Class", "Business Class", "Economy Class", "Economy Class", "Economy Class", "Economy Class" };
 
-                    Random rnd = new Random(DateTime.UtcNow.Millisecond);
+                    Random rnd = RandomHelper.Instance;
                     var resource = fakeResource[rnd.Next(0, fakeResource.Length)] + "?rnd=" + rnd.Next().ToString();
 
                     var result = await httpClient.GetAsync(resource);

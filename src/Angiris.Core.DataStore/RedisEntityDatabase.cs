@@ -24,13 +24,12 @@ namespace Angiris.Core.DataStore
             string keyName = string.Format(keyFormat, entity.DepartureCity, entity.ArrivalCity, entity.FlightDate.Date);
 
             string hashName = entity.FlightNumber;
-
+            
             string value = JsonConvert.SerializeObject(entity);
 
             TimeSpan expiry = (entity.FlightDate.Date.Date - DateTime.UtcNow.Date).Add(DefaultExpiry);
 
-            entity.TimeStamp = DateTime.UtcNow;
-
+           
             try
             {
                 await Database.HashSetAsync(keyName, hashName, value);

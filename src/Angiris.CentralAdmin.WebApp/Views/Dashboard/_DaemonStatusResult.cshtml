@@ -1,0 +1,11 @@
+﻿
+@model  List<Angiris.Core.Models.DaemonStatus>
+     
+<ul class="list-inline" style="font-family: Segoe UI Light; font-size: 13px;">
+    @foreach (var daemonStatus in Model)
+    {
+        <li style="margin-top: 5px;">
+            @Html.Raw(daemonStatus.ToString().Replace("\r\n", "<br />"))
+        </li>
+    }
+</ul>

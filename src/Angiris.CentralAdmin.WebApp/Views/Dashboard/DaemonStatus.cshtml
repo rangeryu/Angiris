@@ -1,4 +1,4 @@
-﻿@model  List<Angiris.Core.Models.DaemonStatus>
+﻿
 @{
     ViewBag.Title = "Daemon Status Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,8 +7,8 @@
 
 <h2>DaemonStatus</h2>
 
-<h1><img src="../../img/layout-brand-sm.png" style="margin-left:4px;" /><br />Daemon Status</h1>
-<div ng-controller="sbAppController">
+@*<h1><img src="../../img/layout-brand-sm.png" style="margin-left:4px;" /><br />Daemon Status</h1>*@
+@*<div ng-controller="sbAppController">
 
     <div class="row">
         @foreach (var item in Model)
@@ -31,14 +31,30 @@
             </div>
         }
     </div>
+</div>*@
+
+
+<div id="DaemonStatusResult">
+    @*@{
+        Html.RenderPartial("_DaemonStatusResult");
+    }*@
 </div>
 
+@section scripts
+{
+    <script type="text/javascript">
+        
+        $(function () {
+              
+            var url = "@(Html.Raw(Url.Action("_DaemonStatusResult", "Dashboard")))";
+            $("#DaemonStatusResult").load(url);
+            setInterval(function () {
+                var url = "@(Html.Raw(Url.Action("_DaemonStatusResult", "Dashboard")))";
+                $("#DaemonStatusResult").load(url);
+            }, 2000); //Refreshes every 2 seconds
 
-<ul class="list-inline">
-        @foreach (var daemonStatus in Model)
-        {
-            <li>
-                @Html.Raw(daemonStatus.ToString().Replace("\r\n", "<br />"));
-            </li>
-        }
-    </ul>
+            $.ajaxSetup({ cache: false });
+        });
+
+    </script>
+}

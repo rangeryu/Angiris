@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,8 @@ namespace Angiris.Core.Models
     /// </summary>
     public class DateEpoch
     {
-        public DateTime Date { get; set; }
+        private DateTime dateTime = DateTime.MaxValue;
+        public DateTime Date { get { return dateTime; } set { dateTime = value; } }
         public int Epoch
         {
             get
@@ -32,5 +34,11 @@ namespace Angiris.Core.Models
         {
             return new DateEpoch() { Date = value };
         }
+
+        public override string ToString()
+        {
+            return Date.ToString(CultureInfo.InvariantCulture);
+        }
+        
     }
 }

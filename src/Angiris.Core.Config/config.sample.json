@@ -1,0 +1,31 @@
+﻿{
+    "FlightCrawlEntityQueue": {
+        "SBConn": "Endpoint=sb://angiris-demo.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=xxx",
+        "P0Name": "flight-crawl-p0",
+        "P1Name": "flight-crawl-p1"
+    },
+    "RedisQueuedTaskStore": {
+        "Host": "Angiris-Demo-Cache.redis.cache.windows.net",
+        "Key": "xxx",
+        "DbIndex": 0,
+        "ExpiryMins": 30
+    },
+    "RedisFlightEntityDatabase": {
+        "Host": "Angiris-Demo-Cache.redis.cache.windows.net",
+        "Key": "xxx",
+        "DbIndex": 1,
+        "ExpiryDays": 2
+    },
+    "RedisDaemonStatus": {
+        "Host": "Angiris-Demo-Cache.redis.cache.windows.net",
+        "Key": "xxx",
+        "DbIndex": 2,
+        "KeyName": "Telemetry-DaemonStatus"
+    },
+    "DocDbFlightEntityDatabase": {
+        "Host": "https://angiris-demo.documents.azure.com:443",
+        "Key": "xxx",
+        "DatabaseId": "EntitySnapshots",
+        "CollectionId": "FlightEntities"
+    }
+}

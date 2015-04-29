@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Angiris.Core.Utility;
 
 namespace Angiris.CentralAdmin.Core
 {
@@ -33,7 +34,7 @@ namespace Angiris.CentralAdmin.Core
         {
             var output = new FlightRequest();
 
-            Random rnd = new Random(DateTime.Now.Millisecond * rndIndex);
+            var rnd = RandomHelper.Instance;
 
             output.FlightDate = DateTime.UtcNow.AddDays(rnd.Next(0, 15));
 

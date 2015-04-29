@@ -27,8 +27,12 @@ namespace Angiris.Core.Models
         // 保险产品价格
         public decimal InsurancePrice { get; set; }
         // 货币单位
-        public string CurrencyType { get; set; } 
+        public string CurrencyType { get; set; }
 
+        public decimal TotalPrice
+        {
+            get { return CabinPrice + FuelFee + OtherFee + InsurancePrice; }
+        }
     }
 
     // 航班查询请求实体（任务输入）
@@ -116,14 +120,12 @@ namespace Angiris.Core.Models
         {
             return string.Format("{0}-{1:yyyyMMdd}", flightNumber, flightDate.Date);
         }
-    }
+     }
 
 
     public class FakeFlightDataSource
     {
         public static List<string> CompanyNameList = new List<string>() { "SPRING", "AIRASIA","SOUTHERN","EASTERN","TIGER","SCOTT","JETBLUE"};
-        public static List<string> CityNameList = new List<string>() { "aaa", "bbb", "ccc", "ddd", "eee", "fff", "ggg","hhh","iii","jjj","kkk" };
-
-
+        public static List<string> CityNameList = new List<string>() { "New Tristram", "Westmarch", "Caldeum", "High Heavens", "Nephalem Rifts", "Sanctuary", "Xiansai", "Harrogath", "Lut Gholein", "Ureh", "Pandemonium Fortress", "Kurast" };
     }
 }

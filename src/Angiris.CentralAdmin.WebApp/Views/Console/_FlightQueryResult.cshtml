@@ -1,6 +1,83 @@
 ﻿@model IEnumerable<Angiris.Core.Models.FlightResponse>
-           
-@foreach (var resp in Model)
-{
-    <p>@resp.FlightNumber.ToString()</p>
-}
+<table class="table table-hover table-striped">
+    <tr>
+        <th>Company</th>
+        <th>FlightNumber</th>
+        <th>FlightDate</th>
+        <th>DepartureCity</th>
+        <th>DepartureTime</th>
+        <th>ArrivalCity</th>
+        <th>ArrivalTime</th>
+        <th>TimeStamp</th>
+    </tr>
+    @foreach (var resp in Model)
+    {
+        <tr>
+            <td>@resp.Company</td>
+            <td>@resp.FlightNumber</td>
+            <td>@resp.FlightDate.Date.ToString("M/d/yyyy dddd")</td>
+            <td>@resp.DepartureCity</td>
+            <td>@resp.DepartureTime.Date.ToString("t")</td>
+            <td>@resp.ArrivalCity</td>
+            <td>@resp.ArrivalTime.Date.ToString("g")</td>
+            <td>@resp.TimeStamp</td>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <table class="table table-hover table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>
+                            Cabin
+                        </th>
+                        <th>
+                            Total
+                        </th>
+                        <th>
+                            CabinPrice
+                        </th>
+                        <th>
+                            AirPortFee
+                        </th>
+                        <th>
+                            FuelFee
+                        </th>
+                        <th>
+                            Insurance
+                        </th>
+                        <th>
+                            OtherFee
+                        </th>
+                    </tr>
+                    @foreach (var cabin in resp.FlightCabins)
+                    {
+                        <tr>
+                            <td>
+                                @cabin.CabinName
+                            </td>
+                            <td>
+                                @cabin.CurrencyType &nbsp;
+                                @cabin.TotalPrice
+                            </td>
+                            <td>
+                                @cabin.CabinPrice
+                            </td>
+                            <td>
+                                 @cabin.AirPortFee
+                            </td>
+                            <td>
+                                 @cabin.FuelFee
+                            </td>
+                            <td>
+                                 @cabin.InsuranceName &nbsp;
+                                @cabin.InsurancePrice
+                            </td>
+                            <td>
+                                 @cabin.OtherFee
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </td>
+        </tr>
+    }
+</table>

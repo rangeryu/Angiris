@@ -95,11 +95,13 @@ namespace Angiris.Backend.Core
                     // task completed within timeout
 
                     crawlEntity.FinishTime = DateTime.UtcNow;
+                    
 
                     Parallel.ForEach(crawlEntity.ResponseData, async (r) =>
                     {
                         try
                         {
+                            r.TimeStamp = DateTime.UtcNow;
                             await _flightEntityDatabase.CreateOrUpdateEntity(r);
                             await _docDbFlightEntityDatabase.CreateOrUpdateEntity(r);
                         }

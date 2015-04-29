@@ -15,8 +15,13 @@ namespace Angiris.CentralAdmin.Core
         IQueueTopicManager<FlightCrawlEntity> queueManager;
         INoSqlStoreProvider<FlightCrawlEntity> cacheStore;
         //INoSQLStoreProvider<FlightCrawlEntity> persistenceStore;
+
+        public void Initialize()
+        {
+            
+        }
  
-        public async Task StartPushTaskMessages(int totalMessages)
+        public async Task StartPushTaskMessages(int totalMessages, Action<string> onActionUpdate)
         {
             var qMgrProfile= QueueMgrProfile.Default;
             qMgrProfile.IsHighPriority = false;
@@ -30,8 +35,8 @@ namespace Angiris.CentralAdmin.Core
             queueManagerP0 = QueueManagerFactory.CreateFlightCrawlEntityQueueMgr(qMgrProfileP0);
             queueManagerP0.Initialize();
 
-            cacheStore = DataProviderFactory.GetRedisQueuedTaskStore<FlightCrawlEntity>();
-            cacheStore.Initialize();
+            cacheStore = DataProviderFactory.SingletonRedisQueuedTaskStore;
+            
 
             //persistenceStore = DataProviderFactory.GetDocDBQueuedTaskStore<FlightCrawlEntity>();
             //persistenceStore.Initialize();
@@ -82,7 +87,8 @@ namespace Angiris.CentralAdmin.Core
                         r.LastModifiedTime = DateTime.UtcNow;
                         await cacheStore.UpdateEntity(r.TaskId, r);
 
-                        Console.WriteLine("done sending out task message " + r.TaskId);
+                        onActionUpdate("done sending out task message " + r.TaskId);
+                        //onActionUpdate()
                     }
                     //await persistenceStore.CreateEntity(r);
 
@@ -99,12 +105,12 @@ namespace Angiris.CentralAdmin.Core
                             var taskExecutionLength = DateTime.UtcNow - getStatusTaskStart;
                             var getStatusTaskResult = getStatusTask.Result;
 
-                            Console.WriteLine("Task " + getStatusTaskResult.TaskId + " completed in "
+                            onActionUpdate("Task " + getStatusTaskResult.TaskId + " completed in "
                                 + taskExecutionLength.TotalSeconds.ToString("F") + "");
                         }
                         else
                         {
-                            Console.WriteLine("Task " + taskID + " reached max timeout of " + msGetStatusTimeout.ToString() + "ms. ");
+                            onActionUpdate("Task " + taskID + " reached max timeout of " + msGetStatusTimeout.ToString() + "ms. ");
                         }
                     });
 
@@ -117,7 +123,7 @@ namespace Angiris.CentralAdmin.Core
             Task.WaitAll(displayResultTaskList.ToArray());
 
             var endTime = DateTime.Now;
-            Console.WriteLine("End in " + (endTime - startTime).TotalSeconds + " seconds");
+            onActionUpdate("End in " + (endTime - startTime).TotalSeconds + " seconds");
         }
 
    

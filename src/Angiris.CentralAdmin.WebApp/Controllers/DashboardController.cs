@@ -21,13 +21,17 @@ namespace Angiris.CentralAdmin.WebApp.Controllers
 
         public ActionResult DaemonStatus()
         {
+            return View();
+        }
 
+        public ActionResult _DaemonStatusResult()
+        {
             var telemetrydata = new List<DaemonStatus>();
             //await svc.GetAllDaemonStatusListAsync();
             Task.Run(async () =>
             {
                 telemetrydata = await _svc.GetAllDaemonStatusListAsync();
-            }).Wait(); ;
+            }).Wait();
 
             //TODO: understand why the behaviors diff
 
@@ -41,7 +45,7 @@ namespace Angiris.CentralAdmin.WebApp.Controllers
             //telemetrydata = datatask.Result; 
 
 
-            return View(telemetrydata);
+            return PartialView("_DaemonStatusResult",telemetrydata);
         }
     }
 }

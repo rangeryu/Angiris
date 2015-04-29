@@ -25,7 +25,10 @@ namespace Angiris.CentralAdmin.TestConsole
 
                     try
                     {
-                        await flightCrawlRequestFactory.StartPushTaskMessages(totalMsg);
+                        await flightCrawlRequestFactory.StartPushTaskMessages(totalMsg, (msg) =>
+                        {
+                            Console.WriteLine(msg);
+                        });
                     }
                     catch (Exception ex)
                     {

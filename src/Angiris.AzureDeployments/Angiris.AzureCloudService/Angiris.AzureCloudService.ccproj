@@ -56,6 +56,7 @@
   <ItemGroup>
     <PublishProfile Include="Profiles\Angiris-FarmProduction.azurePubxml" />
     <PublishProfile Include="Profiles\Angiris-FarmProduction1.azurePubxml" />
+    <PublishProfile Include="Profiles\Angiris-FarmProduction2.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
