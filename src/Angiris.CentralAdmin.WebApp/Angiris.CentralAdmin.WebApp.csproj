@@ -268,6 +268,10 @@
       <Project>{94db60bc-b1b0-4de9-909d-3d32925413c0}</Project>
       <Name>Angiris.CentralAdmin.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Angiris.Core.Messaging\Angiris.Core.Messaging.csproj">
+      <Project>{dad80344-0c66-4509-a547-316b4e466553}</Project>
+      <Name>Angiris.Core.Messaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Angiris.Core.Models\Angiris.Core.Models.csproj">
       <Project>{6ad8ba4c-fed9-47c5-a08a-1acfabb58e38}</Project>
       <Name>Angiris.Core.Models</Name>

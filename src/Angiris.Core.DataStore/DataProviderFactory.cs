@@ -11,22 +11,26 @@ using Newtonsoft.Json;
 	{
         public static RedisQueuedTaskStoreProvider<T> GetRedisQueuedTaskStore<T>() where T : IQueuedTask
 		{
-            string host = "Angiris-Demo-Cache.redis.cache.windows.net";
-            string key = "kYi4cUJPM4o/jDEfWiXR89994u0xG9AMHbL/AyVMczw=";
-            TimeSpan expiry = TimeSpan.FromMinutes(30);
+            dynamic cfg = Config.ConfigMgr.ReleaseCfg.RedisQueuedTaskStore;
+
+            string host = cfg.Host;
+            string key = cfg.Key;
+            TimeSpan expiry = TimeSpan.FromMinutes(cfg.ExpiryMins);
             string connString = string.Format("{0},ssl=true,password={1}", host, key);
-            int dbIndex = 0;
+            int dbIndex = cfg.DbIndex;
             RedisQueuedTaskStoreProvider<T> provider = new RedisQueuedTaskStoreProvider<T>(connString,  expiry, dbIndex);
             return provider;
 		}
 
         public static RedisFlightEntityDatabase GetRedisFlightEntityDatabase()
         {
-            string host = "Angiris-Demo-Cache.redis.cache.windows.net";
-            string key = "kYi4cUJPM4o/jDEfWiXR89994u0xG9AMHbL/AyVMczw=";
+            dynamic cfg = Config.ConfigMgr.ReleaseCfg.RedisFlightEntityDatabase;
+
+            string host = cfg.Host;
+            string key = cfg.Key;
             string connString = string.Format("{0},ssl=true,password={1}", host, key);
-            int dbIndex = 1;
-            TimeSpan expiryAfterFlight = TimeSpan.FromDays(2);
+            int dbIndex = cfg.DbIndex;
+            TimeSpan expiryAfterFlight = TimeSpan.FromDays(cfg.ExpiryDays);
 
             RedisFlightEntityDatabase database = new RedisFlightEntityDatabase(connString, expiryAfterFlight, dbIndex);
             return database;
@@ -38,21 +42,25 @@ using Newtonsoft.Json;
 
         public static RedisDaemonStatusProvider GetRedisDaemonStatusProvider()
         {
-            string host = "Angiris-Demo-Cache.redis.cache.windows.net";
-            string key = "kYi4cUJPM4o/jDEfWiXR89994u0xG9AMHbL/AyVMczw=";
+            dynamic cfg = Config.ConfigMgr.ReleaseCfg.RedisDaemonStatus;
+
+            string host = cfg.Host;
+            string key = cfg.Key;
             string connString = string.Format("{0},ssl=true,password={1}", host, key);
-            string keyname = "Telemetry-DaemonStatus";
-            int dbIndex = 2;
+            string keyname = cfg.KeyName;
+            int dbIndex = cfg.DbIndex;
             RedisDaemonStatusProvider provider = new RedisDaemonStatusProvider(connString, dbIndex, keyname);
             return provider;
         }
 
         public static DocDbFlightEntityDatabase GetDocDBFlightEntityDatabase()
         {
-            string host = "https://angiris-demo.documents.azure.com:443";
-            string key = "dCvlAX1QGxPnjSqpcDsH0DdKu7zuOxvwAv9q1Zb9bQOnGcqyBQJheNAoQTz8YarSG+/Y0I6iCCVSdjz6IVV6Mw==";
-            string databaseId = "EntitySnapshots";
-            string collectionId = "FlightEntities";
+            dynamic cfg = Config.ConfigMgr.ReleaseCfg.DocDbFlightEntityDatabase;
+
+            string host = cfg.Host;
+            string key = cfg.Key;
+            string databaseId = cfg.DatabaseId;
+            string collectionId = cfg.CollectionId;
 
             DocDbFlightEntityDatabase provider = new DocDbFlightEntityDatabase(host, key, databaseId, collectionId);
             return provider;

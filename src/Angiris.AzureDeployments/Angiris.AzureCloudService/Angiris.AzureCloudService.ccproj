@@ -12,6 +12,7 @@
     <AssemblyName>Angiris.AzureCloudService</AssemblyName>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
     <Name>Angiris.AzureCloudService</Name>
+    <PackageEnableRemoteDebugger>False</PackageEnableRemoteDebugger>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
