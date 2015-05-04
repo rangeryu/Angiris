@@ -18,25 +18,37 @@ namespace Angiris.APIService.Core
             }
         }
 
-        public IEnumerable<FlightResponse> QueryEntities(params FlightRequest[] flightRequests)
+        public async Task<IEnumerable<string>> QueryKeys(string departure, string arrival, DateTime? date)
+        {
+            if(string.IsNullOrEmpty(departure))
+                departure = "*";
+            if(string.IsNullOrEmpty(arrival))
+                arrival = "*";
+        
+            string dateStr = "*";
+            if(date.HasValue)
+                dateStr = date.Value.ToString("yyyyMMdd");
+
+            var keys =
+                (await entityDatabase.GetKeys(new Tuple<string, string, string>(departure, arrival, dateStr)));//.ToList();
+
+            return keys;
+        }
+
+        public async Task<IEnumerable<FlightResponse>> QueryEntities(params FlightRequest[] flightRequests)
         {
             var requests = flightRequests.Where(r => !string.IsNullOrEmpty(r.ArrivalCity) && !string.IsNullOrEmpty(r.DepartureCity) && r.FlightDate > DateTime.UtcNow.Date.AddMonths(-1))
                 .Distinct().ToList();
 
-            var results = new List<FlightResponse>();
-            Parallel.ForEach(requests, (r) =>
-                {
-                    Task.Run(async () =>
-                    {
-                        var result = await entityDatabase.QueryEntities(r);
-                        results.AddRange(result);
-                    }).Wait();
-                }
-            );
+            var outputResults = new List<FlightResponse>();
 
-            results = results.ToList();
-           
-            return results;
+            var queryTasks = requests.Select(r => entityDatabase.QueryEntities(r));
+
+            var taskResults = await Task.WhenAll(queryTasks);
+
+            taskResults.ToList().ForEach(r => outputResults.AddRange(r));
+ 
+            return outputResults;
         }
 
     }

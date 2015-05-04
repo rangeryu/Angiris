@@ -62,6 +62,24 @@ namespace Angiris.Core.DataStore
                 return null;
             }
         }
+
+        
+        /// <summary>
+        /// Redis "Keys" is a server cmd. http://redis.io/commands/keys Use it with extreme care
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<string>> GetKeys(Tuple<string, string, string> pattern)
+        {
+            var task = Task.Run(() =>
+            {
+                return Server.Keys(this.DbIndexId,
+    string.Format("{0}-{1}-{2}", pattern.Item1, pattern.Item2, pattern.Item3))
+    .Select(k => (string)k).ToList();
+            });
+            
+            return await task;
+
+        }
  
     }
 }

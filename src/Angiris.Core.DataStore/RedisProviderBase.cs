@@ -20,6 +20,8 @@ namespace Angiris.Core.DataStore
             private set;
         }
 
+        protected IServer Server { get; private set; }
+
         protected int DbIndexId { get; private set; }
 
         protected IDatabase Database { get; private set; }
@@ -48,6 +50,8 @@ namespace Angiris.Core.DataStore
         {
             Connection = ConnectionMultiplexer.Connect(this.ConfigOption);
             Database = Connection.GetDatabase(this.DbIndexId);
+            var svcEndpoint = Connection.GetEndPoints().FirstOrDefault();
+            Server = Connection.GetServer(svcEndpoint);
 
             if (Connection != null)
                 IsInitialized = true;

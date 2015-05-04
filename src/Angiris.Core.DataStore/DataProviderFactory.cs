@@ -15,7 +15,8 @@ using Newtonsoft.Json;
 
             string host = cfg.Host;
             string key = cfg.Key;
-            TimeSpan expiry = TimeSpan.FromMinutes(cfg.ExpiryMins);
+            int expiryMins = cfg.ExpiryMins;
+            TimeSpan expiry = TimeSpan.FromMinutes(expiryMins);
             string connString = string.Format("{0},ssl=true,password={1}", host, key);
             int dbIndex = cfg.DbIndex;
             RedisQueuedTaskStoreProvider<T> provider = new RedisQueuedTaskStoreProvider<T>(connString,  expiry, dbIndex);
@@ -30,7 +31,8 @@ using Newtonsoft.Json;
             string key = cfg.Key;
             string connString = string.Format("{0},ssl=true,password={1}", host, key);
             int dbIndex = cfg.DbIndex;
-            TimeSpan expiryAfterFlight = TimeSpan.FromDays(cfg.ExpiryDays);
+            int expiryDays = cfg.ExpiryDays;
+            TimeSpan expiryAfterFlight = TimeSpan.FromDays(expiryDays);
 
             RedisFlightEntityDatabase database = new RedisFlightEntityDatabase(connString, expiryAfterFlight, dbIndex);
             return database;
@@ -78,6 +80,16 @@ using Newtonsoft.Json;
         //    return provider;
 
         //}
+
+	    public static void InitializeAll()
+	    {
+	        //TODO
+
+            var a = DataProviderFactory.SingletonRedisDaemonStatusProvider;
+            var b = DataProviderFactory.SingletonFlightEntityDatabase;
+            var c = DataProviderFactory.SingletonDocDbFlightEntityDatabase;
+            var d = DataProviderFactory.SingletonRedisQueuedTaskStore;
+	    }
 
 
         private static readonly object syncRoot_docDBFlightEntityDatabase = new Object();

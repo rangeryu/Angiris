@@ -264,9 +264,17 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Angiris.APIService.Core\Angiris.APIService.Core.csproj">
+      <Project>{29f57285-e546-45c5-95cb-77009fc72c80}</Project>
+      <Name>Angiris.APIService.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Angiris.CentralAdmin.Core\Angiris.CentralAdmin.Core.csproj">
       <Project>{94db60bc-b1b0-4de9-909d-3d32925413c0}</Project>
       <Name>Angiris.CentralAdmin.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Angiris.Core.Config\Angiris.Core.Config.csproj">
+      <Project>{34ffe720-b4ac-4375-8da5-d297107e0f0f}</Project>
+      <Name>Angiris.Core.Config</Name>
     </ProjectReference>
     <ProjectReference Include="..\Angiris.Core.Messaging\Angiris.Core.Messaging.csproj">
       <Project>{dad80344-0c66-4509-a547-316b4e466553}</Project>

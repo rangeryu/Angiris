@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Angiris.Core.Models;
 using Newtonsoft.Json;
+using Angiris.APIService.Core;
 
 namespace Angiris.CentralAdmin.WebApp.Controllers
 {
@@ -23,6 +24,30 @@ namespace Angiris.CentralAdmin.WebApp.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Query via client redis api
+        /// </summary>
+        /// <param name="departure"></param>
+        /// <param name="arrival"></param>
+        /// <returns></returns>
+        public async Task<ActionResult> ListDates(string departure, string arrival)
+        {
+            FlightQueryService querySvc = new FlightQueryService();
+            var keys = await querySvc.QueryKeys(departure, arrival, null);
+
+            var dates = keys.Select(k => k.Split('-').LastOrDefault()).OrderBy(t=>t).ToList();
+
+            return Json(dates,JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Query via exposed API management
+        /// </summary>
+        /// <param name="departure"></param>
+        /// <param name="arrival"></param>
+        /// <param name="date"></param>
+        /// <param name="company"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> _FlightQuery(string departure, string arrival, string date, string company = "")
         {
@@ -44,5 +69,7 @@ namespace Angiris.CentralAdmin.WebApp.Controllers
 
             return PartialView("_FlightQueryResult",responseData);
         }
+
+        
     }
 }

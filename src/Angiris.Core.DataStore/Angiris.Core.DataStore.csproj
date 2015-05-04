@@ -76,7 +76,7 @@
     <Compile Include="INoSQLStoreProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RedisDaemonStatusProvider.cs" />
-    <Compile Include="RedisEntityDatabase.cs" />
+    <Compile Include="RedisFlightEntityDatabase.cs" />
     <Compile Include="RedisProviderBase.cs" />
     <Compile Include="RedisQueuedTaskStoreProvider.cs" />
   </ItemGroup>

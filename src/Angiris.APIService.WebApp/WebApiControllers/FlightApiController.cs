@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace Angiris.APIService.WebApp.WebApiControllers
@@ -22,9 +23,9 @@ namespace Angiris.APIService.WebApp.WebApiControllers
         /// <returns>List of FlightResponse</returns>
         [Route("query")]
         [HttpPost]
-        public IEnumerable<FlightResponse> Query([FromBody]FlightQuerySyntax query)
+        public async Task<IEnumerable<FlightResponse>> Query([FromBody]FlightQuerySyntax query)
         {
-            return _flightQuerySvc.QueryEntities(query.FlightRequests);
+            return await _flightQuerySvc.QueryEntities(query.FlightRequests);
         }
 
         /// <summary>
@@ -38,7 +39,8 @@ namespace Angiris.APIService.WebApp.WebApiControllers
         /// <returns>List of FlightResponse</returns>
         [Route("query")]
         [HttpGet]
-        public IEnumerable<FlightResponse> Query(string departure, string arrival, string date, string company = "")
+        public async Task<IEnumerable<FlightResponse>> Query
+            (string departure, string arrival, string date, string company = "")
         {
             DateTime flightDate;
 
@@ -51,8 +53,9 @@ namespace Angiris.APIService.WebApp.WebApiControllers
 
             FlightRequest req = new FlightRequest() { DepartureCity = departure, ArrivalCity = arrival, FlightDate = flightDate, Company = company };
 
-            return _flightQuerySvc.QueryEntities(req);
+            return await _flightQuerySvc.QueryEntities(req);
         }
+ 
         
 //http://localhost:58178/api/flights/query?departure=bbb&arrival=ddd&date=2015-04-03
 

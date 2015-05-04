@@ -16,13 +16,18 @@
 
     <div class="row">
         <div class="col-md-3">
-            departure:@Html.DropDownList("departure", FakeFlightDataSource.CityNameList.Select(c => new SelectListItem() { Text = c, Value = c }))
+            departure:@Html.DropDownList("departure", 
+            FakeFlightDataSource.CityNameList.Select(c => new SelectListItem() { Text = c, Value = c }),
+                new { id = "departure" })
         </div>
         <div class="col-md-3">
-            arrival:@Html.DropDownList("arrival", FakeFlightDataSource.CityNameList.Select(c => new SelectListItem() { Text = c, Value = c }))
+            arrival:@Html.DropDownList("arrival", FakeFlightDataSource.CityNameList.Select(c => new SelectListItem() { Text = c, Value = c }),
+                new { id = "arrival" })
         </div>
         <div class="col-md-3">
-            date:@Html.TextBox("date")
+            date:
+            @*@Html.TextBox("date")*@
+            @Html.DropDownList("date", new List<SelectListItem>(), new { id = "date" })
         </div>
         <div class="col-md-3">
 
@@ -54,8 +59,13 @@
 @section scripts
 {
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             EndLoading();
+
+            $("#departure").change(function () { UpdateDatetimeList() });
+            $("#arrival").change(function () { UpdateDatetimeList() });
+
+            UpdateDatetimeList();
         });
 
         function StartLoading() {
@@ -65,6 +75,27 @@
         function EndLoading() {
             $('#loading').fadeOut();
         }
-</script>
+
+        function UpdateDatetimeList() {
+
+            var departure = $("#departure").val();
+            var arrival = $("#arrival").val();
+
+            var jsonUrl = "/Console/ListDates?departure=" + departure + "&arrival=" + arrival;
+            $.getJSON(jsonUrl, function(data) {
+
+                $("#date").empty();
+
+                $.each(data, function(key, val) {
+
+                    $("<option value='" + val + "'>" + val + "</option>").appendTo("#date");
+
+                });
+
+
+            });
+
+        }
+    </script>
 
 }
