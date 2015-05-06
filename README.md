@@ -13,6 +13,7 @@ What's Project Angiris: Proof-Of-Concept of Backend(Crawler)-as-a-Service (BaaS)
 Demo: http://angiris.ranger.im/
 
 How to host:
+
 1. Clone
 2. Save Angiris/src/Angiris.Core.Config/config.sample.json as Angiris/src/Angiris.Core.Config/config.release.json
 3. Replace your own Azure service endpoints and credentials in config.release.json
