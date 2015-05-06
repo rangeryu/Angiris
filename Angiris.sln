@@ -51,7 +51,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Angiris.AzureDeployments", 
 EndProject
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Angiris.AzureCloudService", "src\Angiris.AzureDeployments\Angiris.AzureCloudService\Angiris.AzureCloudService.ccproj", "{75AE599A-B6E8-4D58-856E-A8D6CA67295E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendWorkerRole", "BackendWorkerRole\BackendWorkerRole.csproj", "{A94713B2-BAF4-4762-82D2-0F90CF2D4EBE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendWorkerRole", "src\Angiris.AzureDeployments\BackendWorkerRole\BackendWorkerRole.csproj", "{A94713B2-BAF4-4762-82D2-0F90CF2D4EBE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Angiris.Core.Config", "src\Angiris.Core.Config\Angiris.Core.Config.csproj", "{34FFE720-B4AC-4375-8DA5-D297107E0F0F}"
 EndProject

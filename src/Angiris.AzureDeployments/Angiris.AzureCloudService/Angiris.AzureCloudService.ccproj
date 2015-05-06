@@ -38,16 +38,6 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BackendWorkerRole\BackendWorkerRole.csproj">
-      <Name>BackendWorkerRole</Name>
-      <Project>{a94713b2-baf4-4762-82d2-0f90cf2d4ebe}</Project>
-      <Private>True</Private>
-      <RoleType>Worker</RoleType>
-      <RoleName>BackendWorkerRole</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="BackendWorkerRoleContent\" />
     <Folder Include="Profiles" />
   </ItemGroup>
@@ -58,6 +48,16 @@
     <PublishProfile Include="Profiles\Angiris-FarmProduction.azurePubxml" />
     <PublishProfile Include="Profiles\Angiris-FarmProduction1.azurePubxml" />
     <PublishProfile Include="Profiles\Angiris-FarmProduction2.azurePubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BackendWorkerRole\BackendWorkerRole.csproj">
+      <Name>BackendWorkerRole</Name>
+      <Project>{a94713b2-baf4-4762-82d2-0f90cf2d4ebe}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>BackendWorkerRole</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
