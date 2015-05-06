@@ -4,6 +4,11 @@
 #Credentials
 config.release.json
 
+#publish profiles
+*.pubxml
+*.pubxml.user
+*.azurePubxml
+
 # User-specific files
 *.suo
 *.user
