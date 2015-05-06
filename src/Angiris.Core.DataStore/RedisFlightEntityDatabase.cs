@@ -70,14 +70,14 @@ namespace Angiris.Core.DataStore
         /// <returns></returns>
         public async Task<IEnumerable<string>> GetKeys(Tuple<string, string, string> pattern)
         {
-            var task = Task.Run(() =>
+            var result = await Task.Run(() =>
             {
                 return Server.Keys(this.DbIndexId,
-    string.Format("{0}-{1}-{2}", pattern.Item1, pattern.Item2, pattern.Item3))
-    .Select(k => (string)k).ToList();
+                        string.Format("{0}-{1}-{2}", pattern.Item1, pattern.Item2, pattern.Item3))
+                        .Select(k => (string)k).ToList();
             });
-            
-            return await task;
+
+            return result;
 
         }
  

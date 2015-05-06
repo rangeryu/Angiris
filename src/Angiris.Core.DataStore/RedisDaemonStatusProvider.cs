@@ -67,7 +67,7 @@
             //var values = await database.HashGetAllAsync(this.DaemonStatusHashKeyName);
             var values = await Database.HashGetAllAsync(this.DaemonStatusHashKeyName);
             var output = values.Select(v => JsonConvert.DeserializeObject<DaemonStatus>(v.Value))
-                .Where(s => s.LastUpdated > DateTime.UtcNow.AddDays(-1)).ToList();
+                .Where(s => s.LastUpdated > DateTime.UtcNow.AddHours(-2)).ToList();
             return output;
 
         }

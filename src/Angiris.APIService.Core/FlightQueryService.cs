@@ -14,7 +14,7 @@ namespace Angiris.APIService.Core
         {
             get
             {
-                return DataProviderFactory.SingletonFlightEntityDatabase;
+                return DataProviderFactory.SingletonRedisFlightEntityDatabase;
             }
         }
 

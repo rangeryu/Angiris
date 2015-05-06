@@ -34,7 +34,7 @@ namespace Angiris.Backend.Core
         public FlightCrawlRobot(QueueMgrProfile profile)
         {
             _taskCacheStore = DataProviderFactory.SingletonRedisQueuedTaskStore;
-            _flightEntityDatabase = DataProviderFactory.SingletonFlightEntityDatabase;
+            _flightEntityDatabase = DataProviderFactory.SingletonRedisFlightEntityDatabase;
             _docDbFlightEntityDatabase = DataProviderFactory.SingletonDocDbFlightEntityDatabase;
             _queueManager = QueueManagerFactory.CreateFlightCrawlEntityQueueMgr(profile);
 

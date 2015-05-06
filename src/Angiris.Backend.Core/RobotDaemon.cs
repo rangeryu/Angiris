@@ -16,15 +16,15 @@
 	{
         public DaemonStatus StatusData { get; private set; }
 
-	    readonly PerfCounter _perfCounter;
-        readonly RedisDaemonStatusProvider _daemonStatusStore;
+	    PerfCounter _perfCounter;
+        RedisDaemonStatusProvider _daemonStatusStore;
 
         public RobotDaemon()
         {
             TaskRobotList = new List<FlightCrawlRobot>();
             StatusData = new DaemonStatus() { StartTime = DateTime.UtcNow, InstanceName = System.Environment.MachineName };
             _perfCounter = new PerfCounter();
-            _daemonStatusStore = DataProviderFactory.GetRedisDaemonStatusProvider();
+          
             
         }
 
@@ -39,7 +39,10 @@
             //https://msdn.microsoft.com/en-us/library/system.net.servicepointmanager.defaultconnectionlimit(v=vs.110).aspx
             ServicePointManager.DefaultConnectionLimit = 50;
 
-            _daemonStatusStore.Initialize();
+            DataProviderFactory.InitializeAll();
+
+            _daemonStatusStore = DataProviderFactory.SingletonRedisDaemonStatusProvider;
+          
 
             this.StatusData.IsStarted = true;
  

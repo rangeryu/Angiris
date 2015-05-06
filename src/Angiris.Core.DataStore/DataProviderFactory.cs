@@ -55,7 +55,7 @@ using Newtonsoft.Json;
             return provider;
         }
 
-        public static DocDbFlightEntityDatabase GetDocDBFlightEntityDatabase()
+        public static DocDbFlightEntityDatabase GetDocDbFlightEntityDatabase()
         {
             dynamic cfg = Config.ConfigMgr.ReleaseCfg.DocDbFlightEntityDatabase;
 
@@ -83,128 +83,129 @@ using Newtonsoft.Json;
 
 	    public static void InitializeAll()
 	    {
-	        //TODO
 
-            var a = DataProviderFactory.SingletonRedisDaemonStatusProvider;
-            var b = DataProviderFactory.SingletonFlightEntityDatabase;
-            var c = DataProviderFactory.SingletonDocDbFlightEntityDatabase;
-            var d = DataProviderFactory.SingletonRedisQueuedTaskStore;
+	        InitSingletonDocDbFlightEntityDatabase();
+            InitSingletonRedisFlightEntityDatabase();
+
+            InitSingletonRedisQueuedTaskStore();
+	        InitSingletonRedisDaemonStatusProvider();
 	    }
 
 
-        private static readonly object syncRoot_docDBFlightEntityDatabase = new Object();
+        
 
         private static DocDbFlightEntityDatabase _docDbFlightEntityDatabase;
         public static DocDbFlightEntityDatabase SingletonDocDbFlightEntityDatabase
         {
             get
             {
-                if (_docDbFlightEntityDatabase == null || !_docDbFlightEntityDatabase.IsInitialized)
-                {
-                    lock (syncRoot_docDBFlightEntityDatabase)
-                    {
-                        if (_docDbFlightEntityDatabase == null || !_docDbFlightEntityDatabase.IsInitialized)
-                        {
-                            _docDbFlightEntityDatabase = GetDocDBFlightEntityDatabase();
-                            _docDbFlightEntityDatabase.Initialize();
-                        }
-                    }
-                }
+                InitSingletonDocDbFlightEntityDatabase();
                 return _docDbFlightEntityDatabase;
             }
         }
 
+        private static readonly object syncRoot_docDBFlightEntityDatabase = new Object();
+	    private static void InitSingletonDocDbFlightEntityDatabase()
+	    {
+            if (_docDbFlightEntityDatabase == null || !_docDbFlightEntityDatabase.IsInitialized)
+            {
+                lock (syncRoot_docDBFlightEntityDatabase)
+                {
+                    if (_docDbFlightEntityDatabase == null || !_docDbFlightEntityDatabase.IsInitialized)
+                    {
+                        _docDbFlightEntityDatabase = GetDocDbFlightEntityDatabase();
+                        _docDbFlightEntityDatabase.Initialize();
+                    }
+                }
+            }
+	    }
 
-        private static readonly object syncRoot_flightEntityDatabase = new Object();
 
-        private static RedisFlightEntityDatabase _flightEntityDatabase;
-        public static RedisFlightEntityDatabase SingletonFlightEntityDatabase
+        
+
+        private static RedisFlightEntityDatabase _redisFlightEntityDatabase;
+        public static RedisFlightEntityDatabase SingletonRedisFlightEntityDatabase
         {
             get
             {
-                if (_flightEntityDatabase == null || !_flightEntityDatabase.IsInitialized )
-                {
-                    lock (syncRoot_flightEntityDatabase)
-                    {
-                        if (_flightEntityDatabase == null || !_flightEntityDatabase.IsInitialized)
-                        {
-                            _flightEntityDatabase = GetRedisFlightEntityDatabase();
-                            _flightEntityDatabase.Initialize();
-                        }
-                    }
-                }
-                return _flightEntityDatabase;
+                InitSingletonRedisFlightEntityDatabase();
+                return _redisFlightEntityDatabase;
             }
         }
 
-
-        //private static object syncRoot_docDBQueuedTaskStore = new Object();
-
-        //private static DocDBQueuedTaskStoreProvider<FlightCrawlEntity> _docDBQueuedTaskStore;
-        //public static DocDBQueuedTaskStoreProvider<FlightCrawlEntity> SingletonDocDBQueuedTaskStore
-        //{
-        //    get
-        //    {
-        //        if (_docDBQueuedTaskStore == null)
-        //        {
-        //            lock (syncRoot_docDBQueuedTaskStore)
-        //            {
-        //                if (_docDBQueuedTaskStore == null)
-        //                {
-        //                    _docDBQueuedTaskStore = DataProviderFactory.GetDocDBQueuedTaskStore<FlightCrawlEntity>();
-        //                    _docDBQueuedTaskStore.Initialize();
-        //                }
-        //            }
-        //        }
-        //        return _docDBQueuedTaskStore;
-        //    }
-        //}
-
-        private static readonly object syncRoot_RedisQueuedTaskStore = new Object();
-        //INoSQLStoreProvider<FlightCrawlEntity> cacheStore;
+        private static readonly object syncRoot_RedisflightEntityDatabase = new Object();
+        private static void InitSingletonRedisFlightEntityDatabase()
+	    {
+            if (_redisFlightEntityDatabase == null || !_redisFlightEntityDatabase.IsInitialized)
+            {
+                lock (syncRoot_RedisflightEntityDatabase)
+                {
+                    if (_redisFlightEntityDatabase == null || !_redisFlightEntityDatabase.IsInitialized)
+                    {
+                        _redisFlightEntityDatabase = GetRedisFlightEntityDatabase();
+                        _redisFlightEntityDatabase.Initialize();
+                    }
+                }
+            }
+	    }
+ 
 
         private static RedisQueuedTaskStoreProvider<FlightCrawlEntity> _redisQueuedTaskStore;
         public static RedisQueuedTaskStoreProvider<FlightCrawlEntity> SingletonRedisQueuedTaskStore
         {
             get
             {
-                if (_redisQueuedTaskStore == null || !_redisQueuedTaskStore.IsInitialized)
-                {
-                    lock (syncRoot_RedisQueuedTaskStore)
-                    {
-                        if (_redisQueuedTaskStore == null || !_redisQueuedTaskStore.IsInitialized)
-                        {
-                            _redisQueuedTaskStore = DataProviderFactory.GetRedisQueuedTaskStore<FlightCrawlEntity>();
-                            _redisQueuedTaskStore.Initialize();
-                        }
-                    }
-                }
+                InitSingletonRedisQueuedTaskStore();
                 return _redisQueuedTaskStore;
             }
         }
 
+        private static readonly object syncRoot_RedisQueuedTaskStore = new Object();
+	    private static void InitSingletonRedisQueuedTaskStore()
+	    {
+            if (_redisQueuedTaskStore == null || !_redisQueuedTaskStore.IsInitialized)
+            {
+                lock (syncRoot_RedisQueuedTaskStore)
+                {
+                    if (_redisQueuedTaskStore == null || !_redisQueuedTaskStore.IsInitialized)
+                    {
+                        _redisQueuedTaskStore = DataProviderFactory.GetRedisQueuedTaskStore<FlightCrawlEntity>();
+                        _redisQueuedTaskStore.Initialize();
+                    }
+                }
+            }
+	    }
 
-        private static readonly object syncRoot_RedisDaemonStatusProvider = new Object();
+
+
 
         private static RedisDaemonStatusProvider _redisDaemonStatusProvider;
         public static RedisDaemonStatusProvider SingletonRedisDaemonStatusProvider
         {
             get
             {
-                if (_redisDaemonStatusProvider == null || !_redisDaemonStatusProvider.IsInitialized)
-                {
-                    lock (syncRoot_RedisDaemonStatusProvider)
-                    {
-                        if (_redisDaemonStatusProvider == null || !_redisDaemonStatusProvider.IsInitialized)
-                        {
-                            _redisDaemonStatusProvider = DataProviderFactory.GetRedisDaemonStatusProvider();
-                            _redisDaemonStatusProvider.Initialize();
-                        }
-                    }
-                }
+                InitSingletonRedisDaemonStatusProvider();
                 return _redisDaemonStatusProvider;
             }
         }
+
+        private static readonly object syncRoot_RedisDaemonStatusProvider = new Object();
+	    private static void InitSingletonRedisDaemonStatusProvider()
+	    {
+            if (_redisDaemonStatusProvider == null || !_redisDaemonStatusProvider.IsInitialized)
+            {
+                lock (syncRoot_RedisDaemonStatusProvider)
+                {
+                    if (_redisDaemonStatusProvider == null || !_redisDaemonStatusProvider.IsInitialized)
+                    {
+                        _redisDaemonStatusProvider = DataProviderFactory.GetRedisDaemonStatusProvider();
+                        _redisDaemonStatusProvider.Initialize();
+                    }
+                }
+            } 
+	    }
+
+
 	}
 }
 

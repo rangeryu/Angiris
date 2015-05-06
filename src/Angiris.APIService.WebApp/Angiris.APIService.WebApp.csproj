@@ -246,6 +246,10 @@
       <Project>{29f57285-e546-45c5-95cb-77009fc72c80}</Project>
       <Name>Angiris.APIService.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Angiris.Core.Config\Angiris.Core.Config.csproj">
+      <Project>{34ffe720-b4ac-4375-8da5-d297107e0f0f}</Project>
+      <Name>Angiris.Core.Config</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Angiris.Core.Models\Angiris.Core.Models.csproj">
       <Project>{6ad8ba4c-fed9-47c5-a08a-1acfabb58e38}</Project>
       <Name>Angiris.Core.Models</Name>

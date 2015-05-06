@@ -27,7 +27,9 @@
         <div class="col-md-3">
             date:
             @*@Html.TextBox("date")*@
-            @Html.DropDownList("date", new List<SelectListItem>(), new { id = "date" })
+           
+            @Html.DropDownList("date", new List<SelectListItem>(), new { id = "date", style="width:100px;" })
+             
         </div>
         <div class="col-md-3">
 
@@ -78,22 +80,35 @@
 
         function UpdateDatetimeList() {
 
+            var dateSel = $("#date");
+
+            dateSel.empty();
+            $("<option>Loading...</option>").appendTo("#date");
+            
             var departure = $("#departure").val();
             var arrival = $("#arrival").val();
 
             var jsonUrl = "/Console/ListDates?departure=" + departure + "&arrival=" + arrival;
             $.getJSON(jsonUrl, function(data) {
 
-                $("#date").empty();
+                dateSel.empty();
 
-                $.each(data, function(key, val) {
+                if (data.length > 0) {
+                    $.each(data, function (key, val) {
 
-                    $("<option value='" + val + "'>" + val + "</option>").appendTo("#date");
+                        $("<option value='" + val + "'>" + val + "</option>").appendTo("#date");
 
-                });
+                    });
+                } else {
+                    $("<option>N/A</option>").appendTo("#date");
+                }
+
+
 
 
             });
+
+           
 
         }
     </script>
