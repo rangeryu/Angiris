@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using Angiris.Core.Models;
 using Newtonsoft.Json;
@@ -48,24 +50,33 @@ namespace Angiris.CentralAdmin.WebApp.Controllers
         /// <param name="date"></param>
         /// <param name="company"></param>
         /// <returns></returns>
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public async Task<ActionResult> _FlightQuery(string departure, string arrival, string date, string company = "")
         {
             // aaa-hhh-20150429
+            //HttpClient httpClient = new HttpClient();
+            //var apitoken = "73caed41790745e39d7fce419714980c";
+            //string requestUrl =
+            //    string.Format(
+            //        "https://angirisdemo.azure-api.net/flights/query?departure={0}&arrival={1}&date={2}&company={3}&subscription-key={4}",
+            //        departure, arrival, date, company, apitoken
+            //        );
+            //string response = await httpClient.GetStringAsync(requestUrl);
+            //var responseData = JsonConvert.DeserializeObject<IEnumerable<FlightResponse>>(response);
 
-            HttpClient httpClient = new HttpClient();
+            FlightQueryService querySvc = new FlightQueryService();
 
-            var apitoken = "73caed41790745e39d7fce419714980c";
+            DateTime flightDate;
 
-            string requestUrl =
-                string.Format(
-                    "https://angirisdemo.azure-api.net/flights/query?departure={0}&arrival={1}&date={2}&company={3}&subscription-key={4}",
-                    departure, arrival, date, company, apitoken
-                    );
+            if (string.IsNullOrEmpty(departure) || string.IsNullOrEmpty(arrival)
+                ||
+                !(DateTime.TryParse(date, out flightDate) || DateTime.TryParseExact(date, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out flightDate))
+                )
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
 
-            string response = await httpClient.GetStringAsync(requestUrl);
+            FlightRequest req = new FlightRequest() { DepartureCity = departure, ArrivalCity = arrival, FlightDate = flightDate, Company = company };
 
-            var responseData = JsonConvert.DeserializeObject<IEnumerable<FlightResponse>>(response);
+            var responseData =  await querySvc.QueryEntities(req);
 
             return PartialView("_FlightQueryResult",responseData);
         }

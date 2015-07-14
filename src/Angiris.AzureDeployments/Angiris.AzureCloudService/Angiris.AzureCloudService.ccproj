@@ -48,6 +48,7 @@
     <PublishProfile Include="Profiles\Angiris-FarmProduction.azurePubxml" />
     <PublishProfile Include="Profiles\Angiris-FarmProduction1.azurePubxml" />
     <PublishProfile Include="Profiles\Angiris-FarmProduction2.azurePubxml" />
+    <PublishProfile Include="Profiles\Angiris-FarmProduction3.azurePubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BackendWorkerRole\BackendWorkerRole.csproj">
